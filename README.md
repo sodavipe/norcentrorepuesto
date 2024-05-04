@@ -1,7 +1,8 @@
+Instalar Package Json en el Backend
 Al momento de instalar el package.json se debe de instalar en el NPM las siguientes versiones de librerias:
 Usar: npm install (+ libreria)
 
-Si quieres una versi{on anterior se hace por ejemplo
+Si quieres una versi{on anterior se hace por ejemplo:
 npm install mongoose@6.9.1
 
  "bcryptjs": "^2.4.3",
