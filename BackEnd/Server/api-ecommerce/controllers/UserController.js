@@ -15,6 +15,25 @@ export default{
             console.log(error)
         }
     },
+    register_admin: async(req, res)=>{
+        try {
+            const userV = await models.User.findOne({email: req.body.email})
+            if(userV){
+                res.status(500).send({
+                    message: "El Usuario ya Existe!"
+                });
+            }
+            req.body.rol = "admin";
+            req.body.password = await bcript.hash(req.body.password,10);
+            const user = await models.User.create(req.body);
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN PROBLEMA"
+            });
+            console.log(error)
+        }
+    },
     login: async(req, res)=>{
         try {
             const user = await models.User.findOne({email: req.body.email, state:1})
