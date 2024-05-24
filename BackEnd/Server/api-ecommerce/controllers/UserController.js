@@ -1,6 +1,8 @@
 import bcript from 'bcryptjs'
 import models from '../models';
 import token from '../service/token';
+import resource from '../resource';
+
 
 export default{
     register: async(req, res)=>{
@@ -25,8 +27,10 @@ export default{
             }
             req.body.rol = "admin";
             req.body.password = await bcript.hash(req.body.password,10);
-            const user = await models.User.create(req.body);
-            res.status(200).json(user);
+            let user = await models.User.create(req.body);
+            res.status(200).json({
+                user:resource.User.user_list(user)
+            });
         } catch (error) {
             res.status(500).send({
                 message: "OCURRIÓ UN PROBLEMA"
@@ -132,7 +136,7 @@ export default{
     list: async(req, res)=>{
         try {
             var search = req.body.search;
-            const Users = await models.User.find(
+            let Users = await models.User.find(
                 {
                     $or:[
                         {"name":new RegExp(search, "i")},
@@ -141,6 +145,10 @@ export default{
                     ]
                 }
             ).sort({'createdAt':-1});
+
+            Users = Users.map((user)=>{
+                return resource.User.user_list(user);
+            })
 
             res.status(200).json({
                 users: Users

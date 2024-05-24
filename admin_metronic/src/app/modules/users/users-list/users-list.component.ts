@@ -10,14 +10,24 @@ import { AddUsersComponent } from '../components/add-users/add-users.component';
 })
 export class UsersListComponent implements OnInit {
 
+  users:any = [];
+
+  isLoading$:any;
   constructor(
     public _userService:UsersService,
     public ModalService:NgbModal,
   ) {}
     
   ngOnInit(): void {
+    this.isLoading$ = this._userService.isLoading$;
+    this.allUsers();
   }
-
+  allUsers(){
+    this._userService.allUsers().subscribe((resp:any) =>{
+      console.log(resp);
+      this.users = resp.users;
+    })
+  }
   openCreate(){
     const modalRef = this.ModalService.open(AddUsersComponent, {centered:true, size: 'md'});
     modalRef.result.then(
@@ -25,7 +35,18 @@ export class UsersListComponent implements OnInit {
 
       },() => {
 
-      });
+      }
+    );
+      modalRef.componentInstance.UserC.subscribe((resp:any)=>{
+        console.log(resp);
+        this.users.unshift(resp);
+      })
   }
+  editUser(users){
 
+  }
+  delete(users){
+
+  }
+   
 }

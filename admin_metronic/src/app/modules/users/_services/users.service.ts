@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../../auth';
 import { URL_SERVICIOS } from 'src/app/config/config';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,22 @@ export class UsersService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
+  allUsers(){
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'token': this.authservice.token});
+    let URL = URL_SERVICIOS + "/user/list";
+    return this.http.get(URL,{headers:headers}).pipe(
+      finalize(()=> this.isLoadingSubject.next(false))
+    );
+  }
+
   createUser(data){
+    this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'token': this.authservice.token});
     let URL = URL_SERVICIOS + "/user/register_admin";
-    return this.http.post(URL, data, {headers:headers});
+    return this.http.post(URL, data, {headers:headers}).pipe(
+      finalize(()=> this.isLoadingSubject.next(false))
+    );
   }
 
 }

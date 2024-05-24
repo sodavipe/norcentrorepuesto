@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsersService } from '../../_services/users.service';
 import { Toaster } from 'ngx-toast-notifications';
 import { NoticyAlertComponent } from 'src/app/componets/notifications/noticy-alert/noticy-alert.component';
+
 
 @Component({
   selector: 'app-add-users',
@@ -11,6 +12,7 @@ import { NoticyAlertComponent } from 'src/app/componets/notifications/noticy-ale
 })
 export class AddUsersComponent implements OnInit {
 
+  @Output() UserC:EventEmitter<any> = new EventEmitter();
   name:any = null;
   surname:any = null;
   email:any = null;
@@ -45,6 +47,7 @@ export class AddUsersComponent implements OnInit {
     }
     this.userService.createUser(data).subscribe((resp:any)=>{
       console.log(resp);
+      this.UserC.emit(resp.user);
       this.toaster.open(NoticyAlertComponent,{text:`success- '¡El usuario se ha registrado correctamente!.'`});
       this.modal.close();
       return;
