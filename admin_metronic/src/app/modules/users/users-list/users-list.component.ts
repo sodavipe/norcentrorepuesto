@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../_services/users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUsersComponent } from '../components/add-users/add-users.component';
+import { EditUsersComponent } from '../components/edit-users/edit-users.component';
 
 @Component({
   selector: 'app-users-list',
@@ -43,7 +44,22 @@ export class UsersListComponent implements OnInit {
       })
   }
   editUser(users){
+    const modalRef = this.ModalService.open(EditUsersComponent, {centered:true, size: 'md'});
+    modalRef.componentInstance.user_selected = users;
+    modalRef.result.then(
+      () =>{
 
+      },() => {
+
+      }
+    );
+      modalRef.componentInstance.UserE.subscribe((resp:any)=>{
+        console.log(resp);
+        let INDEX = this.users.findIndex(item => item._id == resp._id);
+        if(INDEX != -1){
+          this.users[INDEX] = resp;
+        }
+      })
   }
   delete(users){
 

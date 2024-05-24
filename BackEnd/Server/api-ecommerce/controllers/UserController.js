@@ -121,10 +121,14 @@ export default{
                 var avatar_name = name[2];
                 console.log(avatar_name)
             }
-            const UserT = await models.User.findByIdAndUpdate({_id: req.body._id}, req.body);
+            
+            await models.User.findByIdAndUpdate({_id: req.body._id}, req.body);
+            
+            let UserT = await models.User.findOne({_id: req.body._id});
+
             res.status(200).json({
                 message: "EL USUARIO SE HA MODIFICADO CORRECTAMENTE",
-                user:UserT,
+                user: resource.User.user_list(UserT),
             });
         } catch (error) {
             res.status(500).send({

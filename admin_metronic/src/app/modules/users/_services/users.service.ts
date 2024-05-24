@@ -38,5 +38,12 @@ export class UsersService {
       finalize(()=> this.isLoadingSubject.next(false))
     );
   }
-
+  updateUser(data){
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'token': this.authservice.token});
+    let URL = URL_SERVICIOS + "/user/update";
+    return this.http.put(URL, data, {headers:headers}).pipe(
+      finalize(()=> this.isLoadingSubject.next(false))
+    );
+  }
 }
