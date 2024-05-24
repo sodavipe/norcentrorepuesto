@@ -21,10 +21,10 @@ export class UsersService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  allUsers(){
+  allUsers(search){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'token': this.authservice.token});
-    let URL = URL_SERVICIOS + "/user/list";
+    let URL = URL_SERVICIOS + "/user/list?search="+search;
     return this.http.get(URL,{headers:headers}).pipe(
       finalize(()=> this.isLoadingSubject.next(false))
     );

@@ -15,53 +15,26 @@
   <div class="card-body">
     <!-- begin: Filtration form -->
     <div class="form form-label-right">
-      <!-- Esta aparte lo comento de manera aparte ya que en la clases lo uso normal -->
-      <!-- <div class="form-group row">
-        <div class="col-lg-4">
-          <div class="row" [formGroup]="filterGroup">
-            <div class="col-lg-6">
-              <select
-                class="form-control"
-                name="status"
-                placeholder="Filtrar por Estado"
-                formControlName="status"
-              >
-                <option value="">Todos</option>
-                <option value="1">Activo</option>
-                <option value="0">Desactivo</option></select
-              ><small class="form-text text-muted"
-                ><b>Filtrar</b> por Estado</small
-              >
-            </div>
-            <div class="col-lg-6">
-              <select
-                class="form-control"
-                placeholder="Filtro por Rol"
-                name="condition"
-                formControlName="condition"
-              >
-                <option value="">Todos</option>
-                <option  *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</option>
-              </select>
-                <small class="form-text text-muted"
-                ><b>Filtro</b> por Rol</small
-              >
-            </div>
+      <div class="form-group row">
+          <div class="col-lg-3" >
+            <input
+              type="text"
+              class="form-control"
+              name="searchText"
+              placeholder="Buscar"
+              value=""
+              [(ngModel)]="search"
+              (keyup.enter)="allUsers()"
+            /><small class="form-text text-muted"
+              ><b>Buscar</b> por correo, nombre y apellido</small
+            >
           </div>
-        </div>
-        <div class="col-lg-3" [formGroup]="searchGroup">
-          <input
-            type="text"
-            class="form-control"
-            name="searchText"
-            placeholder="Buscar"
-            value=""
-            formControlName="searchTerm"
-          /><small class="form-text text-muted"
-            ><b>Buscar</b> por correo y nombre</small
-          >
-        </div>
-      </div> -->
+          <div class="col-2">
+            <button class="btn btn-dark" (click)="refresh()">REFRESH</button>
+          </div>
+      </div>
+        
+        
     </div>
     <ng-container *ngIf="isLoading$ | async">
         <span class="spinner spinner-primary ml-5"></span>

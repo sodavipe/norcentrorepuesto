@@ -15,6 +15,7 @@ export class UsersListComponent implements OnInit {
   users:any = [];
 
   isLoading$:any;
+  search:any = "";
   constructor(
     public _userService:UsersService,
     public ModalService:NgbModal,
@@ -25,10 +26,14 @@ export class UsersListComponent implements OnInit {
     this.allUsers();
   }
   allUsers(){
-    this._userService.allUsers().subscribe((resp:any) =>{
+    this._userService.allUsers(this.search).subscribe((resp:any) =>{
       console.log(resp);
       this.users = resp.users;
     })
+  }
+  refresh(){
+    this.search="";
+    this.allUsers();
   }
   openCreate(){
     const modalRef = this.ModalService.open(AddUsersComponent, {centered:true, size: 'md'});
