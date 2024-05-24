@@ -3,6 +3,7 @@ import { UsersService } from '../_services/users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUsersComponent } from '../components/add-users/add-users.component';
 import { EditUsersComponent } from '../components/edit-users/edit-users.component';
+import { DeleteUserComponent } from '../components/delete-user/delete-user.component';
 
 @Component({
   selector: 'app-users-list',
@@ -62,7 +63,22 @@ export class UsersListComponent implements OnInit {
       })
   }
   delete(users){
+    const modalRef = this.ModalService.open(DeleteUserComponent, {centered:true, size: 'md'});
+    modalRef.componentInstance.user_selected = users;
+    modalRef.result.then(
+      () =>{
 
+      },() => {
+
+      }
+    );
+      modalRef.componentInstance.UserD.subscribe((resp:any)=>{
+        console.log(resp);
+        let INDEX = this.users.findIndex(item => item._id == users._id);
+        if(INDEX != -1){
+          this.users.splice(INDEX,1);
+        }
+      })
   }
    
 }

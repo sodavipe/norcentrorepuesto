@@ -46,4 +46,12 @@ export class UsersService {
       finalize(()=> this.isLoadingSubject.next(false))
     );
   }
+  deleteUser(user_id){
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'token': this.authservice.token});
+    let URL = URL_SERVICIOS + "/user/delete?_id="+user_id;
+    return this.http.delete(URL,{headers:headers}).pipe(
+      finalize(()=> this.isLoadingSubject.next(false))
+    );
+  }
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Toaster } from 'ngx-toast-notifications';
+import { UsersService } from '../../_services/users.service';
+import { NoticyAlertComponent } from 'src/app/componets/notifications/noticy-alert/noticy-alert.component';
 
 @Component({
   selector: 'app-delete-user',
@@ -7,9 +11,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteUserComponent implements OnInit {
 
-  constructor() { }
+  @Output() UserD:EventEmitter<any> = new EventEmitter();
+  @Input() user_selected:any;
+  constructor(
+    public modal: NgbActiveModal,
+    public userService: UsersService,
+    public toaster: Toaster
+  ) { }
 
   ngOnInit(): void {
   }
 
+  delete(){
+    this.userService.deleteUser(this.user_selected._id).subscribe((resp:any)=>{
+      console.log(resp);
+      this.UserD.emit("");
+      this.toaster.open(NoticyAlertComponent,{text:`success- '¡El usuario se ha eliminó correctamente!.'`});
+      this.modal.close();
+      return;
+    }, (error)=>{
+      if(error.error){
+        this.toaster.open(NoticyAlertComponent,{text:`danger- '${error.error.message}'`});
+      }
+    })
+  }
 }

@@ -166,7 +166,7 @@ export default{
     },
     remove: async(req,res) => {
         try {
-            const User = await models.User.findByIdAndDelete({_id:req.body._id})
+            const User = await models.User.findByIdAndDelete({_id:req.query._id})
             res.status(200).json({
                 message: "EL USUARIO SE ELIMINÓ CORRECTAMENTE"
             });
