@@ -121,7 +121,9 @@ export default{
                 var avatar_name = name[2];
                 console.log(avatar_name)
             }
-            
+            if(req.body.password){
+                req.body.password = await bcript.hash(req.body.password,10);
+            }
             await models.User.findByIdAndUpdate({_id: req.body._id}, req.body);
             
             let UserT = await models.User.findOne({_id: req.body._id});
