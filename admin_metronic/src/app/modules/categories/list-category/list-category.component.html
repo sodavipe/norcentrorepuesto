@@ -23,7 +23,7 @@
                 name="searchText"
                 placeholder="Buscar"
                 value=""
-                [(ngModel)]="search"
+                [(ngModel)]="search"  
                 (keyup.enter)="allCategories()"
               /><small class="form-text text-muted"
                 ><b>Buscar</b> por nombre</small
@@ -55,9 +55,9 @@
                   <tbody>
                       <tr *ngFor="let categorie of category">
                         <td>
-                        <img [src]="categorie.imagen" style="width:60px;" alt="">
+                        <img [src]="URL_BACKEND +'api/categories/uploads/category/'+ categorie.imagen" style="width:60px;" alt="">
                         </td>
-                        <td>{{categorie.name}}</td>
+                        <td>{{categorie.title}}</td>
                         <td>{{categorie.state}}</td>
                         <td>
                           <a (click)="editCategory(category)" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-1" ngbTooltip="Editar Categoria" ngbTooltipClass="kt-tooltip">

@@ -1,5 +1,7 @@
 import models from "../models";
 import resource from "../resource";
+import fs from 'fs';
+import path from "path";
 export default{
     register: async(req, res)=>{
         try {
@@ -62,6 +64,28 @@ export default{
             res.status(200).json({
                 category: Category
             });
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN PROBLEMA"
+            });
+            console.log(error)
+        }
+    },
+    obtener_imagen: async(req,res)=>{
+        try {
+            var img = req.params['img'];
+
+
+        fs.stat('./uploads/category/'+img, function(err){
+            if(!err){
+                let path_img = './uploads/category/'+img;
+                res.status(200).sendFile(path.resolve(path_img));
+            }else{
+                let path_img = './uploads/default.jpg';
+                res.status(200).sendFile(path.resolve(path_img));
+            }
+    })
+
         } catch (error) {
             res.status(500).send({
                 message: "OCURRIÓ UN PROBLEMA"

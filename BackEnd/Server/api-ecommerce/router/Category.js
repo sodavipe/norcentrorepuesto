@@ -13,5 +13,6 @@ router.put("/update",[auth.verifyAdmin,path],categoryController.update);
 router.get("/list",auth.verifyAdmin,categoryController.list);
 router.delete("/delete",auth.verifyAdmin,categoryController.remove);
 
+router.get("/uploads/category/:img",categoryController.obtener_imagen);
 
 export default router;
