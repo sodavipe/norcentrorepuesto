@@ -26,5 +26,21 @@ export const AsideMenuAdminGeneral = {
           }
         ]
       },
+      { section: 'Productos' },
+      {
+        title: 'Categorias',
+        root: true,
+        name: "users",
+        bullet: 'dot',
+        icon: 'flaticon2-user-outline-symbol',
+        svg: './assets/media/svg/icons/Home/Commode2.svg',
+        page: '/users',
+        submenu: [
+          {
+            title: 'Lista Categorias',
+            page: '/categorias/list'
+          }
+        ]
+      },
     ]
 }
