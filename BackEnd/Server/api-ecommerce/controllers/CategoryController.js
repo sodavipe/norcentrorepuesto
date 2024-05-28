@@ -23,7 +23,7 @@ export default{
     },
     update: async(req, res)=>{
         try {
-            if(req.files){
+            if(req.files && req.files.portada){
                 var img_path = req.files.portada.path;
                 var name = img_path.split('\\');
                 var portada_name = name[2];
@@ -37,7 +37,7 @@ export default{
 
             res.status(200).json({
                 message: "LA CATEGORIA SE HA MODIFICADO CORRECTAMENTE",
-                category: resource.Category.category_list(UserT),
+                category: resource.Category.category_list(CategoriaT),
             });
         } catch (error) {
             res.status(500).send({

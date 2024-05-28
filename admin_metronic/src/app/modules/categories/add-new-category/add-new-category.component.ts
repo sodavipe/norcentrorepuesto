@@ -55,6 +55,7 @@ export class AddNewCategoryComponent implements OnInit {
       this.CategoryC.emit(resp);
       this.modal.close();
     })
+    
   }
 
 }

@@ -38,5 +38,20 @@ createCategory(data){
     finalize(()=> this.isLoadingSubject.next(false))
   );
 }
-
+updateCategory(data){
+  this.isLoadingSubject.next(true);
+  let headers = new HttpHeaders({'token': this.authservice.token});
+  let URL = URL_SERVICIOS + "/categories/update";
+  return this.http.put(URL,data,{headers:headers}).pipe(
+    finalize(()=> this.isLoadingSubject.next(false))
+  );
+}
+deleteCategory(category_id){
+  this.isLoadingSubject.next(true);
+  let headers = new HttpHeaders({'token': this.authservice.token});
+  let URL = URL_SERVICIOS + "/categories/delete?_id="+category_id;
+  return this.http.delete(URL,{headers:headers}).pipe(
+    finalize(()=> this.isLoadingSubject.next(false))
+  );
+}
 }

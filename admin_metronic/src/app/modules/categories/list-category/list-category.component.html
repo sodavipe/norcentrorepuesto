@@ -53,14 +53,17 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let categorie of category">
+                      <tr *ngFor="let categorie of categories">
                         <td>
                         <img [src]="URL_BACKEND +'api/categories/uploads/category/'+ categorie.imagen" style="width:60px;" alt="">
                         </td>
                         <td>{{categorie.title}}</td>
-                        <td>{{categorie.state}}</td>
                         <td>
-                          <a (click)="editCategory(category)" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-1" ngbTooltip="Editar Categoria" ngbTooltipClass="kt-tooltip">
+                          <span class="label label-success label-pill label-inline mr-2" *ngIf="categorie.state == 1">Activo</span>
+                          <span class="label label-danger label-pill label-inline mr-2" *ngIf="categorie.state == 2">Desactivo</span>
+                        </td>
+                        <td>
+                          <a (click)="editCategory(categorie)" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-1" ngbTooltip="Editar Categoria" ngbTooltipClass="kt-tooltip">
                             <span class="svg-icon svg-icon-md svg-icon-primary">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Write.svg-->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -74,7 +77,7 @@
                             </span>
                           </a>
         
-                          <a (click)="delete(category)" class="btn btn-icon btn-light btn-hover-primary btn-sm" ngbTooltip="Eliminar Categoria" ngbTooltipClass="kt-tooltip">
+                          <a (click)="delete(categorie)" class="btn btn-icon btn-light btn-hover-primary btn-sm" ngbTooltip="Eliminar Categoria" ngbTooltipClass="kt-tooltip">
                             <span class="svg-icon svg-icon-md svg-icon-danger">
                                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
