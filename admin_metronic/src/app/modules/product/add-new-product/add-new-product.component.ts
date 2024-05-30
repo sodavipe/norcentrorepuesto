@@ -62,8 +62,14 @@ export class AddNewProductComponent implements OnInit {
     this.loadServices();
   }
   addTag(){
-    this.tags.push(this.tag);
+   // this.tags.push(this.tag);
+   // this.tag = "";
+   if (this.tag && this.tag.trim()) {
+    this.tags.push(this.tag.trim());
     this.tag = "";
+  } else {
+    this.toaster.open(NoticyAlertComponent, { text: `danger- 'La etiqueta no puede estar vacía.'` });
+  }
   }
   removeTag(i){
     this.tags.splice(i,1);

@@ -91,20 +91,27 @@ export class EditNewProductComponent implements OnInit {
     this.loadServices();
   }
   addTag(){
-    this.tags.push(this.tag);
+   // this.tags.push(this.tag);
+   // this.tag = "";
+   if (this.tag && this.tag.trim()) {
+    this.tags.push(this.tag.trim());
     this.tag = "";
+  } else {
+    this.toaster.open(NoticyAlertComponent, { text: `danger- 'La etiqueta no puede estar vacía.'` });
+  }
   }
   removeTag(i){
     this.tags.splice(i,1);
   }
-  save(){
+  update(){
     if(!this.title || !this.categories || !this.price_soles || !this.price_usd ||
-      !this.resumen || !this.description || !this.sku ||  this.tags.length == 0 || !this.imagen_file){
+      !this.resumen || !this.description || !this.sku ||  this.tags.length == 0){
       
       this.toaster.open(NoticyAlertComponent,{text:`danger- 'Upps! NECESITAS DIGITAR TODOS LOS CAMPOS DEL FORMULARIO.'`});
       return;
     }
     let formData = new FormData();
+    formData.append("_id",this.product_id);
     formData.append("title",this.title);
     formData.append("category",this.categories);
     formData.append("sku",this.sku);
@@ -113,28 +120,21 @@ export class EditNewProductComponent implements OnInit {
     formData.append("description",this.description);
     formData.append("resumen",this.resumen);
     formData.append("tags",JSON.stringify(this.tags));
-    formData.append("imagen",this.imagen_file);
-    
-    this._serviceProduct.createProducts(formData).subscribe((resp:any)=>{
+    if(this.imagen_file){
+      formData.append("imagen",this.imagen_file);
+    }
+    this._serviceProduct.updateProducts(formData).subscribe((resp:any)=>{
       console.log(resp);
       if(resp.code == 403){
         this.toaster.open(NoticyAlertComponent,{text:`danger- 'Upps! EL PRODUCTO YA EXISTE, DIGITE OTRO NOMBRE.'`});
         return;
       }else{
-        this.toaster.open(NoticyAlertComponent,{text:`primary- 'EL PRODUCTO SE REGISTRÓ CON ÉXITO.'`});
-        this.title = null;
-        this.categories = null;
-        this.sku = null;
-        this.price_soles = null;
-        this.price_usd = null;
-        this.description = null;
-        this.resumen = null;
-        this.tags = [];
-        this.imagen_file = null;
-        this.imagen_previsualizacion = null;
+        this.toaster.open(NoticyAlertComponent,{text:`primary- 'EL PRODUCTO SE HA EDITADO CON ÉXITO.'`});
         return;
       }
     })
   }
-
+  listProducts(){
+    this.router.navigateByUrl("/productos/lista-de-todos-los-productos")
+  }
 }
