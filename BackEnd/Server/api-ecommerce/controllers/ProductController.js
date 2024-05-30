@@ -1,5 +1,7 @@
-import models from '../models'
+import models from '../models';
 import resource from '../resource';
+import fs from 'fs';
+import path from 'path'
 
 export default {
     register:async(req,res)=>{
@@ -9,7 +11,7 @@ export default {
             let valid_Product = await models.Product.findOne({title: data.title})
 
             if(valid_Product){
-                res.status(200).json({
+                return res.status(200).json({
                     code:403,
                     message:"EL PRODUCTO YA EXISTE",
                 });
@@ -121,6 +123,21 @@ export default {
             }
     })
 
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN PROBLEMA"
+            });
+            console.log(error)
+        }
+    },
+    show: async(req,res)=>{
+        try {
+            var product_id = req.params.id;
+            let PRODUCT = await models.Product.findById({_id:product_id}).populate("category");
+
+            res.status(200).json({
+                product: resource.Product.product_list(PRODUCT),
+            })
         } catch (error) {
             res.status(500).send({
                 message: "OCURRIÓ UN PROBLEMA"

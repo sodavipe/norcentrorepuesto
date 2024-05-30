@@ -30,16 +30,35 @@ export const AsideMenuAdminGeneral = {
       {
         title: 'Categorias',
         root: true,
-        name: "users",
+        name: "categorias",
         bullet: 'dot',
         icon: 'flaticon2-user-outline-symbol',
         svg: './assets/media/svg/icons/Home/Commode2.svg',
-        page: '/users',
+        page: '/categorias',
         submenu: [
           {
             title: 'Lista Categorias',
             page: '/categorias/list'
           }
+        ]
+      },
+      {
+        title: 'Productos',
+        root: true,
+        name: "productos",
+        bullet: 'dot',
+        icon: 'flaticon2-user-outline-symbol',
+        svg: './assets/media/svg/icons/Devices/TV2.svg',
+        page: '/productos',
+        submenu: [
+          {
+            title: 'Crear Producto',
+            page: '/productos/registrar-producto'
+          },
+          {
+            title: 'Listar Productos',
+            page: '/productos/lista-de-todos-los-productos'
+          },
         ]
       },
     ]
