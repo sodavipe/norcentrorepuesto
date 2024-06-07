@@ -66,6 +66,7 @@ export class EditNewProductComponent implements OnInit {
       this.categories = this.product_selected.category._id;
       this.price_soles = this.product_selected.price_soles;
       this.price_usd = this.product_selected.price_usd;
+      this.stock = this.product_selected.stock
       this.imagen_previsualizacion = this.product_selected.imagen;
       this.resumen = this.product_selected.resumen;
       this.description = this.product_selected.description;
@@ -133,6 +134,7 @@ export class EditNewProductComponent implements OnInit {
     formData.append("resumen",this.resumen);
     formData.append("type_inventario",this.type_inventario);
     formData.append("tags",JSON.stringify(this.tags));
+    formData.append("stock",this.stock);
     if(this.imagen_file){
       formData.append("imagen",this.imagen_file);
     }
@@ -168,10 +170,17 @@ export class EditNewProductComponent implements OnInit {
     }
     this._serviceProduct.createVariedad(data).subscribe((resp:any)=>{
       console.log(resp);
-      this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA VARIEDAD SE REGISTRÓ CORRECTAMENTE'`});
-
       this.valor_multiple = null;
       this.stock_multiple = null;
+      let index = this.variedades.findIndex(item => item._id == resp.variedad._id);
+      if(index != -1){
+        this.variedades[index] = resp.variedad;
+        this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA VARIEDAD SE EDITÓ CORRECTAMENTE'`});
+      }else{
+        this.variedades.unshift(resp.variedad)
+        this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA VARIEDAD SE REGISTRÓ CORRECTAMENTE'`});
+
+      }
     })
   }
 
@@ -183,7 +192,7 @@ export class EditNewProductComponent implements OnInit {
       let index = this.variedades.findIndex(item => item._id == variedadE._id);
       if(index != -1){
         this.variedades[index] = variedadE;
-        
+        this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA VARIEDAD SE EDITÓ CORRECTAMENTE'`});
       }
     })  
   }
@@ -195,7 +204,7 @@ export class EditNewProductComponent implements OnInit {
       let index = this.variedades.findIndex(item => item._id == variedad._id);
       if(index != -1){
         this.variedades.splice(index,1);
-        
+        this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA VARIEDAD SE ELIMINÓ CORRECTAMENTE'`})
       }
     })
   }

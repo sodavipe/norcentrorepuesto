@@ -28,7 +28,9 @@ export default {
         try {
             let data = req.body
 
-            let variedad = await models.Variedad.findByIdAndUpdate({_id:data._id},data);
+            await models.Variedad.findByIdAndUpdate({_id:data._id},data);
+            
+            let variedad = await models.Variedad.findById({_id: data._id});
 
             res.status(200).json({
                 variedad:variedad

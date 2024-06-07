@@ -24,7 +24,7 @@ router.get("/show/:id",productController.show);
 
 router.post("/register-variedad",[auth.verifyAdmin,path],VariedadController.register);
 router.put("/update-variedad",[auth.verifyAdmin,path],VariedadController.update);
-router.delete("/delete-variedad/:is",[auth.verifyAdmin,path],VariedadController.delete);
+router.delete("/delete-variedad/:id",[auth.verifyAdmin,path],VariedadController.delete);
 
 
 export default router;
