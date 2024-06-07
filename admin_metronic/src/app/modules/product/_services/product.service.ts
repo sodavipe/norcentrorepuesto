@@ -56,12 +56,43 @@ export class ProductService {
       finalize(()=> this.isLoadingSubject.next(false))
     );
   }
-  deleteProducts(category_id){
+  deleteProducts(product_id){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'token': this.authservice.token});
-    let URL = URL_SERVICIOS + "/products/delete?_id="+category_id;
+    let URL = URL_SERVICIOS + "/products/delete?_id="+product_id;
     return this.http.delete(URL,{headers:headers}).pipe(
       finalize(()=> this.isLoadingSubject.next(false))
     );
   }
+
+  //Variedad
+
+    createVariedad(data){
+      this.isLoadingSubject.next(true);
+      let headers = new HttpHeaders({'token': this.authservice.token});
+      let URL = URL_SERVICIOS + "/products/register-variedad";
+      return this.http.post(URL,data,{headers:headers}).pipe(
+        finalize(()=> this.isLoadingSubject.next(false))
+      );
+    }
+    updateVariedad(data){
+      this.isLoadingSubject.next(true);
+      let headers = new HttpHeaders({'token': this.authservice.token});
+      let URL = URL_SERVICIOS + "/products/update-variedad";
+      return this.http.put(URL,data,{headers:headers}).pipe(
+        finalize(()=> this.isLoadingSubject.next(false))
+      );
+    }
+    deleteVariedad(variedad_id){
+      this.isLoadingSubject.next(true);
+      let headers = new HttpHeaders({'token': this.authservice.token});
+      let URL = URL_SERVICIOS + "/products/delete-variedad/"+variedad_id;
+      return this.http.delete(URL,{headers:headers}).pipe(
+        finalize(()=> this.isLoadingSubject.next(false))
+      );
+    }
+
+  
+
+
 }

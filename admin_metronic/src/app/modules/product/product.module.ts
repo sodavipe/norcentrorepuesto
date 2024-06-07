@@ -13,11 +13,13 @@ import { NgbModule, NgbModalModule, NgbDatepickerModule } from '@ng-bootstrap/ng
 import { InlineSVGModule } from 'ng-inline-svg';
 import { CRUDTableModule } from 'src/app/_metronic/shared/crud-table';
 import { UsersRoutingModule } from '../users/users-routing.module';
-import {EditorModule} from '@tinymce/tinymce-angular'
+import {EditorModule} from '@tinymce/tinymce-angular';
+import { EditNewVariedadComponent } from './variedades/edit-new-variedad/edit-new-variedad.component';
+import { DeleteNewVariedadComponent } from './variedades/delete-new-variedad/delete-new-variedad.component'
 
 
 @NgModule({
-  declarations: [ProductComponent, AddNewProductComponent, EditNewProductComponent, DeleteNewProductComponent, ListProductsComponent],
+  declarations: [ProductComponent, AddNewProductComponent, EditNewProductComponent, DeleteNewProductComponent, ListProductsComponent, EditNewVariedadComponent, DeleteNewVariedadComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,

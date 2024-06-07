@@ -3,6 +3,7 @@ import productController from '../controllers/ProductController'
 import auth from '../middleware/auth';
 
 import multiparty from 'connect-multiparty'
+import VariedadController from '../controllers/VariedadController';
 var path = multiparty({uploadDir: './uploads/product'})
 const router = routerx();
 
@@ -20,5 +21,10 @@ router.delete("/delete",auth.verifyAdmin,productController.remove);
 router.get("/uploads/product/:img",productController.obtener_imagen);
 
 router.get("/show/:id",productController.show);
+
+router.post("/register-variedad",[auth.verifyAdmin,path],VariedadController.register);
+router.put("/update-variedad",[auth.verifyAdmin,path],VariedadController.update);
+router.delete("/delete-variedad/:is",[auth.verifyAdmin,path],VariedadController.delete);
+
 
 export default router;

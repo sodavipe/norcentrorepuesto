@@ -1,7 +1,7 @@
 import mongoose,{Schema} from "mongoose";
 
 const VariedadSchema = new Schema({
-    producto:{type:Schema.ObjectId,ref:'product',required:true},
+    product:{type:Schema.ObjectId,ref:'product',required:true},
     valor:{type:String, required:true},
     stock:{type:Number,required:true},
 },{
