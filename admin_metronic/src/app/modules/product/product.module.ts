@@ -15,11 +15,12 @@ import { CRUDTableModule } from 'src/app/_metronic/shared/crud-table';
 import { UsersRoutingModule } from '../users/users-routing.module';
 import {EditorModule} from '@tinymce/tinymce-angular';
 import { EditNewVariedadComponent } from './variedades/edit-new-variedad/edit-new-variedad.component';
-import { DeleteNewVariedadComponent } from './variedades/delete-new-variedad/delete-new-variedad.component'
+import { DeleteNewVariedadComponent } from './variedades/delete-new-variedad/delete-new-variedad.component';
+import { DeleteGaleriaImagenComponent } from './delete-galeria-imagen/delete-galeria-imagen.component'
 
 
 @NgModule({
-  declarations: [ProductComponent, AddNewProductComponent, EditNewProductComponent, DeleteNewProductComponent, ListProductsComponent, EditNewVariedadComponent, DeleteNewVariedadComponent],
+  declarations: [ProductComponent, AddNewProductComponent, EditNewProductComponent, DeleteNewProductComponent, ListProductsComponent, EditNewVariedadComponent, DeleteNewVariedadComponent, DeleteGaleriaImagenComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,

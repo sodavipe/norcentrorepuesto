@@ -7,6 +7,7 @@ import { NoticyAlertComponent } from 'src/app/componets/notifications/noticy-ale
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditNewVariedadComponent } from '../variedades/edit-new-variedad/edit-new-variedad.component';
 import { DeleteNewVariedadComponent } from '../variedades/delete-new-variedad/delete-new-variedad.component';
+import { DeleteGaleriaImagenComponent } from '../delete-galeria-imagen/delete-galeria-imagen.component';
 
 @Component({
   selector: 'app-edit-new-product',
@@ -39,6 +40,9 @@ export class EditNewProductComponent implements OnInit {
   valor_multiple:any = "";
   variedades:any =[];
 
+  imagen_previz_galeria:any = null;
+  imagen_file_galeria:any = null;
+  galerias:any = [];
   constructor(
     public _serviceProduct:ProductService,
     public router:Router,
@@ -73,7 +77,7 @@ export class EditNewProductComponent implements OnInit {
       this.tags = this.product_selected.tags;
       this.variedades = this.product_selected.variedades;
       this.type_inventario = this.product_selected.type_inventario;
-      
+      this.galerias = this.product_selected.galerias;
     })
 
     this._serviceCategory.allCategories().subscribe((resp:any)=>{
@@ -101,6 +105,19 @@ export class EditNewProductComponent implements OnInit {
     let reader = new FileReader();
     reader.readAsDataURL(this.imagen_file);
     reader.onloadend = () => this.imagen_previsualizacion = reader.result;
+    this.loadServices();
+  }
+  processFileGaleria($event){
+    console.log($event.target)
+    if($event.target.files[0].type.indexOf("image") < 0){
+      this.imagen_previz_galeria = null;
+      this.toaster.open(NoticyAlertComponent,{text:`danger- 'Upps! Necesita ingresar un archivo de tipo imagen.'`});
+      return;
+    }
+    this.imagen_file_galeria = $event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(this.imagen_file_galeria);
+    reader.onloadend = () => this.imagen_previz_galeria = reader.result;
     this.loadServices();
   }
   addTag(){
@@ -205,6 +222,34 @@ export class EditNewProductComponent implements OnInit {
       if(index != -1){
         this.variedades.splice(index,1);
         this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA VARIEDAD SE ELIMINÓ CORRECTAMENTE'`})
+      }
+    })
+  }
+  storeImagen(){
+    if(!this.imagen_file_galeria){
+      this.toaster.open(NoticyAlertComponent,{text:`danger- 'NECESITAS SELECCIONAR UNA IMAGEN'`})
+      return;
+    }
+    let formData = new FormData();
+    formData.append("_id",this.product_id);
+    formData.append("imagen",this.imagen_file_galeria);
+    formData.append("__id",new Date().getTime().toString());
+    this._serviceProduct.createGaleria(formData).subscribe((resp:any)=>{
+      console.log(resp);
+      this.imagen_file_galeria = null;
+      this.imagen_previz_galeria = null;
+      this.galerias.unshift(resp.imagen);
+    })
+  }
+  removeImagen(imagen){
+    const modalRef = this.ModalService.open(DeleteGaleriaImagenComponent,{centered:true, size: 'sm'});
+    modalRef.componentInstance.imagen = imagen;
+    modalRef.componentInstance.product_id = this.product_id;
+    modalRef.componentInstance.imagenD.subscribe((resp:any)=>{
+      let index = this.galerias.findIndex(item => item._id == imagen._id);
+      if(index != -1){
+        this.galerias.splice(index,1);
+        this.toaster.open(NoticyAlertComponent,{text:`primary- 'LA IMAGEN SE ELIMINÓ CORRECTAMENTE'`})
       }
     })
   }

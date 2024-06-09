@@ -72,13 +72,19 @@ export default {
     },
     list:async(req,res)=>{
         try {
-            var search = req.query.search;
-            var category = req.query.category;
+            var filter = [];
+            if(req.query.search){
+                filter.push(
+                    {"title":new RegExp(req.query.search, "i")},
+                );
+            }if(req.query.category){
+                filter.push(
+                    {"category":req.query.category},
+                );
+            }
+
             let products = await models.Product.find({
-                $or:[
-                    {"title":new RegExp(search, "i")},
-                    {"category":category}
-                ],
+                $and:filter,
             }).populate('category')
 
             products = products.map(product =>{
@@ -96,7 +102,7 @@ export default {
     },
     remove:async(req,res)=>{
         try {
-            let _id = req.params._id;
+            let _id = req.query._id;
             await models.Product.findByIdAndDelete({_id: _id});
 
             res.status(200).json({
@@ -164,8 +170,7 @@ export default {
                     res.status(200).json({
                         message: "LA IMAGEN SE SUBIÓ PERFECTAMENTE",
                         imagen:{
-                            imagen: imagen_name,
-                            imagen_path: 'http://localhost:3000' + '/uploads/product/' + imagen_name,
+                            imagen: 'http://localhost:3000' + '/api/products/uploads/product/' + imagen_name,
                             _id: req.body.__id,
                         }
                     })

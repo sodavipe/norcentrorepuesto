@@ -5,14 +5,15 @@ import { NoticyAlertComponent } from 'src/app/componets/notifications/noticy-ale
 import { ProductService } from '../_services/product.service';
 
 @Component({
-  selector: 'app-delete-new-product',
-  templateUrl: './delete-new-product.component.html',
-  styleUrls: ['./delete-new-product.component.scss']
+  selector: 'app-delete-galeria-imagen',
+  templateUrl: './delete-galeria-imagen.component.html',
+  styleUrls: ['./delete-galeria-imagen.component.scss']
 })
-export class DeleteNewProductComponent implements OnInit {
+export class DeleteGaleriaImagenComponent implements OnInit {
 
-  @Input() product:any;
-  @Output() ProductD:EventEmitter<any> = new EventEmitter();
+  @Input() imagen:any;
+  @Input() product_id:any;
+  @Output() imagenD:EventEmitter<any> = new EventEmitter();
   
   constructor(
     public modal: NgbActiveModal,
@@ -25,9 +26,13 @@ export class DeleteNewProductComponent implements OnInit {
   }
 
   delete(){
-    this.productService.deleteProducts(this.product._id).subscribe((resp:any)=>{
+    let data = {
+      _id: this.product_id,
+      __id:this.imagen._id,
+    }
+    this.productService.deleteGaleria(data).subscribe((resp:any)=>{
       console.log(resp);
-      this.ProductD.emit("");
+      this.imagenD.emit("");
       this.modal.close();
       return;
     }, (error)=>{
@@ -36,4 +41,5 @@ export class DeleteNewProductComponent implements OnInit {
       }
     })
   }
+
 }

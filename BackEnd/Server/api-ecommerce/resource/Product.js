@@ -16,6 +16,10 @@ export default{
             type_inventario:product.type_inventario,
             state: product.state,
             variedades:variedades,
+            galerias:product.galerias.map((galeria)=>{
+                galeria.imagen = 'http://localhost:3000' + '/api/products/uploads/product/' + galeria.imagen;//*
+                return galeria;
+            }),
         }
     }
 }
