@@ -1,5 +1,5 @@
 import routerx from 'express-promise-router'
-import sliderController from '../controllers/SliderController'
+import SliderController from '../controllers/SliderController';
 import auth from '../middleware/auth';
 
 import multiparty from 'connect-multiparty'
@@ -8,11 +8,11 @@ const router = routerx();
 
 // http://localhost:3000/api/user/ + CRUDS
 
-router.post("/register",[auth.verifyAdmin,path],sliderController.register);
-router.put("/update",[auth.verifyAdmin,path],sliderController.update);
-router.get("/list",auth.verifyAdmin,sliderController.list);
-router.delete("/delete",auth.verifyAdmin,sliderController.remove);
+router.post("/register",[auth.verifyAdmin,path],SliderController.register);
+router.put("/update",[auth.verifyAdmin,path],SliderController.update);
+router.get("/list",auth.verifyAdmin,SliderController.list);
+router.delete("/delete",auth.verifyAdmin,SliderController.remove);
 
-router.get("/uploads/slider/:img",sliderController.obtener_imagen);
+router.get("/uploads/slider/:img",SliderController.obtener_imagen);
 
 export default router;
