@@ -62,7 +62,7 @@ export default{
             })
 
             res.status(200).json({
-                Sliders: Sliders
+                sliders: Sliders
             });
         } catch (error) {
             res.status(500).send({

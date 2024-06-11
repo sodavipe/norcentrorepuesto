@@ -61,5 +61,20 @@ export const AsideMenuAdminGeneral = {
           },
         ]
       },
+      {
+        title: 'Sliders',
+        root: true,
+        name: "sliders",
+        bullet: 'dot',
+        icon: 'flaticon2-user-outline-symbol',
+        svg: './assets/media/svg/icons/Design/Image.svg',
+        page: '/sliders',
+        submenu: [
+          {
+            title: 'Lista de Sliders',
+            page: '/sliders/lista-sliders'
+          }
+        ]
+      },
     ]
 }
