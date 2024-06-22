@@ -29,6 +29,7 @@ export class EditNewProductComponent implements OnInit {
   imagen_previsualizacion:any = null;
   resumen:any = null;
   description:any = null;
+  state:any =1;
   //
   tag:any = null;
   tags:any = [];
@@ -57,6 +58,7 @@ export class EditNewProductComponent implements OnInit {
     this.activeRouter.params.subscribe((resp:any)=>{
       console.log(resp);
       this.product_id = resp.id;
+
     });
     
     
@@ -77,6 +79,7 @@ export class EditNewProductComponent implements OnInit {
       this.tags = this.product_selected.tags;
       this.variedades = this.product_selected.variedades;
       this.type_inventario = this.product_selected.type_inventario;
+      this.state = this.product_selected.state;
       this.galerias = this.product_selected.galerias;
     })
 
@@ -149,6 +152,7 @@ export class EditNewProductComponent implements OnInit {
     formData.append("price_usd",this.price_usd);
     formData.append("description",this.description);
     formData.append("resumen",this.resumen);
+    formData.append("state",this.state);
     formData.append("type_inventario",this.type_inventario);
     formData.append("tags",JSON.stringify(this.tags));
     formData.append("stock",this.stock);

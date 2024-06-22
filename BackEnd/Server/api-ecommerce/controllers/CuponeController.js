@@ -16,7 +16,7 @@ export default {
             let cupone = await models.Cupone.create(data);
 
             res.status(200).json({
-                message:403,
+                message:200,
                 message_text: "EL CUPÓN SE HA REGISTRADO CORRECTAMENTE"
             })
         } catch (error) {
@@ -86,6 +86,22 @@ export default {
             res.status(200).json({
                 message:200,
                 cupones: cupones,
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN PROBLEMA"
+            });
+            console.log(error);
+        }
+    },
+    config: async(req,res) => {
+        try {
+            let Products = await models.Product.find({state:2});
+            let Categories = await models.Category.find({state:1});
+            res.status(200).json({
+                message:200,
+                products: Products,
+                categories: Categories,
             })
         } catch (error) {
             res.status(500).send({

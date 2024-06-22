@@ -6,7 +6,7 @@ const ProductSchema = new Schema({
     sku:{type:String,required:true},
     category:{type:Schema.ObjectId,ref:'category',required:true},
     price_soles:{type:Number,required:true},
-    price_usd:{type:String,required:true},
+    price_usd:{type:Number,required:true},
     portada:{type:String,required:true},
     galerias:[{type:Object,required:false}],
     state:{type:Number,default:1},//1 es en prueba o desarrollo y 2 es que es público y 3 es que está anulado (cuando no está en stock)
