@@ -7,6 +7,7 @@ const CuponeSchema = new Schema({
     type_count:{type:Number, required:true,default:1}, // ilimitado va a ser 1 o limitado va a ser 2
     num_use:{type:Number, required:false},
     type_segment:{type:Number, required:false, default:1}, // cupon por producto va a ser 1 y cupón por categoria va a ser 2
+    state:{type:Number, required:false,default:1}, // 1 es activo, 0 es desactivado
     products:[{type:Object}],
     categories:[{type:Object}],
 },{

@@ -48,7 +48,6 @@ export class AddNewCuponeComponent implements OnInit {
   }
   checkedTypeCount(value){
     this.type_count = value;
-    this.discount = 0;
   }
   checkedTypeSegment(value){
     this.type_segment = value;

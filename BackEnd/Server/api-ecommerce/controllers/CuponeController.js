@@ -94,6 +94,23 @@ export default {
             console.log(error);
         }
     },
+    show: async(req,res) => {
+        try {
+            let cupon_id = req.query.cupon_id;
+
+            let cupon = await models.Cupone.findOne({_id: cupon_id});
+
+            res.status(200).json({
+                message:200,
+                cupon: cupon,
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN PROBLEMA"
+            });
+            console.log(error);
+        }
+    },
     config: async(req,res) => {
         try {
             let Products = await models.Product.find({state:2});

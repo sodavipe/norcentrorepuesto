@@ -30,6 +30,15 @@ export class CuponeService {
     );
   }
 
+  showCupon(cupon_id=''){
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'token': this.authservice.token});
+    let URL = URL_SERVICIOS + "/cupones/show?cupon_id="+cupon_id;
+    return this.http.get(URL,{headers:headers}).pipe(
+      finalize(()=> this.isLoadingSubject.next(false))
+    );
+  }
+
   CuponsConfig(){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'token': this.authservice.token});
@@ -55,10 +64,10 @@ export class CuponeService {
       finalize(()=> this.isLoadingSubject.next(false))
     );
   }
-  deleteCupone(category_id){
+  deleteCupone(cupon_id){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'token': this.authservice.token});
-    let URL = URL_SERVICIOS + "/cupones/delete?_id="+category_id;
+    let URL = URL_SERVICIOS + "/cupones/delete?_id="+cupon_id;
     return this.http.delete(URL,{headers:headers}).pipe(
       finalize(()=> this.isLoadingSubject.next(false))
     );
