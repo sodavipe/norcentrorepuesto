@@ -43,6 +43,7 @@
                     <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_1">
                         <thead>
                             <tr class="text-left">
+                                <th >TIPO DE CAMPAÑA</th>
                                 <th >TIPO</th>
                                 <th >DESCUENTO</th>
                                 <th >FECHAS</th>
@@ -52,6 +53,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let discount of discounts">
+                              <td>{{discount.type_campaign == 1 ? "CAMPAÑA NORMAL" : "VENTA FLASH"}}</td>
                               <td>{{discount.type_segment == 1 ? "PRODUCTO" : "CATEGORÍA"}}</td>
                               <td>{{(discount.type_discount == 2 ? "S/. " : "") + discount.discount + (discount.type_discount == 1 ? "%" : "")}}</td>
                               <td>{{getParseDate(discount.start_date) + ' / ' + getParseDate(discount.end_date)}}</td>

@@ -26,6 +26,10 @@ export class AddNewProductComponent implements OnInit {
   tags:any = [];
 
   isLoading$:any;
+
+  //
+
+  skus:any = [];
   constructor(
     public _productService:ProductService,
     public _CategoryService:CategoriesService,
@@ -39,6 +43,17 @@ export class AddNewProductComponent implements OnInit {
       this.category = resp.category;
       this.loadServices();
     })
+    // Genera el SKU al iniciar el componente
+    this.generateSKU();
+  }
+  generateSKU() {
+    let sku;
+    do {
+      const now = new Date();
+      sku = `SKU-${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    } while (this.skus.includes(sku));
+    this.skus.push(sku);
+    this.sku = sku;
   }
 
   loadServices(){
@@ -109,6 +124,9 @@ export class AddNewProductComponent implements OnInit {
         this.tags = [];
         this.imagen_file = null;
         this.imagen_previsualizacion = null;
+
+
+        this.generateSKU();
         return;
       }
     })

@@ -33,6 +33,10 @@ export class EditNewDiscountComponent implements OnInit {
   end_date:any = null;
   discount_id:any= null;
   discount_selected:any = null;
+
+  //
+
+  type_campaign:any = 1;
   constructor(
     public _discountService:DiscountService,
     public toaster:Toaster,
@@ -66,6 +70,7 @@ export class EditNewDiscountComponent implements OnInit {
       this.end_date = this.formatDate(this.discount_selected.end_date) ;
 
       this.type_segment = this.discount_selected.type_segment;
+      this.type_campaign = this.discount_selected.type_campaign ? this.discount_selected.type_campaign : 1;
       if(this.type_segment == 1){
         this.discount_selected.products.forEach(products_selected => {
           this.products.forEach(product => {
@@ -87,6 +92,10 @@ export class EditNewDiscountComponent implements OnInit {
   }
   formatDate(date){
     return this.datePipe.transform(date,"yyyy-MM-dd","UTC");
+  }
+  checkedTypeCampaign(value){
+    this.type_campaign = value;
+    this.checkedTypeSegment(1);
   }
   checkedTypeDiscount(value){
     this.type_discount = value;
@@ -187,6 +196,7 @@ export class EditNewDiscountComponent implements OnInit {
 
     let data ={
       _id: this.discount_id,
+      type_campaign: this.type_campaign,
       type_discount : this.type_discount,
       discount : this.discount,
       type_segment : this.type_segment,

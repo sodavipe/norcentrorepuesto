@@ -43,7 +43,9 @@
                     <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_1">
                         <thead>
                             <tr class="text-left">
+
                                 <th >CÓDIGO</th>
+                                <th >TIPO</th>
                                 <th >DESCUENTO</th>
                                 <th >STATUS</th>
                                 <th >ACCIÓN</th>
@@ -52,6 +54,7 @@
                         <tbody>
                             <tr *ngFor="let cupon of cupones">
                               <td>{{cupon.code}}</td>
+                              <td>{{cupon.type_segment == 1 ? "PRODUCTO" : "CATEGORÍA"}}</td>
                               <td>{{(cupon.type_discount == 2 ? "S/. " : "") + cupon.discount + (cupon.type_discount == 1 ? "%" : "")}}</td>
                               <td>
                                 <span class="label label-success label-pill label-inline mr-2" *ngIf="cupon.state == 1">Activo</span>
