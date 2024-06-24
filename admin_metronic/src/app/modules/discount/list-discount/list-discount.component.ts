@@ -44,9 +44,9 @@ export class ListDiscountComponent implements OnInit {
   }
   delete(discount){
     const modalRef = this.ModalService.open(DeleteNewDiscountComponent,{centered:true, size: 'md'});
-    modalRef.componentInstance.cupon_selected = discount;
+    modalRef.componentInstance.discount_selected = discount;
 
-    modalRef.componentInstance.CuponD.subscribe((resp:any)=>{
+    modalRef.componentInstance.DiscountD.subscribe((resp:any)=>{
       let index = this.discounts.findIndex(item => item._id == discount._id);
       if(index != -1){
         this.discounts.splice(index,1);
