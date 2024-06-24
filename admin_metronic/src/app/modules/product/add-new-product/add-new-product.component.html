@@ -46,14 +46,14 @@
             <div class="col-3">
                 <div class="form-group">
                     <label>PRECIO PEN <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="" [(ngModel)]="price_soles" name="price_soles">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="price_soles" name="price_soles" (input)="onPriceSolesChange()">
                     <span class="form-text text-muted">Ingresa el nombre del producto.</span>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-group">
                     <label>PRECIO USD <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="" [(ngModel)]="price_usd" name="price_usd">
+                    <input type="text" class="form-control" placeholder="" [(ngModel)]="price_usd" name="price_usd" readonly>
                     <span class="form-text text-muted">Ingresa el nombre del producto.</span>
                 </div>
             </div>

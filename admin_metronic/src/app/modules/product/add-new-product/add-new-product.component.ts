@@ -3,6 +3,7 @@ import { Toaster } from 'ngx-toast-notifications';
 import { NoticyAlertComponent } from 'src/app/componets/notifications/noticy-alert/noticy-alert.component';
 import { ProductService } from '../_services/product.service';
 import { CategoriesService } from '../../categories/_services/categories.service';
+import { ExchangeRateServiceService } from '../_services/exchange-rate-service.service';
 
 @Component({
   selector: 'app-add-new-product',
@@ -30,10 +31,13 @@ export class AddNewProductComponent implements OnInit {
   //
 
   skus:any = [];
+  exchangeRate: number = 0;
+
   constructor(
     public _productService:ProductService,
     public _CategoryService:CategoriesService,
     public toaster:Toaster,
+    public exchangeRateService:ExchangeRateServiceService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +49,12 @@ export class AddNewProductComponent implements OnInit {
     })
     // Genera el SKU al iniciar el componente
     this.generateSKU();
+    this.loadExchangeRate();
+  }
+  loadExchangeRate(){
+    this.exchangeRateService.getExchangeRate().subscribe((data: any) => {
+      this.exchangeRate = data.rates.USD; // Asegúrate de que esta es la forma correcta de acceder a la tasa de cambio USD
+    });
   }
   generateSKU() {
     let sku;
@@ -85,6 +95,11 @@ export class AddNewProductComponent implements OnInit {
   } else {
     this.toaster.open(NoticyAlertComponent, { text: `danger- 'La etiqueta no puede estar vacía.'` });
   }
+  }
+  onPriceSolesChange() {
+    if (this.exchangeRate > 0) {
+      this.price_usd = (this.price_soles / this.exchangeRate).toFixed(2);
+    }
   }
   removeTag(i){
     this.tags.splice(i,1);
