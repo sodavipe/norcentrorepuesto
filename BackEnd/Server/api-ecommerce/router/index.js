@@ -4,6 +4,7 @@ import Category from './Category'
 import Products from './Product'
 import Slider from './Slider';
 import Cupone from './Cupone';
+import Discount from './Discount'
 
 const router = routerx();
 router.use('/user',User);
@@ -11,5 +12,6 @@ router.use('/categories',Category);
 router.use('/products',Products);
 router.use('/sliders',Slider);
 router.use('/cupones',Cupone);
+router.use('/discount',Discount);
 
 export default router;

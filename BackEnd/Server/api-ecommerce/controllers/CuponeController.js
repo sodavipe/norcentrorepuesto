@@ -17,7 +17,8 @@ export default {
 
             res.status(200).json({
                 message:200,
-                message_text: "EL CUPÓN SE HA REGISTRADO CORRECTAMENTE"
+                message_text: "EL CUPÓN SE HA REGISTRADO CORRECTAMENTE",
+                cupone:cupone
             })
         } catch (error) {
             res.status(500).send({
