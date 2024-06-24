@@ -97,7 +97,7 @@ export default {
 
             res.status(200).json({
                 message:200,
-                message_text: "EL DESCUENTO SE HA REGISTRADO CORRECTAMENTE",
+                message_text: "EL DESCUENTO SE HA ACTUALIZADO CORRECTAMENTE",
                 discount:discount,
             })
         } catch (error) {

@@ -40,7 +40,7 @@ export class ListDiscountComponent implements OnInit {
     this.router.navigateByUrl("/descuento/editar-descuento/"+discount._id);
   }
   getParseDate(date){
-    return this.datePipe.transform(date,"yyyy-MM-dd","UTC");
+    return this.datePipe.transform(date,"dd-MM-yyyy","UTC");
   }
   delete(discount){
     const modalRef = this.ModalService.open(DeleteNewDiscountComponent,{centered:true, size: 'md'});
