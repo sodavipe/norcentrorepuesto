@@ -104,6 +104,27 @@ export class AddNewProductComponent implements OnInit {
   removeTag(i){
     this.tags.splice(i,1);
   }
+  validateNumberInput(event: KeyboardEvent) {
+    const pattern = /[0-9\.]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // Si el carácter no es un número o un punto, evita que se introduzca
+      event.preventDefault();
+    }
+
+    if (inputChar === '.' && (this.price_soles || '').toString().includes('.')) {
+      // Si ya hay un punto en el valor, evita que se introduzca otro
+      event.preventDefault();
+    }
+  }
+  validateInput(event: any) {
+    const pattern = /^[0-9]*\.?[0-9]*$/;
+    if (!pattern.test(event.target.value)) {
+      event.target.value = event.target.value.replace(/[^0-9\.]/g, '');
+      this.price_soles = event.target.value; // Asegúrate de que el modelo se actualice
+    }
+  }
   save(){
     if(!this.title || !this.categories || !this.price_soles || !this.price_usd ||
       !this.resumen || !this.description || !this.sku ||  this.tags.length == 0 || !this.imagen_file){
