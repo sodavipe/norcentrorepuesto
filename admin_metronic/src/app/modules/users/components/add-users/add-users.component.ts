@@ -26,11 +26,19 @@ export class AddUsersComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  validateEmail(email: string): boolean {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(email);
+  }
   save(){
     if(!this.name || !this.surname || !this.email || !this.password || !this.repeat_password){
       // TODOS LOS CAMPOS SON OBLIGATORIOS
       this.toaster.open(NoticyAlertComponent,{text:`danger- 'Upps! Necesita ingresar todos los campos.'`});
+      return;
+    }
+    if (!this.validateEmail(this.email)) {
+      // FORMATO DE CORREO ELECTRÓNICO NO VÁLIDO
+      this.toaster.open(NoticyAlertComponent,{text:`danger- 'Upps! Necesita ingresar un correo electrónico válido.'`});
       return;
     }
     if(this.password != this.repeat_password){
