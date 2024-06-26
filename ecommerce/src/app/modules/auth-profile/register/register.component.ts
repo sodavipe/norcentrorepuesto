@@ -24,6 +24,10 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(["/"]);
     }
   }
+  validateEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailPattern.test(email);
+  }
 
   registro(){
 
@@ -34,6 +38,10 @@ export class RegisterComponent implements OnInit {
       !this.password ||
       !this.repeat_password
     ){ alert("TODOS LOS CAMPOS SON REQUERIDOS!");
+      return;
+    }
+    if (!this.validateEmail(this.email)) {
+      alert("EMAIL NO VÁLIDO! Por favor, ingrese un correo electrónico correcto.");
       return;
     }
     if(this.password != this.repeat_password){
