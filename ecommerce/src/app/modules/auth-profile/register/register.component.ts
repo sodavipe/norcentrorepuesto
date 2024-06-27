@@ -29,39 +29,40 @@ export class RegisterComponent implements OnInit {
     return emailPattern.test(email);
   }
 
-  registro(){
-
-    if(
-      !this.email ||
-      !this.name ||
-      !this.surname ||
-      !this.password ||
-      !this.repeat_password
-    ){ alert("TODOS LOS CAMPOS SON REQUERIDOS!");
+  registro() {
+    if (!this.email || !this.name || !this.surname || !this.password || !this.repeat_password) {
+      alert("TODOS LOS CAMPOS SON REQUERIDOS!");
       return;
     }
+
     if (!this.validateEmail(this.email)) {
       alert("EMAIL NO VÁLIDO! Por favor, ingrese un correo electrónico correcto.");
       return;
     }
-    if(this.password != this.repeat_password){
+
+    if (this.password !== this.repeat_password) {
       alert("LAS CONTRASEÑAS DEBEN SER IGUALES!");
       return;
     }
-    let data ={
-      email:this.email,
-      name:this.name,
-      surname:this.surname,
-      password:this.password,
-      rol: 'Cliente',
-    }
-    this.authServices.registro(data).subscribe((resp:any)=>{
-      console.log(resp);
-    }
-    , (error: any) => {
-      console.error('Error during registration:', error);
-      alert('Ha ocurrido un error durante el registro. Por favor, inténtelo de nuevo.');}
-  );
-  }
 
+    const data = {
+      email: this.email,
+      name: this.name,
+      surname: this.surname,
+      password: this.password,
+      rol: 'Cliente',
+    };
+
+    this.authServices.registro(data).subscribe(
+      (resp: any) => {
+        console.log(resp);
+        alert('Registro exitoso. Por favor, revisa tu correo electrónico para confirmar tu cuenta.');
+        this.router.navigate(['/']);
+      },
+      (error: any) => {
+        console.error('Error during registration:', error);
+        alert('Ha ocurrido un error durante el registro. Por favor, inténtelo de nuevo.');
+      }
+    );
+  }
 }

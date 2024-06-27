@@ -6,11 +6,12 @@ const router = routerx();
 
 // http://localhost:3000/api/user/ + CRUDS
 
-router.post("/register",userController.register);
+router.post('/register', userController.register);
+router.get('/confirm/:token', userController.confirmEmail); // Nueva ruta para confirmar email
+router.post('/login', userController.login);
 router.put("/update",userController.update);
 router.get("/list",auth.verifyAdmin,userController.list);
 router.post("/register_admin",userController.register_admin);
-router.post("/login",userController.login);
 router.post("/login_admin",userController.login_admin);
 router.delete("/delete",userController.remove);
 
