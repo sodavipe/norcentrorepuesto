@@ -98,7 +98,7 @@ export class AddNewProductComponent implements OnInit {
   }
   onPriceSolesChange() {
     if (this.exchangeRate > 0) {
-      this.price_usd = (this.price_soles / this.exchangeRate).toFixed(2);
+      this.price_usd = (this.price_soles * this.exchangeRate).toFixed(2);
     }
   }
   removeTag(i){
