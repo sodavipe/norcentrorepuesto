@@ -29,6 +29,8 @@ export class AddNewDiscountComponent implements OnInit {
   start_date:any = null;
   end_date:any = null;
 
+
+  today: string = null;
   //
 
   type_campaign:any = 1;
@@ -46,6 +48,12 @@ export class AddNewDiscountComponent implements OnInit {
     })
     this.product = "";
     this.category = "";
+
+    const currentDate = new Date();
+    const day = ('0' + currentDate.getDate()).slice(-2);
+    const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    const year = currentDate.getFullYear();
+    this.today = `${year}-${month}-${day}`;
   }
   checkedTypeCampaign(value){
     this.type_campaign = value;
@@ -116,9 +124,25 @@ export class AddNewDiscountComponent implements OnInit {
   }
 
   save(){
+    const currentDate = new Date();
+    const day = ('0' + currentDate.getDate()).slice(-2);
+    const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    const year = currentDate.getFullYear();
+    const today = `${year}-${month}-${day}`;
 
     if (!this.discount || !this.start_date || !this.end_date){
       this.toaster.open(NoticyAlertComponent, { text: `danger- 'Upps! ALGUNOS CAMPOS ESTÁN VACIOS'` });
+      return;
+    }
+        // Verifica que las fechas no sean anteriores a hoy
+    if (this.start_date < today || this.end_date < today) {
+      this.toaster.open(NoticyAlertComponent, { text: `danger- 'Upps! LAS FECHAS NO PUEDEN SER ANTERIORES A HOY'` });
+      return;
+    }
+
+    // Verifica que la fecha de inicio no sea posterior a la fecha de fin
+    if (this.start_date > this.end_date) {
+      this.toaster.open(NoticyAlertComponent, { text: `danger- 'Upps! LA FECHA DE INICIO NO PUEDE SER POSTERIOR A LA FECHA DE FIN'` });
       return;
     }
     if(this.type_segment == 1){

@@ -67,6 +67,7 @@
                   <input type="date"
                   class="form-control form-control-lg form-control-solid"
                   [(ngModel)]="start_date"
+                  [attr.min]="today"
                   />
                 </div>
                 
@@ -78,6 +79,7 @@
                   <input type="date"
                   class="form-control form-control-lg form-control-solid"
                   [(ngModel)]="end_date"
+                  [attr.min]="today"
                   />
                 </div>
             </div>
