@@ -30,16 +30,8 @@ export class HomeComponent implements OnInit {
       this.bestProducts = resp.best_products;
       this.our_products = resp.our_products
       setTimeout(()=>{
-        console.log("2");
         HOMEINITTEMPLATE($);
       },50)
     });
   }
-
-  showImagen(our_product:any){
-    let IMAGEN = "";
-    IMAGEN = our_product.galerias[2].imagen;
-    return IMAGEN
-  }
-
 }

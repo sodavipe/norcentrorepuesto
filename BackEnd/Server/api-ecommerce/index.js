@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 import router from './router';
 
 //Conexión a la BASE DE DATOS
-
+require('dotenv').config();
 mongoose.Promise = global.Promise;
 const dbUrl = "mongodb://localhost:27017/Ecommerce_Norcentro";
 mongoose.connect(
