@@ -991,3 +991,55 @@ function HOMEINITTEMPLATE ($, undefined) {
   axilInit.i();
 
 }
+
+function ModalProductDetail(){
+  $('.product-large-thumbnail').slick({
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    speed: 800,
+    draggable: false,
+    asNavFor: '.product-small-thumb'
+  });
+
+  $('.product-small-thumb').slick({
+    infinite: false,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    focusOnSelect: true,
+    vertical: true,
+    speed: 800,
+    asNavFor: '.product-large-thumbnail',
+    responsive: [{
+            breakpoint: 992,
+            settings: {
+                vertical: false,
+            }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                vertical: false,
+                slidesToShow: 4,
+            }
+        }
+    ]
+
+});
+
+if ($('.zoom-gallery').length) {
+  $('.zoom-gallery').each(function() {
+      $('.zoom-gallery').magnificPopup({
+          delegate: 'a.popup-zoom',
+          type: 'image',
+          gallery: {
+              enabled: true
+          }
+      });
+  });
+}
+}

@@ -3,7 +3,7 @@ import { HomeService } from './_services/home.service';
 
 declare var $:any;
 declare function HOMEINITTEMPLATE ([]):any;
-
+declare function ModalProductDetail():any;
 
 @Component({
   selector: 'app-home',
@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   categories:any = [];
   bestProducts:any = [];
   our_products:any = [];
+  product_selected:any = null;
 
   constructor(
     public homeService:HomeService
@@ -33,5 +34,15 @@ export class HomeComponent implements OnInit {
         HOMEINITTEMPLATE($);
       },50)
     });
+  }
+  OpenModal(bestProd:any){
+    this.product_selected = null;
+
+    setTimeout(() => {
+      this.product_selected = bestProd;
+      setTimeout(() => {
+        ModalProductDetail();
+      },50);
+    }, 100);
   }
 }
