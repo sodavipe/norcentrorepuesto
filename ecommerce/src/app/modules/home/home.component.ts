@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { HomeService } from './_services/home.service';
 
 declare var $:any;
@@ -20,7 +20,8 @@ export class HomeComponent implements OnInit {
   FlashSale:any = null;
   FlashProductList:any = [];
   constructor(
-    public homeService:HomeService
+    public homeService:HomeService,
+    public changeDetectorRef:ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -33,19 +34,50 @@ export class HomeComponent implements OnInit {
       this.our_products = resp.our_products;
       this.FlashSale = resp.FlashSale;
       this.FlashProductList = resp.campaign_products;
-      setTimeout(()=>{
-        HOMEINITTEMPLATE($);
-      },50)
+
+      this.changeDetectorRef.detectChanges();
+      setTimeout(() => {
+        if (this.FlashSale) {
+          var eventCounter = $(".sale-countdown");
+          let PARSE_DATE = new Date(this.FlashSale.end_date);
+
+          let DATE = PARSE_DATE.getFullYear() + "/" + (PARSE_DATE.getMonth() + 1) + "/" + (PARSE_DATE.getDate() + 1);
+          console.log(DATE);
+          if (eventCounter.length) {
+            eventCounter.countdown(DATE, function (e: any) {
+              eventCounter.html(
+                e.strftime(
+                  "<div class='countdown-section'><div><div class='countdown-number'>%-D</div> <div class='countdown-unit'>Day</div> </div></div><div class='countdown-section'><div><div class='countdown-number'>%H</div> <div class='countdown-unit'>Hrs</div> </div></div><div class='countdown-section'><div><div class='countdown-number'>%M</div> <div class='countdown-unit'>Min</div> </div></div><div class='countdown-section'><div><div class='countdown-number'>%S</div> <div class='countdown-unit'>Sec</div> </div></div>"
+                )
+              );
+            });
+          }
+        }
+
+        // Verificamos si el DOM está completamente cargado
+        $(document).ready(() => {
+          HOMEINITTEMPLATE($);
+        });
+      }, 50);
     });
   }
-  OpenModal(bestProd:any){
+  OpenModal(bestProd:any,FlashSale:any = null){
     this.product_selected = null;
 
     setTimeout(() => {
       this.product_selected = bestProd;
+      this.product_selected.FlashSale = FlashSale
       setTimeout(() => {
         ModalProductDetail();
       },50);
     }, 100);
+  }
+
+  getCallNewPrice(product:any){
+    if(this.FlashSale.type_discount == 1){
+      return (product.price_soles - product.price_soles*this.FlashSale.discount*0.01).toFixed(2);
+    }else{
+      return product.price_soles - this.FlashSale.discount;
+    }
   }
 }
