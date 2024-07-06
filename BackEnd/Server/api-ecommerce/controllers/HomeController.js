@@ -4,6 +4,7 @@ import resource from "../resource";
 export default {
  list:async(req,res) => {
     try {
+        var TIME_NOW = req.query.TIME_NOW;
         let Sliders = await models.Slider.find({state:1});
 
         Sliders = Sliders.map((slider)=>{
@@ -16,20 +17,47 @@ export default {
         })
 
         let BestProducts = await models.Product.find({state:2}).sort({"createdAt": -1});
-        BestProducts = BestProducts.map((product)=>{
-            return resource.Product.product_list(product);
-        })
+        var ObjectBestProducts = [];
+        for (const Product of BestProducts) {
+            let VARIEDADES = await models.Variedad.find({product:Product._id});
+            ObjectBestProducts.push(resource.Product.product_list(Product,VARIEDADES));
+        }
 
         let OurProducts = await models.Product.find({state:2}).sort({"createdAt": 1});
-        OurProducts = OurProducts.map((product)=>{
-            return resource.Product.product_list(product);
-        })
 
+        var ObjectOurProducts = [];
+        for (const Product of OurProducts) {
+            let VARIEDADES = await models.Variedad.find({product:Product._id});
+            ObjectOurProducts.push(resource.Product.product_list(Product,VARIEDADES));
+        }
+
+        // OurProducts = OurProducts.map(async (product)=>{
+        //     let VARIEDADES = await models.Variedad.find({product:product._id});
+        //     return resource.Product.product_list(product,VARIEDADES);
+        // })
+
+        let FlashSale = await models.Discount.findOne({
+            type_campaign: 2,
+            start_date_num:{$lte:TIME_NOW},
+            end_date_num:{$gte:TIME_NOW},
+        });
+
+        let ProductList = [];
+        if(FlashSale){
+            for (const product of FlashSale.products) {
+                var ObjectT = await models.Product.findById({_id:product._id});
+                let VARIEDADES = await models.Variedad.find({product:product._id});
+                ProductList.push(resource.Product.product_list(ObjectT,VARIEDADES));
+            }
+        }
+        console.log(FlashSale);
         res.status(200).json({
             sliders: Sliders,
             categories:Categories,
-            best_products:BestProducts,
-            our_products:OurProducts,
+            best_products:ObjectBestProducts,
+            our_products:ObjectOurProducts,
+            FlashSale:FlashSale,
+            campaign_products:ProductList,
         });
 
     } catch (error) {

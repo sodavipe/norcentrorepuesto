@@ -11,8 +11,8 @@ export class HomeService {
     public http:HttpClient
   ) { }
 
-  listHome(){
-    let URL = URL_SERVICIOS+"/home/list";
+  listHome(TIME_NOW:any = ''){
+    let URL = URL_SERVICIOS+"/home/list?TIME_NOW="+TIME_NOW;
     return this.http.get(URL);
   }
 }
