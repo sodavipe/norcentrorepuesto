@@ -1043,9 +1043,9 @@ if ($('.zoom-gallery').length) {
   });
 }
 
-$('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
-          $('.pro-qty').append('<span class="inc qtybtn">+</span>');
-          $('.qtybtn').on('click', function() {
+$('.modal-product .pro-qty').prepend('<span class="dec qtybtn">-</span>');
+          $('.modal-product .pro-qty').append('<span class="inc qtybtn">+</span>');
+          $('.modal-product .qtybtn').on('click', function() {
               var $button = $(this);
               var oldValue = $button.parent().find('input').val();
               if ($button.hasClass('inc')) {
@@ -1099,9 +1099,9 @@ $('.product-large-thumbnail-2').slick({
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="fal fa-long-arrow-left"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="fal fa-long-arrow-right"></i></button>'
 });
-$('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
-          $('.pro-qty').append('<span class="inc qtybtn">+</span>');
-          $('.qtybtn').on('click', function() {
+$('.landing-product .pro-qty').prepend('<span class="dec qtybtn">-</span>');
+          $('.landing-product .pro-qty').append('<span class="inc qtybtn">+</span>');
+          $('.landing-product .qtybtn').on('click', function() {
               var $button = $(this);
               var oldValue = $button.parent().find('input').val();
               if ($button.hasClass('inc')) {
@@ -1116,5 +1116,36 @@ $('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
               }
               $button.parent().find('input').val(newVal);
           });
+          $('.recent-product-activation').slick({
+            infinite: true,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            arrows: true,
+            dots: false,
+            prevArrow: '<button class="slide-arrow prev-arrow"><i class="fal fa-long-arrow-left"></i></button>',
+            nextArrow: '<button class="slide-arrow next-arrow"><i class="fal fa-long-arrow-right"></i></button>',
+            responsive: [{
+                    breakpoint: 1199,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 479,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
 }
 
