@@ -66,5 +66,20 @@ export default {
         });
         console.log(error);
     }
- }
+ },
+ show_landing_product:async(req,res) =>{
+    try {
+        let SLUG = req.params.slug;
+        let Product = await models.Product.findOne({slug:SLUG});
+        let VARIEDADES = await models.Variedad.find({product:Product._id});
+        res.status(200).json({
+            product: resource.Product.product_list(Product,VARIEDADES),
+        })
+    } catch (error) {
+        res.status(500).send({
+            message: "OCURRIÓ UN ERROR"
+        });
+        console.log(error);
+    }
+ },
 }
