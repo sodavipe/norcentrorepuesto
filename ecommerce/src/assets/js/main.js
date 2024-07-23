@@ -1149,3 +1149,39 @@ $('.landing-product .pro-qty').prepend('<span class="dec qtybtn">-</span>');
         });
 }
 
+
+function sideOffcanvasToggle(selectbtn, openElement) {
+
+  $('body').on('click', selectbtn, function(e) {
+      e.preventDefault();
+
+      var $this = $(this),
+          wrapp = $this.parents('body'),
+          wrapMask = $('<div / >').addClass('closeMask'),
+          cartDropdown = $(openElement);
+
+      if (!(cartDropdown).hasClass('open')) {
+          wrapp.addClass('open');
+          cartDropdown.addClass('open');
+          cartDropdown.parent().append(wrapMask);
+          wrapp.css({
+              'overflow': 'hidden'
+
+          });
+
+      } else {
+          removeSideMenu();
+      }
+
+      function removeSideMenu() {
+          wrapp.removeAttr('style');
+          wrapp.removeClass('open').find('.closeMask').remove();
+          cartDropdown.removeClass('open');
+      }
+
+      $('.sidebar-close, .closeMask').on('click', function() {
+          removeSideMenu();
+      });
+
+  });
+}

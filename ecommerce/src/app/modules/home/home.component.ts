@@ -35,8 +35,8 @@ export class HomeComponent implements OnInit {
       this.FlashSale = resp.FlashSale;
       this.FlashProductList = resp.campaign_products;
 
-      this.changeDetectorRef.detectChanges();
-      setTimeout(() => {
+      // this.changeDetectorRef.detectChanges();
+      // setTimeout(() => {
         if (this.FlashSale) {
           var eventCounter = $(".sale-countdown");
           let PARSE_DATE = new Date(this.FlashSale.end_date);
@@ -55,10 +55,10 @@ export class HomeComponent implements OnInit {
         }
 
         // Verificamos si el DOM está completamente cargado
-        $(document).ready(() => {
-          HOMEINITTEMPLATE($);
-        });
-      }, 50);
+        // $(document).ready(() => {
+        //   HOMEINITTEMPLATE($);
+        // });
+      // }, 50);
     });
   }
   OpenModal(bestProd:any,FlashSale:any = null){

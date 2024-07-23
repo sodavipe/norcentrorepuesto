@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
+declare function sideOffcanvasToggle ([],[]):any;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
