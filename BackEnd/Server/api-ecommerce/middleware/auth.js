@@ -9,7 +9,7 @@ export default{
         }
         const response = await token.decode(req.headers.token);
         if(response){
-            if(response.rol=="cliente" || response.rol=="admin"){
+            if(response.rol=="Cliente" || response.rol=="admin"){
                 next();
             }else{
                 res.status(403).send({

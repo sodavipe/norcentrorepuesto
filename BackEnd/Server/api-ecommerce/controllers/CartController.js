@@ -14,7 +14,7 @@ export default {
                 },
             });
 
-            CARTS = CARTS.map(()=>{
+            CARTS = CARTS.map((cart)=>{
                 return resource.Cart.cart_list(cart);
             });
 
@@ -85,8 +85,15 @@ export default {
             }
 
             let CART = await models.Cart.create(data);
+
+            let NEW_CART = await models.Cart.findById({_id:CART._id}).populate("variedad").populate({
+                path:"product",
+                populate:{
+                    path:"category"
+                },
+            })
             res.status(200).json({
-                cart:CART,
+                cart:resource.Cart.cart_list(NEW_CART),
                 message_text: "EL CARRITO SE REGISTRÓ CON ÉXITO!"
             })
         } catch (error) {
@@ -127,8 +134,14 @@ export default {
             }
 
             let CART = await models.Cart.findByIdAndUpdate({_id:data._id},data);
+            let NEW_CART = await models.Cart.findById({_id:CART._id}).populate("variedad").populate({
+                path:"product",
+                populate:{
+                    path:"category"
+                },
+            })
             res.status(200).json({
-                cart:CART,
+                cart:resource.Cart.cart_list(NEW_CART),
                 message_text: "EL CARRITO SE ACTUALIZÓ CON ÉXITO!"
             })
         } catch (error) {
@@ -144,6 +157,7 @@ export default {
             let CART = await models.Cart.findByIdAndDelete({_id:_id});
 
             res.status(200).json({
+                cart:resource.Cart.cart_list(CART),
                 message_text: "EL CARRITO SE ELIMINÓ CORRECTAMENTE!"
             })
         } catch (error) {

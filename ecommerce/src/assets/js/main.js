@@ -31,7 +31,7 @@ function HOMEINITTEMPLATE ($, undefined) {
           axilInit.campaignCountdown('.campaign-countdown', '2022/10/01');
           axilInit.countdownInit('.poster-countdown', '2022/10/01');
           // axilInit.countdownInit('.sale-countdown', '2024/10/31');
-          axilInit.sideOffcanvasToggle('.cart-dropdown-btn', '#cart-dropdown');
+          // axilInit.sideOffcanvasToggle('.cart-dropdown-btn', '#cart-dropdown');
           axilInit.sideOffcanvasToggle('.mobile-nav-toggler', '.header-main-nav');
           axilInit.sideOffcanvasToggle('.department-side-menu', '.department-nav-menu');
           axilInit.sideOffcanvasToggle('.filter-toggle', '.axil-shop-sidebar');
@@ -1154,7 +1154,7 @@ function sideOffcanvasToggle(selectbtn, openElement) {
 
   $('body').on('click', selectbtn, function(e) {
       e.preventDefault();
-
+      console.log("CLIC");
       var $this = $(this),
           wrapp = $this.parents('body'),
           wrapMask = $('<div / >').addClass('closeMask'),
