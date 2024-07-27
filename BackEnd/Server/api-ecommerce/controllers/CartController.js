@@ -167,4 +167,90 @@ export default {
             console.log(error);
         }
     },
+    applyCupon:async(req,res) =>{
+        try {
+            let data = req.body;
+            //VALIDACIÓN: ¿EL CUPON EXISTE?
+            let CUPON = await models.Cupone.findOne({
+                code: data.code,
+            })
+            if(!CUPON){
+                res.status(200).json({
+                    message: 403,
+                    message_text: "EL CUPÓN INGRESADO NO EXISTE, DIGITE OTRO NUEVAMENTE"
+                });
+                return;
+            }
+            //TIENE CON EL USO DEL CUPON -- / EN ESPERA ESPERA - ESTO ES PARA EL CHECKOUT
+        
+        
+            //PARTE OPERATIVA
+
+            let carts = await models.Cart.find({user:data.user_id}).populate("product");
+
+
+            let products = [];
+            let categories = [];
+
+            CUPON.products.forEach((product)=>{
+                products.push(product._id);
+            });
+            //[ID DEL PRODUCTO]
+            CUPON.categories.forEach((categorie)=>{
+                categories.push(categorie._id);
+            });
+            //[ID DE LA CATEGORIA]
+            for (const cart of carts) {
+                if(products.length > 0){
+                    if(products.includes(cart.product._id)){
+                        let subtotal = 0;
+                        let total = 0;
+                        if(CUPON.type_discount == 1){ //PORCENTAJE
+                            subtotal = cart.price_unitario - cart.price_unitario *(CUPON.discount*0.01);
+                        }else{ //MONEDA
+                            subtotal = cart.price_unitario - CUPON.discount;
+                    }
+                    total = subtotal * cart.cantidad;
+
+                    await models.Cart.findByIdAndUpdate({_id:cart._id},{
+                        subtotal: subtotal,
+                        total: total,
+                        type_discount: CUPON.type_discount,
+                        discount: CUPON.discount,
+                        code_cupon: CUPON.code,
+                    });
+                }
+            }
+            if(categories.length > 0){
+                if(categories.includes(cart.product.category)){
+                    let subtotal = 0;
+                    let total = 0;
+                    if(CUPON.type_discount == 1){ //PORCENTAJE
+                        subtotal = cart.price_unitario - cart.price_unitario *(CUPON.discount*0.01);
+                    }else{ //MONEDA
+                        subtotal = cart.price_unitario - CUPON.discount;
+                }
+                total = subtotal * cart.cantidad;
+
+                await models.Cart.findByIdAndUpdate({_id:cart._id},{
+                    subtotal: subtotal,
+                    total: total,
+                    type_discount: CUPON.type_discount,
+                    discount: CUPON.discount,
+                    code_cupon: CUPON.code,
+                });
+            }
+                }
+            }
+            res.status(200).json({
+                message:200,
+                message_text: "EL CUPÓN SE HA APLICADO CORRECTAMENTE",
+            });
+        } catch (error) {
+            res.status(500).send({
+                message:"OCURRIÓ UN ERROR",
+            });
+            console.log(error);
+        }
+    },
 }
