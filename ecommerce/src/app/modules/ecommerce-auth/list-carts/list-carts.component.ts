@@ -16,6 +16,7 @@ export class ListCartsComponent implements OnInit {
   listCart:any = [];
   subtotalCart:any = 0;
   totalCart:any = 0;
+  code_cupon:any = null;
   constructor(
     public router:Router,
     public cartService: CartService,
@@ -93,4 +94,44 @@ export class ListCartsComponent implements OnInit {
       this.cartService.removeItemCart(cart);
     })
   }
+  aplicarCupon(){
+    let data = {
+      code:this.code_cupon,
+      user_id: this.cartService._authService.user._id,
+    }
+    this.cartService.aplicarCupon(data).subscribe((resp:any) =>{
+      console.log(resp);
+      if(resp.message == 403){
+        alertDanger(resp.message_text);
+      }else{
+        alertSuccess(resp.message_text);
+        this.listCart;
+
+      }
+    })
+  }
+  listCarts(){
+    this.cartService.resetCart();
+
+    if(this.cartService._authService.user){
+      this.cartService.listCart(this.cartService._authService.user._id).subscribe((resp:any)=>{
+        console.log(resp);
+        // this.listCart = resp.carts;
+        resp.carts.forEach((cart:any) => {
+          this.cartService.changeCart(cart);
+        });
+      })
+    }
+  }
+  deleteAllItems(cart_id: any) {
+    this.cartService.deleteAllCartItems(cart_id).subscribe((resp: any) => {
+      console.log(resp);
+      this.cartService.resetCart();
+      alertSuccess("Todos los elementos del carrito han sido eliminados correctamente");
+    }, (error: any) => {
+      console.log(error);
+      alertDanger("Ocurrió un error al intentar eliminar todos los elementos del carrito");
+    });
+  }
+
 }

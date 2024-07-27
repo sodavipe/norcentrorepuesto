@@ -6,7 +6,7 @@
           <div class="axil-product-cart-wrap">
               <div class="product-table-heading">
                   <h4 class="title">Your Cart</h4>
-                  <a href="#" class="cart-clear">Clear Shoping Cart</a>
+                  <a href="#" class="cart-clear" onclick="return false;" (click)="deleteAllItems(cartService._authService.user._id)">Clear Shoping Cart</a>
               </div>
               <div class="table-responsive">
                   <table class="table axil-product-table axil-cart-table mb--40">
@@ -32,7 +32,7 @@
                               <small style="color: #3CB371;">VARIEDAD: {{cart.variedad.valor}}</small>
                             </ng-container>
                             </td>
-                            <td class="product-price" data-title="Price"><span class="currency-symbol">S/. </span>{{cart.price_unitario | number:'1.2-2'}}</td>
+                            <td class="product-price" data-title="Price"><span class="currency-symbol">S/. </span>{{cart.subtotal | number:'1.2-2'}}</td>
                             <td class="section-cart product-quantity" data-title="Qty">
                                 <div class="pro-qty">
                                   <span class="dec qtybtn" (click)="dec(cart)">-</span>
@@ -50,13 +50,13 @@
               </div>
               <div class="cart-update-btn-area">
                   <div class="input-group product-cupon">
-                      <input placeholder="Enter coupon code" type="text">
+                      <input placeholder="Enter coupon code" type="text" [(ngModel)]="code_cupon">
                       <div class="product-cupon-btn">
-                          <button type="submit" class="axil-btn btn-outline">Apply</button>
+                          <button type="submit" class="axil-btn btn-outline" (click)="aplicarCupon()">Apply</button>
                       </div>
                   </div>
                   <div class="update-btn">
-                      <a href="#" class="axil-btn btn-outline">Update Cart</a>
+                      <a href="#" onclick="return false;" class="axil-btn btn-outline" (click)="listCarts()">Update Cart</a>
                   </div>
               </div>
               <div class="row">

@@ -1207,69 +1207,30 @@ function sectionCart(){
 }
 
 
-function alertDanger(TEXT){
-  const notification = document.getElementById("notification-ecommerce-danger");
-  const closeBtn = document.getElementById("close");
+function showAlert(type, text) {
+  const notification = document.getElementById(`notification-ecommerce-${type}`);
+  const closeBtn = notification.querySelector('.notification__close');
 
-  notification?.classList.add("notification-show");
+  notification.classList.add('notification-show');
+  notification.querySelector('.text-message-notification').textContent = text;
 
-  var SECONDS = 0;
-  var showTime = () => {
-    SECONDS ++;
-    $("#notification-ecommerce-danger .btn-secondary").text(SECONDS);
+  const hideNotification = () => {
+    notification.classList.remove('notification-show');
   };
-  $("#notification-ecommerce-danger .text-message-notification").text(TEXT);
-  var timer = setInterval(showTime, 1000);
-  setTimeout(() => {
-    clearInterval(timer);
-    document.getElementById("notification-ecommerce-danger")?.classList.remove("notification-show");
-  }, 6000);
 
-  closeBtn.addEventListener("click", () => {
-    document.getElementById("notification-ecommerce-danger")?.classList.remove("notification-show");
-  });
+  setTimeout(hideNotification, 6000);
+  closeBtn.addEventListener('click', hideNotification);
 }
-function alertWarning(TEXT){
-const notification = document.getElementById("notification-ecommerce-warning");
-const closeBtn = document.getElementById("close");
 
-notification?.classList.add("notification-show");
-
-var SECONDS = 0;
-var showTime = () => {
-  SECONDS ++;
-  $("#notification-ecommerce-warning .btn-secondary").text(SECONDS);
-};
-$("#notification-ecommerce-warning .text-message-notification").text(TEXT);
-var timer = setInterval(showTime, 1000);
-setTimeout(() => {
-  clearInterval(timer);
-  document.getElementById("notification-ecommerce-warning")?.classList.remove("notification-show");
-}, 6000);
-
-closeBtn.addEventListener("click", () => {
-  document.getElementById("notification-ecommerce-warning")?.classList.remove("notification-show");
-});
+function alertDanger(text) {
+  showAlert('danger', text);
 }
-function alertSuccess(TEXT){
-const notification = document.getElementById("notification-ecommerce-success");
-  const closeBtn = document.getElementById("close");
 
-  notification?.classList.add("notification-show");
-
-  var SECONDS = 0;
-  var showTime = () => {
-    SECONDS ++;
-    $("#notification-ecommerce-success .btn-secondary").text(SECONDS);
-  };
-  $("#notification-ecommerce-success .text-message-notification").text(TEXT);
-  var timer = setInterval(showTime, 1000);
-  setTimeout(() => {
-    clearInterval(timer);
-    document.getElementById("notification-ecommerce-success")?.classList.remove("notification-show");
-  }, 6000);
-
-  closeBtn.addEventListener("click", () => {
-    document.getElementById("notification-ecommerce-success")?.classList.remove("notification-show");
-  });
+function alertWarning(text) {
+  showAlert('warning', text);
 }
+
+function alertSuccess(text) {
+  showAlert('success', text);
+}
+

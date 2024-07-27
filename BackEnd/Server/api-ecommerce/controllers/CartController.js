@@ -187,7 +187,8 @@ export default {
             //PARTE OPERATIVA
 
             let carts = await models.Cart.find({user:data.user_id}).populate("product");
-
+            
+            console.log(carts);
 
             let products = [];
             let categories = [];
@@ -199,10 +200,12 @@ export default {
             CUPON.categories.forEach((categorie)=>{
                 categories.push(categorie._id);
             });
+            console.log(products);
+            console.log(categories);
             //[ID DE LA CATEGORIA]
             for (const cart of carts) {
                 if(products.length > 0){
-                    if(products.includes(cart.product._id)){
+                    if(products.includes(cart.product._id+"")){
                         let subtotal = 0;
                         let total = 0;
                         if(CUPON.type_discount == 1){ //PORCENTAJE
@@ -222,7 +225,7 @@ export default {
                 }
             }
             if(categories.length > 0){
-                if(categories.includes(cart.product.category)){
+                if(categories.includes(cart.product.category+"")){
                     let subtotal = 0;
                     let total = 0;
                     if(CUPON.type_discount == 1){ //PORCENTAJE
@@ -249,6 +252,21 @@ export default {
         } catch (error) {
             res.status(500).send({
                 message:"OCURRIÓ UN ERROR",
+            });
+            console.log(error);
+        }
+    },
+    deleteAllItems: async (req, res) => {
+        try {
+            let cart_id = req.params.cart_id;
+            await models.Cart.deleteMany({ cart: cart_id });
+
+            res.status(200).json({
+                message_text: "TODOS LOS ELEMENTOS DEL CARRITO SE ELIMINARON CORRECTAMENTE!"
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN ERROR",
             });
             console.log(error);
         }
