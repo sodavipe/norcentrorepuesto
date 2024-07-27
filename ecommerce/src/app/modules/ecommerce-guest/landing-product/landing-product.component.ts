@@ -102,7 +102,7 @@ export class LandingProductComponent implements OnInit {
       }
     },error=>{
       console.log(error);
-      if(error.error.message == "EL TOKEN NO ES VALIDO"){
+      if(error.error.message == "EL TOKEN NO ES VÁLIDO"){
         this.cartService._authService.logout();
       }
     });

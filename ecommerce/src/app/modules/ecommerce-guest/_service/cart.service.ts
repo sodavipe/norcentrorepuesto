@@ -49,4 +49,9 @@ export class CartService {
     let URL = URL_SERVICIOS+"cart/list?user_id="+user_id;
     return this.http.get(URL,{headers:headers});
   }
+  updateCart(data:any){
+    let headers = new HttpHeaders({'token':this._authService.token});
+    let URL = URL_SERVICIOS+"cart/update";
+    return this.http.put(URL,data,{headers:headers});
+  }
 }

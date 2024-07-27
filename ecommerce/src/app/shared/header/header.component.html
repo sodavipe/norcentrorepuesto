@@ -526,7 +526,8 @@
                     </div>
                     <h3 class="item-title"><a href="single-product-3.html">{{cart.product.title}}</a></h3>
                     <span *ngIf="cart.variedad"><small>Variedad: {{cart.variedad.valor}}</small></span>
-                    <div class="item-price"><span class="currency-symbol">S/. </span>{{cart.product.price_soles}}</div>
+                    <div class="item-price"><span class="currency-symbol">S/. </span>{{ cart.total | number:'1.2-2' }}</div>
+                    <small>S/. {{cart.price_unitario| number:'1.2-2'}} c/u</small>
                     <div class="pro-qty item-quantity">
                         <input type="number" class="quantity-input" [value]="cart.cantidad">
                     </div>

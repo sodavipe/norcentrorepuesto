@@ -19,6 +19,7 @@ export default{
             variedad:cart.variedad,
             code_cupon:cart.code_cupon,
             code_discount:cart.code_discount,
+            price_unitario:cart.price_unitario,
             subtotal:cart.subtotal,
             total:cart.total,
         }

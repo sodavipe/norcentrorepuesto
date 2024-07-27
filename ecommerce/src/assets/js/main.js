@@ -1099,9 +1099,9 @@ $('.product-large-thumbnail-2').slick({
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="fal fa-long-arrow-left"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="fal fa-long-arrow-right"></i></button>'
 });
-$('.landing-product .pro-qty').prepend('<span class="dec qtybtn">-</span>');
-          $('.landing-product .pro-qty').append('<span class="inc qtybtn">+</span>');
-          $('.landing-product .qtybtn').on('click', function() {
+$('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
+          $('.pro-qty').append('<span class="inc qtybtn">+</span>');
+          $('.qtybtn').on('click', function() {
               var $button = $(this);
               var oldValue = $button.parent().find('input').val();
               if ($button.hasClass('inc')) {
@@ -1184,4 +1184,24 @@ function sideOffcanvasToggle(selectbtn, openElement) {
       });
 
   });
+}
+
+function sectionCart(){
+  // $('.section-cart .pro-qty').prepend('<span class="dec qtybtn">-</span>');
+  //         $('.section-cart .pro-qty').append('<span class="inc qtybtn">+</span>');
+          // $('.section-cart .qtybtn').on('click', function() {
+          //     var $button = $(this);
+          //     var oldValue = $button.parent().find('input').val();
+          //     if ($button.hasClass('inc')) {
+          //         var newVal = parseFloat(oldValue) + 1;
+          //     } else {
+          //         // Don't allow decrementing below zero
+          //         if (oldValue > 0) {
+          //             var newVal = parseFloat(oldValue) - 1;
+          //         } else {
+          //             newVal = 0;
+          //         }
+          //     }
+          //     $button.parent().find('input').val(newVal);
+          // });
 }
