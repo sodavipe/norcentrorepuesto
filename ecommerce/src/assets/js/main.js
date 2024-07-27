@@ -1215,7 +1215,10 @@ function showAlert(type, text) {
   notification.querySelector('.text-message-notification').textContent = text;
 
   const hideNotification = () => {
-    notification.classList.remove('notification-show');
+    notification.classList.add('notification-hide');
+    setTimeout(() => {
+      notification.classList.remove('notification-show', 'notification-hide');
+    }, 600); // Tiempo de duración del fadeOut
   };
 
   setTimeout(hideNotification, 6000);

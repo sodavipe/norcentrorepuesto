@@ -1,10 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+/* Base para notificaciones */
 .notification-ecommerce {
   position: fixed;
   right: 2%;
   top: 2%;
-  background-color: #faebff;
-  border: 1px solid #a687ff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -16,21 +15,39 @@
   z-index: 1000;
 }
 
-.notification-ecommerce svg {
-  fill: blueviolet;
+/* Notificación de error */
+#notification-ecommerce-danger {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+#notification-ecommerce-danger svg {
+  fill: #721c24;
+}
+
+/* Notificación de advertencia */
+#notification-ecommerce-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}
+
+#notification-ecommerce-warning svg {
+  fill: #856404;
+}
+
+/* Notificación de éxito */
+#notification-ecommerce-success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+#notification-ecommerce-success svg {
+  fill: #155724;
 }
 
 .text-message-notification {
   font-size: 1rem;
   color: #333;
-}
-
-.btn-secondary {
-  background-color: #a687ff;
-  color: #fff;
-  border-radius: 50%;
-  padding: 0.5rem 0.7rem;
-  font-size: 0.9rem;
 }
 
 .notification__close {
@@ -50,6 +67,9 @@
   animation: fadeIn 600ms ease-in-out forwards;
   display: flex;
 }
+.notification-hide {
+  animation: fadeOut 600ms ease-in-out forwards;
+}
 
 @keyframes fadeIn {
   0% {
@@ -59,5 +79,16 @@
   100% {
     opacity: 1;
     top: 2%;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    top: 2%;
+  }
+  100% {
+    opacity: 0;
+    top: 0;
   }
 }
