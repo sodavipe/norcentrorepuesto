@@ -6,6 +6,9 @@ import { CartService } from '../_service/cart.service';
 declare var $:any;
 declare function LandingProductDetail():any;
 declare function ModalProductDetail():any;
+declare function alertDanger([]):any;
+declare function alertWarning([]):any;
+declare function alertSuccess([]):any;
 @Component({
   selector: 'app-landing-product',
   templateUrl: './landing-product.component.html',
@@ -65,18 +68,18 @@ export class LandingProductComponent implements OnInit {
   AddCart(product:any){
     console.log(product);
     if(!this.cartService._authService.user){
-      alert("NECESITAS AUTENTICARTE PARA PODER AGREGAR EL PRODUCTO AL CARRITO")
+      alertDanger("NECESITAS AUTENTICARTE PARA PODER AGREGAR EL PRODUCTO AL CARRITO")
       return;
     }if($("#qty-cart").val() == 0){
-      alert("NECESITAS AGREGAR UNA CANTIDAD MAYOR A 0 DEL PRODUCTO PARA EL CARRITO")
+      alertDanger("NECESITAS AGREGAR UNA CANTIDAD MAYOR A 0 DEL PRODUCTO PARA EL CARRITO")
       return;
     }if(this.product_selected.type_inventario == 2){
       if(!this.variedad_selected){
-        alert("NECESITAS SELECCIONAR UNA VARIEDAD PARA EL PRODUCTO")
+        alertDanger("NECESITAS SELECCIONAR UNA VARIEDAD PARA EL PRODUCTO")
         return;
       }
       if(this.variedad_selected.stock < $("#qty-cart").val()){
-        alert("NECESITAS AGREGAR UNA CANTIDAD MENOR PORQUE NO HAY STOCK O NO HAY STOCK DISPONIBLE PARA LA VARIEDAD SELECCIONADA")
+        alertDanger("NECESITAS AGREGAR UNA CANTIDAD MENOR PORQUE NO HAY STOCK O NO HAY STOCK DISPONIBLE PARA LA VARIEDAD SELECCIONADA")
         return;
       }
     }
@@ -95,10 +98,11 @@ export class LandingProductComponent implements OnInit {
     }
     this.cartService.registerCart(data).subscribe((resp:any)=>{
       if(resp.message == 403){
-        alert(resp.message_text);
+        alertDanger(resp.message_text);
         return
       }else{
         this.cartService.changeCart(resp.cart);
+        alertSuccess("EL PRODUCTO SE HA AGREGADO EXITÓSAMENTE AL CARRITO");
       }
     },error=>{
       console.log(error);

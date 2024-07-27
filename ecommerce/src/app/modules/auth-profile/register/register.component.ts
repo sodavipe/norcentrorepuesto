@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+declare function alertDanger([]):any;
+declare function alertWarning([]):any;
+declare function alertSuccess([]):any;
 
 @Component({
   selector: 'app-register',
@@ -37,15 +40,15 @@ export class RegisterComponent implements OnInit {
       !this.surname ||
       !this.password ||
       !this.repeat_password
-    ){ alert("TODOS LOS CAMPOS SON REQUERIDOS!");
+    ){ alertDanger("TODOS LOS CAMPOS SON REQUERIDOS!");
       return;
     }
     if (!this.validateEmail(this.email)) {
-      alert("EMAIL NO VÁLIDO! Por favor, ingrese un correo electrónico correcto.");
+      alertDanger("EMAIL NO VÁLIDO! Por favor, ingrese un correo electrónico correcto.");
       return;
     }
     if(this.password != this.repeat_password){
-      alert("LAS CONTRASEÑAS DEBEN SER IGUALES!");
+      alertDanger("LAS CONTRASEÑAS DEBEN SER IGUALES!");
       return;
     }
     let data ={
@@ -60,7 +63,7 @@ export class RegisterComponent implements OnInit {
     }
     , (error: any) => {
       console.error('Error during registration:', error);
-      alert('Ha ocurrido un error durante el registro. Por favor, inténtelo de nuevo.');}
+      alertDanger('Ha ocurrido un error durante el registro. Por favor, inténtelo de nuevo.');}
   );
   }
 

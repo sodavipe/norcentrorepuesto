@@ -23,7 +23,8 @@
                       <tbody>
                         <ng-container *ngFor="let cart of listCart">
                           <tr>
-                            <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a></td>
+                            <td class="product-remove">
+                              <a href="#" onclick="return false;" class="remove-wishlist"  (click)="removeCart(cart)"><i class="fal fa-times"></i></a></td>
                             <td class="product-thumbnail"><a href="single-product.html"><img [src]="cart.product.imagen" alt="Digital Product"></a></td>
                             <td class="product-title"><a href="single-product.html">{{cart.product.title}}</a>
                               <ng-container *ngIf="cart.variedad">
@@ -66,8 +67,8 @@
                               <table class="table summery-table mb--30">
                                   <tbody>
                                       <tr class="order-subtotal">
-                                          <td>Subtotal</td>
-                                          <td>S/. {{totalCart}}</td>
+                                          <td>Subtotal (Sin IGV)</td>
+                                          <td>S/. {{subtotalCart}}</td>
                                       </tr>
                                       <tr class="order-shipping">
                                           <!-- <td>Shipping</td>

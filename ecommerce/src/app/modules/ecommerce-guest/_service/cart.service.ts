@@ -54,4 +54,9 @@ export class CartService {
     let URL = URL_SERVICIOS+"cart/update";
     return this.http.put(URL,data,{headers:headers});
   }
+  deleteCart(cart_id:any){
+    let headers = new HttpHeaders({'token':this._authService.token});
+    let URL = URL_SERVICIOS+"cart/delete/"+cart_id;
+    return this.http.delete(URL,{headers:headers});
+  }
 }
