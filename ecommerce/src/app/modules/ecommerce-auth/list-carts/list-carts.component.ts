@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../../ecommerce-guest/_service/cart.service';
-
+import Swal from 'sweetalert2';
 declare function sectionCart():any;
 declare function alertDanger([]):any;
 declare function alertWarning([]):any;
@@ -124,14 +124,37 @@ export class ListCartsComponent implements OnInit {
     }
   }
   deleteAllItems(cart_id: any) {
-    this.cartService.deleteAllCartItems(cart_id).subscribe((resp: any) => {
-      console.log(resp);
-      this.cartService.resetCart();
-      alertSuccess("Todos los elementos del carrito han sido eliminados correctamente");
-    }, (error: any) => {
-      console.log(error);
-      alertDanger("Ocurrió un error al intentar eliminar todos los elementos del carrito");
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No podrás deshacer esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar todo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cartService.deleteAllCartItems(cart_id).subscribe(
+          (resp: any) => {
+            console.log(resp);
+            this.cartService.resetCart();
+            Swal.fire(
+              'Eliminado',
+              'Todos los elementos del carrito han sido eliminados.',
+              'success'
+            );
+          },
+          (error: any) => {
+            console.log(error);
+            Swal.fire(
+              'Error',
+              'Ocurrió un error al intentar eliminar todos los elementos del carrito.',
+              'error'
+            );
+          }
+        );
+      }
     });
   }
-
 }

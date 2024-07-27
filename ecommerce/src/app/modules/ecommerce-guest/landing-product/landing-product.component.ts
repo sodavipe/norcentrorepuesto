@@ -43,6 +43,7 @@ export class LandingProductComponent implements OnInit {
       }, 50);
     })
   }
+
   OpenModal(bestProd:any,FlashSale:any = null){
     this.product_selected_modal = null;
 

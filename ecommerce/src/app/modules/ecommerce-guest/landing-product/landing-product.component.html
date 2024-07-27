@@ -13,7 +13,6 @@
                                       <img [src]="item.imagen" alt="Product Images">
                                   </div>
                                   </ng-container>
-
                               </div>
                           </div>
                           <div class="col-lg-12">
@@ -49,9 +48,12 @@
                                   <li><i class="fal fa-check"></i>Free delivery available</li>
                                   <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li>
                               </ul>
-                              <p class="description">
-                                {{product_selected.resumen}}
-                              </p>
+                              <div class="description-container">
+                                <p class="description">
+                                  {{product_selected.resumen}}
+                                </p>
+                              </div>
+
 
                               <div class="product-variations-wrapper">
 
@@ -73,12 +75,17 @@
 
                                   <!-- Start Product Variation  -->
                                   <div class="product-variation product-size-variation" *ngIf="product_selected.type_inventario==2">
-                                      <h6 class="title">Variedades:</h6>
-                                      <ul class="range-variant">
-                                        <ng-container *ngFor="let variedad of product_selected.variedades">
-                                          <li (click)="selectedVariedad(variedad)">{{variedad.valor}}</li>
-                                        </ng-container>
-                                      </ul>
+                                    <h6 class="title">Variedades:</h6>
+                                    <ul class="range-variant">
+                                      <ng-container *ngFor="let variedad of product_selected.variedades">
+                                        <li
+                                          (click)="selectedVariedad(variedad)"
+                                          [class.selected]="variedad === variedad_selected"
+                                        >
+                                          {{ variedad.valor }}
+                                        </li>
+                                      </ng-container>
+                                    </ul>
                                   </div>
                                   <!-- End Product Variation  -->
 

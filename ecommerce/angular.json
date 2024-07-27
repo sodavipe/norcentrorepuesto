@@ -24,6 +24,8 @@
             ],
             "styles": [
               "src/styles.css"
+            ],"allowedCommonJsDependencies": [
+              "sweetalert2"
             ],
             "scripts": []
           },
@@ -101,4 +103,5 @@
   "cli": {
     "analytics": "4703abaa-a812-4fbe-a355-83928ee1e19d"
   }
+
 }
