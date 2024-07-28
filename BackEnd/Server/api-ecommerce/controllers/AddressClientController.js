@@ -6,9 +6,10 @@ export default{
             const address_client = await models.AddressClient.create(req.body);
             res.status(200).json({
                 message: "LA DIRECCIÓN DEL CLIENTE SE HA REGISTRADO CORRECTAMENTE",
-                address_client: AddressClient,
+                address_client: address_client,
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 message:"OCURRIÓ UN ERROR",
             });
@@ -16,13 +17,18 @@ export default{
     },
     update:async(req,res)=>{
         try {
-            let AddressClient = await models.AddressClient.findOne({_id: req.body._id});
+            let data = req.body;
+
+            await models.AddressClient.findByIdAndUpdate({_id: req.body._id},data);
+
+            let AddressClient = await models.AddressClient.findById({_id: req.body._id});
 
             res.status(200).json({
                 message: "LA DIRECCIÓN DEL CLIENTE SE HA MODIFICADO CORRECTAMENTE",
                 address_client: AddressClient,
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 message:"OCURRIÓ UN ERROR",
             });
@@ -36,6 +42,7 @@ export default{
                 address_client: ADDRESS_CLIENT
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 message:"OCURRIÓ UN ERROR",
             });
@@ -43,11 +50,12 @@ export default{
     },
     remove:async(req,res)=>{
         try {
-            await models.AddressClient.findByIdAndDelete({_id:req.query._id})
+            await models.AddressClient.findByIdAndDelete({_id:req.params._id})
             res.status(200).json({
                 message: "LA DIRECCIÓN DEL CLIENTE SE ELIMINÓ CORRECTAMENTE"
             });
         } catch (error) {
+            console.log(error);
             res.status(500).send({
                 message:"OCURRIÓ UN ERROR",
             });

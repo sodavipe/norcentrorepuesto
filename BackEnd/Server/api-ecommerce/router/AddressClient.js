@@ -11,6 +11,6 @@ const router = routerx();
 router.post("/register",auth.verifyAdmin,AddresClientController.register);
 router.put("/update",auth.verifyAdmin,AddresClientController.update);
 router.get("/list",auth.verifyAdmin,AddresClientController.list);
-router.delete("/delete",auth.verifyAdmin,AddresClientController.remove);
+router.delete("/delete/:id",auth.verifyAdmin,AddresClientController.remove);
 
 export default router;
