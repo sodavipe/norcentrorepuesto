@@ -502,7 +502,7 @@
 <div class="cart-dropdown" id="cart-dropdown">
   <div class="cart-content-wrap">
       <div class="cart-header">
-          <h2 class="header-title">Cart review</h2>
+          <h2 class="header-title">Mi Carrito</h2>
           <button class="cart-close sidebar-close"><i class="fas fa-times"></i></button>
       </div>
       <div class="cart-body">
@@ -511,7 +511,8 @@
               <li class="cart-item">
                 <div class="item-img">
                     <a href="single-product.html"><img [src]="cart.product.imagen" alt="Commodo Blown Lamp"></a>
-                    <button class="close-btn"><i class="fas fa-times"></i></button>
+                    <button class="close-btn" onclick="return false;"
+                    (click)="removeCart(cart)"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="item-content">
                     <div class="product-rating">
@@ -542,8 +543,8 @@
               <span class="subtotal-amount">S/. {{totalCart}}</span>
           </h3>
           <div class="group-btn">
-              <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">Mirar Carrito</a>
-              <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+              <a href="/lista-de-carritos" class="axil-btn btn-bg-primary viewcart-btn">Mirar Carrito</a>
+              <a href="/proceso-de-pago" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
           </div>
       </div>
   </div>

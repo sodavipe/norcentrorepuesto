@@ -35,6 +35,12 @@ export class HeaderComponent implements OnInit {
       })
     }
   }
+  removeCart(cart:any){
+    this.cartService.deleteCart(cart._id).subscribe((resp:any)=>{
+      console.log(resp);
+      this.cartService.removeItemCart(cart);
+    })
+  }
   isHome(){
     return this.router.url == "" || this.router.url == "/" ? true : false;
   }

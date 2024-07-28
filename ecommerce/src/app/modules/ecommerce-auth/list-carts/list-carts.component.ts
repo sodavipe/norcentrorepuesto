@@ -105,14 +105,12 @@ export class ListCartsComponent implements OnInit {
         alertDanger(resp.message_text);
       }else{
         alertSuccess(resp.message_text);
-        this.listCart;
-
+        this.listCarts();
       }
     })
   }
   listCarts(){
     this.cartService.resetCart();
-
     if(this.cartService._authService.user){
       this.cartService.listCart(this.cartService._authService.user._id).subscribe((resp:any)=>{
         console.log(resp);
