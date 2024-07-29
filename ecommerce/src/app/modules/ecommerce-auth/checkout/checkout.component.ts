@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EcommerceAuthService } from '../_service/ecommerce-auth.service';
+import { CartService } from '../../ecommerce-guest/_service/cart.service';
 
 
 declare function alertDanger([]):any;
 declare function alertWarning([]):any;
 declare function alertSuccess([]):any;
+declare var paypal:any;
 
 @Component({
   selector: 'app-checkout',
@@ -12,6 +14,8 @@ declare function alertSuccess([]):any;
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+
+  @ViewChild('paypal',{static: true}) paypalElement?: ElementRef;
 
   listAddressClient:any = [];
   name:any = null;
@@ -25,8 +29,14 @@ export class CheckoutComponent implements OnInit {
   email:any = null;
   nota:any = null;
   address_client_selected:any = null;
+
+
+  listCart:any = [];
+  subtotalCart:any = 0;
+  totalCart:any = 0;
   constructor(
     public authEcommerce:EcommerceAuthService,
+    public cartService:CartService,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +44,55 @@ export class CheckoutComponent implements OnInit {
       console.log(resp);
       this.listAddressClient = resp.address_client;
     })
+    this.cartService.currentDataCart$.subscribe((resp:any)=>{
+      console.log(resp);
+      this.listCart = resp;
+      const subtotal = this.listCart.reduce((sum: any, item: any) => sum + item.total, 0);
+      const impuesto = subtotal * 0.18
+      this.subtotalCart = this.listCart.reduce((sum: any, item: any) => sum + item.total, 0).toFixed(2);
+      this.totalCart = (subtotal + impuesto).toFixed(2)
+    })
+
+    paypal.Buttons({
+      // optional styling for buttons
+      // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
+      style: {
+        color: "gold",
+        shape: "rect",
+        layout: "vertical"
+      },
+
+      // set up the transaction
+      createOrder: (data:any, actions:any) => {
+          // pass in any options from the v2 orders create call:
+          // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
+          const createOrderPayload = {
+            purchase_units: [
+              {
+                amount: {
+                    description: "COMPRAR POR EL ECOMMERCE",
+                    value: 50
+                }
+              }
+            ]
+          };
+          return actions.order.create(createOrderPayload);
+      },
+      // finalize the transaction
+      onApprove: async (data:any, actions:any) => {
+
+          let Order = await actions.order.capture();
+
+        // Order.purchase_units[0].payments.captures[0].id
+
+          // return actions.order.capture().then(captureOrderHandler);
+      },
+      // handle unrecoverable errors
+      onError: (err:any) => {
+          console.error('An error prevented the buyer from checking out with PayPal');
+      }
+    }).render(this.paypalElement?.nativeElement);
+
   }
   store(){
     if(this.address_client_selected){
