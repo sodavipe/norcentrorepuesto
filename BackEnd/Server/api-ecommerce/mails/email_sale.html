@@ -29,8 +29,8 @@
 	
 
 	<style type="text/css" media="screen">
-		body { padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#f4ecfa; -webkit-text-size-adjust:none }
-		a { color:#f3189e; text-decoration:none }
+		body { padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#faecec; -webkit-text-size-adjust:none }
+		a { color:#ff0000; text-decoration:none }
 		p { padding:0 !important; margin:0 !important } 
 		img { margin: 0 !important; -ms-interpolation-mode: bicubic; /* Allow smoother rendering of resized image in Internet Explorer */ }
 
@@ -41,13 +41,13 @@
 
 		.l-white a { color: #ffffff; }
 		.l-black a { color: #282828; }
-		.l-pink a { color: #f3189e; }
+		.l-pink a { color: #ff0000; }
 		.l-grey a { color: #6e6e6e; }
-		.l-purple a { color: #9128df; }
+		.l-purple a { color: #f3db03; }
 
-		.gradient { background: linear-gradient(to right, #9028df 0%,#f3189e 100%); }
+		.gradient { background: linear-gradient(to right, #f3db03 0%,#ff0000 100%); }
 
-		.btn-secondary { border-radius: 10px; background: linear-gradient(to right, #9028df 0%,#f3189e 100%); }
+		.btn-secondary { border-radius: 10px; background: linear-gradient(to right, #f3db03 0%,#ff0000 100%); }
 
 				
 		/* Mobile styles */
@@ -96,9 +96,9 @@
 
 			</style>
 </head>
-<body class="body" style="padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#f4ecfa; -webkit-text-size-adjust:none;">
+<body class="body" style="padding:0 !important; margin:0 auto !important; display:block !important; min-width:100% !important; width:100% !important; background:#faecec; -webkit-text-size-adjust:none;">
 	<center>
-		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 0; padding: 0; width: 100%; height: 100%;" bgcolor="#f4ecfa" class="gwfw">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 0; padding: 0; width: 100%; height: 100%;" bgcolor="#faecec" class="gwfw">
 			<tr>
 				<td style="margin: 0; padding: 0; width: 100%; height: 100%;" align="center" valign="top">
 					<table width="600" border="0" cellspacing="0" cellpadding="0" class="m-shell">
@@ -119,7 +119,7 @@
 											<!-- Container -->
 											<table width="100%" border="0" cellspacing="0" cellpadding="0">
 												<tr>
-													<td class="gradient pt-10" style="border-radius: 10px 10px 0 0; padding-top: 10px;" bgcolor="#f3189e">
+													<td class="gradient pt-10" style="border-radius: 10px 10px 0 0; padding-top: 10px;" bgcolor="#ff0000">
 														<table width="100%" border="0" cellspacing="0" cellpadding="0">
 															<tr>
 																<td style="border-radius: 10px 10px 0 0;" bgcolor="#ffffff">
@@ -150,14 +150,14 @@
 																								<tr>
 																									<td class="title-36 a-center pb-15" style="font-size:36px; line-height:40px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px;">
 																										<multiline>
-																											<strong>Thanks for your order!</strong>
+																											<strong>GRACIAS POR EJECUTAR SU ÓRDEN!</strong>
 																										</multiline>
 																									</td>
 																								</tr>
 																								<tr>
 																									<td class="text-16 lh-26 a-center" style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 26px; text-align:center;">
 																										<multiline>
-																											We&rsquo;ll send tracking information as soon as your order ships.
+																											A continuación los detalles de su compra...
 																										</multiline>
 																									</td>
 																								</tr>
@@ -177,10 +177,10 @@
 																										<!-- Button -->
 																										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																											<tr>
-																												<td class="btn-20 btn-secondary c-white l-white" bgcolor="#f3189e" style="font-size:20px; line-height:24px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; min-width:auto !important; border-radius:10px; background:linear-gradient(to right, #9028df 0%,#f3189e 100%); color:#ffffff;">
+																												<td class="btn-20 btn-secondary c-white l-white" bgcolor="#ff0000" style="font-size:20px; line-height:24px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; min-width:auto !important; border-radius:10px; background:linear-gradient(to right, #f3db03 0%,#ff0000 100%); color:#ffffff;">
 																													<multiline>
 																														<a href="#" target="_blank" class="link c-white" style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
-																															<span class="link c-white" style="text-decoration:none; color:#ffffff;">ORDER: #1234567</span>
+																															<span class="link c-white" style="text-decoration:none; color:#ffffff;">ORDEN Nº: #<%= order._id  %></span>
 																														</a>
 																													</multiline>
 																												</td>
@@ -198,18 +198,18 @@
 																														<tr>
 																															<td class="title-20 pb-10" style="font-size:20px; line-height:24px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; padding-bottom: 10px;">
 																																<multiline>
-																																	<strong>Shipping details</strong>
+																																	<strong>Dirección:</strong>
 																																</multiline>
 																															</td>
 																														</tr>
 																														<tr>
 																															<td class="text-16" style="font-size:16px; line-height:20px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important;">
 																																<multiline>
-																																	Daniel Bergamot 
+																																	<%= address_sale.address  %> 
 																																	<br />
-																																	3409 S. Canondale Road 
+																																	<%= address_sale.pais + ' ' + address_sale.region + ' ' + address_sale.ciudad %>
 																																	<br />
-																																	Chicago, IL 60301
+																																	<%= address_sale.telefono  %> 
 																																</multiline>
 																															</td>
 																														</tr>
@@ -221,14 +221,14 @@
 																														<tr>
 																															<td class="title-20 pb-10" style="font-size:20px; line-height:24px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; padding-bottom: 10px;">
 																																<multiline>
-																																	<strong>Estimated arrival</strong>
+																																	<strong>Nombre del cliente:</strong>
 																																</multiline>
 																															</td>
 																														</tr>
 																														<tr>
 																															<td class="text-16" style="font-size:16px; line-height:20px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important;">
 																																<multiline>
-																																	04/22 – 04/25/18
+																																	<%= address_sale.name + ' ' +  address_sale.surname %> 
 																																</multiline>
 																															</td>
 																														</tr>
@@ -247,97 +247,52 @@
 																										</table>
 																									</td>
 																								</tr>
-																								<tr>
-																									<td class="pb-30" style="padding-bottom: 30px;">
-																										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																											<tr>
-																												<th class="column-top" valign="top" width="230" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
-																													<div class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;"><a href="#" target="_blank"><img src="../images/img_product.jpg" border="0" width="230" height="180" editable="true" alt="" /></a></div>
-																												</th>
-																												<th class="column-top mpb-15" valign="top" width="30" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;"></th>
-																												<th class="column-top" valign="top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
-																													<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																														<tr>
-																															<td class="title-20 pb-10" style="font-size:20px; line-height:24px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; padding-bottom: 10px;">
-																																<multiline>
-																																	<strong>Product Name</strong>
-																																</multiline>
-																															</td>
-																														</tr>
-																														<tr>
-																															<td class="text-16 lh-26 pb-15" style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; padding-bottom: 15px;">
-																																<multiline>
-																																	Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-																																</multiline>
-																															</td>
-																														</tr>
-																														<tr>
-																															<td class="text-16 lh-26 c-black" style="font-size:16px; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; color:#282828;">
-																																<multiline>
-																																	<strong>Color:</strong> white
-																																	<br />
-																																	<strong>Qty:</strong> 1
-																																	<br />
-																																	<strong>Price:</strong> $290.99
-																																</multiline>
-																															</td>
-																														</tr>
-																													</table>
-																												</th>
-																											</tr>
-																										</table>
-																									</td>
-																								</tr>
-																								<tr>
-																									<td class="pb-30" style="padding-bottom: 30px;">
-																										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																											<tr>
-																												<th class="column-top" valign="top" width="230" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
-																													<div class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;"><a href="#" target="_blank"><img src="../images/img_product.jpg" border="0" width="230" height="180" editable="true" alt="" /></a></div>
-																												</th>
-																												<th class="column-top mpb-15" valign="top" width="30" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;"></th>
-																												<th class="column-top" valign="top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
-																													<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																														<tr>
-																															<td class="title-20 pb-10" style="font-size:20px; line-height:24px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; padding-bottom: 10px;">
-																																<multiline>
-																																	<strong>Product Name</strong>
-																																</multiline>
-																															</td>
-																														</tr>
-																														<tr>
-																															<td class="text-16 lh-26 pb-15" style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; padding-bottom: 15px;">
-																																<multiline>
-																																	Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-																																</multiline>
-																															</td>
-																														</tr>
-																														<tr>
-																															<td class="text-16 lh-26 c-black" style="font-size:16px; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; color:#282828;">
-																																<multiline>
-																																	<strong>Color:</strong> white
-																																	<br />
-																																	<strong>Qty:</strong> 1
-																																	<br />
-																																	<strong>Price:</strong> $290.99
-																																</multiline>
-																															</td>
-																														</tr>
-																													</table>
-																												</th>
-																											</tr>
-																										</table>
-																									</td>
-																								</tr>
-																								<tr>
-																									<td class="pt-10 pb-40" style="padding-top: 10px; padding-bottom: 40px;">
-																										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																											<tr>
-																												<td class="img" height="1" bgcolor="#ebebeb" style="font-size:0pt; line-height:0pt; text-align:left;">&nbsp;</td>
-																											</tr>
-																										</table>
-																									</td>
-																								</tr>
+                                                                                                <% for(var i=0; i < order_detail.length; i++) { %>
+                                                                                                    <tr>
+                                                                                                        <td class="pb-30" style="padding-bottom: 30px;">
+                                                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                                                <tr>
+                                                                                                                    <th class="column-top" valign="top" width="230" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                                                                                                                        <div class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;"><a href="#" target="_blank"><img src="../images/img_product.jpg" border="0" width="230" height="180" editable="true" alt="" /></a></div>
+                                                                                                                    </th>
+                                                                                                                    <th class="column-top mpb-15" valign="top" width="30" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;"></th>
+                                                                                                                    <th class="column-top" valign="top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+                                                                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                                                            <tr>
+                                                                                                                                <td class="title-20 pb-10" style="font-size:20px; line-height:24px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; padding-bottom: 10px;">
+                                                                                                                                    <multiline>
+                                                                                                                                        <strong><%= order_detail[i].product.title  %></strong>
+																																		
+                                                                                                                                    </multiline>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td class="text-16 lh-26 pb-15" style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; padding-bottom: 15px;">
+                                                                                                                                    <multiline>
+                                                                                                                                        <%= order_detail[i].product.resumen  %>
+                                                                                                                                    </multiline>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td class="text-16 lh-26 c-black" style="font-size:16px; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; color:#282828;">
+                                                                                                                                    <multiline>
+                                                                                                                                        <% if(order_detail[i].variedad) { %>
+                                                                                                                                            <strong>Variedad:</strong><%= order_detail[i].variedad.valor  %>
+                                                                                                                                            <br />
+                                                                                                                                            <% } %>
+                                                                                                                                        <strong>Cantidad:</strong> <%= order_detail[i].cantidad  %>
+                                                                                                                                        <br />
+                                                                                                                                        <strong>Precio:</strong> <%= order_detail[i].total.toFixed(2)  %>
+                                                                                                                                    </multiline>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </th>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <% } %>
 																								<tr>
 																									<td class="pb-30" style="padding-bottom: 30px;">
 																										<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -347,14 +302,14 @@
 																														<tr>
 																															<td class="title-20 pb-10" style="font-size:20px; line-height:24px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; padding-bottom: 10px;">
 																																<multiline>
-																																	<strong>Payment method</strong>
+																																	<strong>Método de Pago</strong>
 																																</multiline>
 																															</td>
 																														</tr>
 																														<tr>
 																															<td class="text-16" style="font-size:16px; line-height:20px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important;">
 																																<multiline>
-																																	Mastercard ending in 4097
+																																	<%= order.method_payment  %>
 																																</multiline>
 																															</td>
 																														</tr>
@@ -369,39 +324,13 @@
 																																	<tr>
 																																		<td class="title-20 lh-30 a-right mt-left mw-auto" width="100" style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 30px; text-align:right;">
 																																			<multiline>
-																																				<strong>Subtotal:</strong>
+																																				<strong>NOTA:</strong>
 																																			</multiline>
 																																		</td>
 																																		<td class="img mw-15" width="20" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
 																																		<td class="title-20 lh-30 mt-right" style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 30px;">
 																																			<multiline>
-																																				$290.99
-																																			</multiline>
-																																		</td>
-																																	</tr>
-																																	<tr>
-																																		<td class="title-20 lh-30 a-right mt-left" style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 30px; text-align:right;">
-																																			<multiline>
-																																				<strong>Shipping:</strong>
-																																			</multiline>
-																																		</td>
-																																		<td class="img mw-15" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
-																																		<td class="title-20 lh-30 mt-right" style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 30px;">
-																																			<multiline>
-																																				$0.00
-																																			</multiline>
-																																		</td>
-																																	</tr>
-																																	<tr>
-																																		<td class="title-20 lh-30 a-right mt-left" style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; line-height: 30px; text-align:right;">
-																																			<multiline>
-																																				<strong>Tax:</strong>
-																																			</multiline>
-																																		</td>
-																																		<td class="img mw-15" style="font-size:0pt; line-height:0pt; text-align:left;"></td>
-																																		<td class="title-20 lh-30 mt-right" style="font-size:20px; color:#282828; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 30px;">
-																																			<multiline>
-																																				$4.32
+																																				<p>El total muestra el precio incluido el IGV</p>
 																																			</multiline>
 																																		</td>
 																																	</tr>
@@ -413,10 +342,10 @@
 																																<!-- Button -->
 																																<table border="0" cellspacing="0" cellpadding="0" class="mw-100p" style="min-width: 200px;">
 																																	<tr>
-																																		<td class="btn-20 btn-secondary c-white l-white" bgcolor="#f3189e" style="font-size:20px; line-height:24px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; min-width:auto !important; border-radius:10px; background:linear-gradient(to right, #9028df 0%,#f3189e 100%); color:#ffffff;">
+																																		<td class="btn-20 btn-secondary c-white l-white" bgcolor="#ff0000" style="font-size:20px; line-height:24px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; min-width:auto !important; border-radius:10px; background:linear-gradient(to right, #f3db03 0%,#ff0000 100%); color:#ffffff;">
 																																			<multiline>
 																																				<a href="#" target="_blank" class="link c-white" style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
-																																					<span class="link c-white" style="text-decoration:none; color:#ffffff;">TOTAL: $290.99</span>
+																																					<span class="link c-white" style="text-decoration:none; color:#ffffff;">TOTAL: <%= order.total  %> <%= order.currency_payment %></span>
 																																				</a>
 																																			</multiline>
 																																		</td>
@@ -452,7 +381,7 @@
 																										<!-- Button -->
 																										<table border="0" cellspacing="0" cellpadding="0" style="min-width: 200px;">
 																											<tr>
-																												<td class="btn-16 c-white l-white" bgcolor="#f3189e" style="font-size:16px; line-height:20px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
+																												<td class="btn-16 c-white l-white" bgcolor="#ff0000" style="font-size:16px; line-height:20px; mso-padding-alt:15px 35px; font-family:'PT Sans', Arial, sans-serif; text-align:center; font-weight:bold; text-transform:uppercase; border-radius:25px; min-width:auto !important; color:#ffffff;">
 																													<multiline>
 																														<a href="#" target="_blank" class="link c-white" style="display: block; padding: 15px 35px; text-decoration:none; color:#ffffff;">
 																															<span class="link c-white" style="text-decoration:none; color:#ffffff;">VIEW MY ORDER</span>

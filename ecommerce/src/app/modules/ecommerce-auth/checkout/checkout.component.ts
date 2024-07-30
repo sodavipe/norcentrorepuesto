@@ -109,7 +109,7 @@ export class CheckoutComponent implements OnInit {
 
         let sale = {
           user: this.authEcommerce.authService.user._id,
-          currency_payment: 'USD',
+          currency_payment: 'PEN',
           method_payment: 'PAYPAL',
           n_transaccion: Order.purchase_units[0].payments.captures[0].id,
           total: this.totalCart,

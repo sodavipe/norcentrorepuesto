@@ -70,8 +70,8 @@ export default {
 
 
             let Order = await models.Sale.findById({_id:req.params.id}).populate("user");
-
-
+            let OrderDetail = await models.SaleDetail.find({sale:Order._id}).populate("product").populate("variedad");
+            let AddressSale = await models.SaleAddress.findOne({sale: Order._id});
             var transporter = nodemailer.createTransport(smtpTransport({
                 service: 'gmail',
                 host: 'smtp.gmail.com',
@@ -82,7 +82,7 @@ export default {
             }));
             readHTMLFile(process.cwd() + '/mails/email_sale.html', (err, html)=>{
                                     
-                let rest_html = ejs.render(html, {order: Order});
+                let rest_html = ejs.render(html, {order: Order, address_sale:AddressSale, order_detail:OrderDetail});
         
                 var template = handlebars.compile(rest_html);
                 var htmlToSend = template({op:true});
