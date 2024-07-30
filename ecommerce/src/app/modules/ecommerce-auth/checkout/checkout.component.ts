@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EcommerceAuthService } from '../_service/ecommerce-auth.service';
 import { CartService } from '../../ecommerce-guest/_service/cart.service';
-
+import { EcommerceAuthExchangeRateService } from '../_service/ecommerce-auth-exchange-rate.service';
 
 declare function alertDanger([]):any;
 declare function alertWarning([]):any;
@@ -34,12 +34,26 @@ export class CheckoutComponent implements OnInit {
   listCart:any = [];
   subtotalCart:any = 0;
   totalCart:any = 0;
+  totalCartUSD:any = 0;
+  exchangeRate: number = 0;
   constructor(
     public authEcommerce:EcommerceAuthService,
     public cartService:CartService,
+    public exchangeRateService:EcommerceAuthExchangeRateService
   ) { }
-
-  ngOnInit(): void {
+  loadExchangeRate(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.exchangeRateService.getExchangeRate().subscribe((data: any) => {
+        this.exchangeRate = data.rates.USD;
+        console.log(this.exchangeRate);
+        resolve();
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+  async ngOnInit(): Promise<void> {
+    await this.loadExchangeRate();
     this.authEcommerce.listAddressClient(this.authEcommerce.authService.user._id).subscribe((resp:any)=>{
       console.log(resp);
       this.listAddressClient = resp.address_client;
@@ -50,9 +64,9 @@ export class CheckoutComponent implements OnInit {
       const subtotal = this.listCart.reduce((sum: any, item: any) => sum + item.total, 0);
       const impuesto = subtotal * 0.18
       this.subtotalCart = this.listCart.reduce((sum: any, item: any) => sum + item.total, 0).toFixed(2);
-      this.totalCart = (subtotal + impuesto).toFixed(2)
+      this.totalCart = (subtotal + impuesto).toFixed(2);
+      this.totalCartUSD = (this.totalCart*this.exchangeRate).toFixed(2);
     })
-
     paypal.Buttons({
       // optional styling for buttons
       // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -66,12 +80,20 @@ export class CheckoutComponent implements OnInit {
       createOrder: (data:any, actions:any) => {
           // pass in any options from the v2 orders create call:
           // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
+          if(this.listCart.length == 0){
+            alertDanger("NO SE PUEDE PROCESAR UNA ORDEN SIN NINGÚN ELEMENTO DENTRO DEL CARRITO");
+            return;
+          }
+          if(!this.address_client_selected){
+            alertDanger("NECESITAS SELECCIONAR UNA DIRECCIÓN DE ENVIO");
+            return;
+          }
           const createOrderPayload = {
             purchase_units: [
               {
                 amount: {
                     description: "COMPRAR POR EL ECOMMERCE",
-                    value: 50
+                    value: this.totalCartUSD,
                 }
               }
             ]
@@ -85,6 +107,32 @@ export class CheckoutComponent implements OnInit {
 
         // Order.purchase_units[0].payments.captures[0].id
 
+        let sale = {
+          user: this.authEcommerce.authService.user._id,
+          currency_payment: 'USD',
+          method_payment: 'PAYPAL',
+          n_transaccion: Order.purchase_units[0].payments.captures[0].id,
+          total: this.totalCart,
+        };
+
+        let sale_address = {
+          name:this.name,
+          surname:this.surname,
+          pais:this.pais,
+          address:this.address,
+          referencia:this.referencia,
+          ciudad:this.ciudad,
+          region:this.region,
+          telefono:this.telefono,
+          email:this.email,
+          nota:this.nota,
+        }
+
+
+        this.authEcommerce.registerSale({sale:sale,sale_address:sale_address}).subscribe((resp:any)=>{
+          console.log(resp);
+          alertSuccess(resp.message);
+        })
           // return actions.order.capture().then(captureOrderHandler);
       },
       // handle unrecoverable errors

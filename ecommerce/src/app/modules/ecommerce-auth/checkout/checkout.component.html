@@ -147,9 +147,13 @@
                                           </td>
                                       </tr>
                                       <tr class="order-total">
-                                          <td>Total (Con IGV)</td>
+                                          <td>Total en soles (Con IGV)</td>
                                           <td class="order-total-amount">S/. {{totalCart | number:'1.2-2'}}</td>
                                       </tr>
+                                      <tr class="order-total">
+                                        <td>Total en dólares (Con IGV)</td>
+                                        <td class="order-total-amount">$ {{totalCartUSD | number:'1.2-2'}}</td>
+                                    </tr>
                                   </tbody>
                               </table>
                           </div>
@@ -174,7 +178,7 @@
                                       <label for="radio6">Paypal</label>
                                       <img src="./assets/images/others/payment.png" alt="Paypal payment">
                                   </div>
-                                  <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                  <p>Paga vía Paypal; usted puede pagar con su tarjeta de crédito si es que no cuenta con alguna cuenta de PayPal (Pagar por este método es necesario la conversión de su moneda local a Dólares Estadounidenses (USD))</p>
                               </div>
                           </div>
                           <div #paypal>

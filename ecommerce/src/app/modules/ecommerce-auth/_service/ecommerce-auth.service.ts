@@ -38,4 +38,10 @@ export class EcommerceAuthService {
   }
 
   // FIN
+
+  registerSale(data:any){
+    let headers = new HttpHeaders({'token':this.authService.token});
+    let URL = URL_SERVICIOS+"sale/register";
+    return this.http.post(URL,data,{headers:headers});
+  }
 }
