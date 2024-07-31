@@ -44,4 +44,10 @@ export class EcommerceAuthService {
     let URL = URL_SERVICIOS+"sale/register";
     return this.http.post(URL,data,{headers:headers});
   }
+
+  showProfileClient(data:any){
+    let headers = new HttpHeaders({'token':this.authService.token});
+    let URL = URL_SERVICIOS+"home/profile_client";
+    return this.http.post(URL,data,{headers:headers});
+  }
 }

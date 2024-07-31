@@ -9,6 +9,6 @@ const router = routerx();
 // http://localhost:3000/api/user/ + CRUDS
 
 router.post("/register",auth.verifyEcommerce,SaleController.register);
-router.get("/send_email/:id",SaleController.sendEmail);
+// router.get("/send_email/:id",SaleController.sendEmail);
 
 export default router;

@@ -150,7 +150,7 @@
 																								<tr>
 																									<td class="title-36 a-center pb-15" style="font-size:36px; line-height:40px; color:#282828; font-family:'PT Sans', Arial, sans-serif; min-width:auto !important; text-align:center; padding-bottom: 15px;">
 																										<multiline>
-																											<strong>GRACIAS POR EJECUTAR SU ÓRDEN!</strong>
+																											<strong>GRACIAS POR EJECUTAR SU ORDEN!</strong>
 																										</multiline>
 																									</td>
 																								</tr>
@@ -270,6 +270,7 @@
                                                                                                                                 <td class="text-16 lh-26 pb-15" style="font-size:16px; color:#6e6e6e; font-family:'PT Sans', Arial, sans-serif; text-align:left; min-width:auto !important; line-height: 26px; padding-bottom: 15px;">
                                                                                                                                     <multiline>
                                                                                                                                         <%= order_detail[i].product.resumen  %>
+																																		<strong>Mas Datos del Producto en la Web</strong>
                                                                                                                                     </multiline>
                                                                                                                                 </td>
                                                                                                                             </tr>
@@ -282,7 +283,7 @@
                                                                                                                                             <% } %>
                                                                                                                                         <strong>Cantidad:</strong> <%= order_detail[i].cantidad  %>
                                                                                                                                         <br />
-                                                                                                                                        <strong>Precio:</strong> <%= order_detail[i].total.toFixed(2)  %>
+                                                                                                                                        <strong>Precio:</strong> <%= order_detail[i].total.toFixed(2) + ' ' + order.currency_payment  %>
                                                                                                                                     </multiline>
                                                                                                                                 </td>
                                                                                                                             </tr>
