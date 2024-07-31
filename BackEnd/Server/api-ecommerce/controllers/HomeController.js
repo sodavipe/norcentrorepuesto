@@ -1,5 +1,7 @@
 import models from "../models";
 import resource from "../resource";
+import bcript from 'bcryptjs';
+
 
 export default {
  list:async(req,res) => {
@@ -145,8 +147,12 @@ export default {
             });
         }
 
+
+        let ADDRESS_CLIENT = await models.AddressClient.find({user: user_id}).sort({'createdAt':-1});
+
         res.status(200).json({
-            sale_orders: sale_orders
+            sale_orders: sale_orders,
+            address_client:ADDRESS_CLIENT,
         })
     } catch (error) {
         res.status(500).send({
@@ -154,5 +160,36 @@ export default {
         });
         console.log(error);
     }
-}
+},
+    update_client :async(req,res) =>{
+        try {
+            if(req.files){
+                var img_path = req.files.avatar.path;
+                var name = img_path.split('\\');
+                var avatar_name = name[2];
+                console.log(avatar_name)
+            }
+            if(req.body.password){
+                req.body.password = await bcript.hash(req.body.password,10);
+            }
+            await models.User.findByIdAndUpdate({_id: req.body._id}, req.body);
+
+            let User = await models.User.findOne({_id: req.body._id});
+            
+            res.status(200).json({
+                message: "SE GUARDÓ SU INFORMACIÓN CORRECTAMENTE",
+                user:{
+                    name:User.name,
+                    surname:User.surname,
+                    email:User.email,
+                    _id:User._id,
+                }
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN ERROR"
+            });
+            console.log(error);
+        }
+    }
 }

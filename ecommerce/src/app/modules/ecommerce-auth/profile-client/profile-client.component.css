@@ -1,0 +1,19 @@
+.new-address-link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007BFF;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.new-address-link:hover {
+  background-color: #0056b3;
+}
+
+.new-address-link:active {
+  background-color: #004085;
+}

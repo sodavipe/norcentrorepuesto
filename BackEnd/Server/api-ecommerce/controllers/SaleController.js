@@ -4,7 +4,7 @@ import handlebars from 'handlebars';
 import ejs from 'ejs';
 import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
-
+const imageBasePath = 'http://localhost:3000/api/products/uploads/product/';
 async function  sendEmail(sale_id) {
     try {
 
@@ -31,6 +31,7 @@ async function  sendEmail(sale_id) {
         let OrderDetail = await models.SaleDetail.find({sale:Order._id}).populate("product").populate("variedad");
         OrderDetail = OrderDetail.map(detail => {
             detail.product.resumen = truncateText(detail.product.resumen, 30);
+            detail.product.portada = imageBasePath + detail.product.portada;
             return detail;
         });
         let AddressSale = await models.SaleAddress.findOne({sale: Order._id});
@@ -42,6 +43,11 @@ async function  sendEmail(sale_id) {
             pass: 'qjbddapiqjzznhzv'
             }
         }));
+
+        // OrderDetail.forEach(detail => {
+        //     console.log(detail.product.portada);
+        // });
+
         readHTMLFile(process.cwd() + '/mails/email_sale.html', (err, html)=>{
                                 
             let rest_html = ejs.render(html, {order: Order, address_sale:AddressSale, order_detail:OrderDetail});

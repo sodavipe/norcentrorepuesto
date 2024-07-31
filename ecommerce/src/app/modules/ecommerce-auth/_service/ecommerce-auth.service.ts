@@ -50,4 +50,9 @@ export class EcommerceAuthService {
     let URL = URL_SERVICIOS+"home/profile_client";
     return this.http.post(URL,data,{headers:headers});
   }
+  UpdateProfileClient(data:any){
+    let headers = new HttpHeaders({'token':this.authService.token});
+    let URL = URL_SERVICIOS+"home/update_client";
+    return this.http.post(URL,data,{headers:headers});
+  }
 }
