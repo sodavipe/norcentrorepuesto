@@ -38,6 +38,12 @@ export class ProfileClientComponent implements OnInit {
   password:any = null;
   password_repeat:any = null;
 
+  //Reviews
+
+  cantidad :any = 0;
+  description : any = null;
+  sale_detail_selected:any = null;
+
   scrollToTop(event: Event): void {
     event.preventDefault(); // Previene el comportamiento predeterminado del enlace
     window.scrollTo({
@@ -211,4 +217,77 @@ export class ProfileClientComponent implements OnInit {
       }
     });
   }
+  viewReview(sale_detail:any){
+    this.sale_detail_selected = sale_detail;
+
+    if(this.sale_detail_selected.review){
+      this.cantidad= this.sale_detail_selected.review.cantidad;
+      this.description= this.sale_detail_selected.review.description;
+    }else{
+      this.cantidad = null
+      this.description = null
+    }
+  }
+  goDetail(){
+    this.sale_detail_selected = null;
+  }
+  addCantidad(cantidad:Number){
+    this.cantidad = cantidad;
+  }
+  save(){
+    if(this.sale_detail_selected.review){
+      this.updateReview();
+    }else{
+      this.saveReview();
+    }
+  }
+  saveReview(){
+    if(
+      !this.cantidad ||
+      !this.description
+    ){
+      alertDanger("TODOS LOS CAMPOS DEL FORMULARIO DE RESEÑAS SON IMPORTANTES");
+      return;
+    }
+    let data = {
+      product: this.sale_detail_selected.product._id,
+      sale_detail: this.sale_detail_selected._id,
+      user: this.authEcommerceService.authService.user._id,
+      cantidad: this.cantidad,
+      description: this.description,
+    }
+
+    this.authEcommerceService.registerProfileClientReview(data).subscribe((resp:any)=>{
+      console.log(resp);
+      this.sale_detail_selected.review = resp.review;
+      alertSuccess(resp.message);
+    })
+  }
+  updateReview(){
+    if(
+      !this.cantidad ||
+      !this.description
+    ){
+      alertDanger("TODOS LOS CAMPOS DEL FORMULARIO DE RESEÑAS SON IMPORTANTES");
+      return;
+    }
+    let data = {
+      _id:this.sale_detail_selected.review._id,
+      product: this.sale_detail_selected.product._id,
+      sale_detail: this.sale_detail_selected._id,
+      user: this.authEcommerceService.authService.user._id,
+      cantidad: this.cantidad,
+      description: this.description,
+    }
+
+    this.authEcommerceService.UpdateProfileClientReview(data).subscribe((resp:any)=>{
+      console.log(resp);
+      this.sale_detail_selected.review = resp.review;
+      alertSuccess(resp.message);
+    })
+  }
+  logout(){
+    this.authEcommerceService.authService.logout();
+  }
 }
+

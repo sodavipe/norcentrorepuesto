@@ -117,6 +117,7 @@ export default {
             let collection_detail_orders = [];
 
             for (const detail_order of detail_orders) {
+                let reviewS = await models.Review.findOne({sale_detail:detail_order._id});
                 collection_detail_orders.push({
                     _id: detail_order._id,
                     product:{
@@ -138,6 +139,7 @@ export default {
                     price_unitario:detail_order.price_unitario,
                     subtotal:detail_order.subtotal,
                     total:detail_order.total,
+                    review:reviewS,
                 });
             }
             sale_orders.push({

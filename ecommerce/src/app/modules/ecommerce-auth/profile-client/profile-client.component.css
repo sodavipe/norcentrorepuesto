@@ -17,3 +17,10 @@
 .new-address-link:active {
   background-color: #004085;
 }
+
+
+.star i{
+  text-decoration: none;
+  outline: none;
+  color: gold
+}

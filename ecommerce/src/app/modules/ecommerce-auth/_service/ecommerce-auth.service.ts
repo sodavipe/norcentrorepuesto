@@ -55,4 +55,17 @@ export class EcommerceAuthService {
     let URL = URL_SERVICIOS+"home/update_client";
     return this.http.post(URL,data,{headers:headers});
   }
+
+  //Review
+  registerProfileClientReview(data:any){
+    let headers = new HttpHeaders({'token':this.authService.token});
+    let URL = URL_SERVICIOS+"review/register";
+    return this.http.post(URL,data,{headers:headers});
+  }
+  UpdateProfileClientReview(data:any){
+    let headers = new HttpHeaders({'token':this.authService.token});
+    let URL = URL_SERVICIOS+"review/update";
+    return this.http.put(URL,data,{headers:headers});
+  }
+
 }
