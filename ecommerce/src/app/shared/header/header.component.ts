@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/modules/ecommerce-guest/_service/cart.service';
-
+declare function alertSuccess([]):any;
 
 
 @Component({
@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit {
     this.cartService.deleteCart(cart._id).subscribe((resp:any)=>{
       console.log(resp);
       this.cartService.removeItemCart(cart);
+      alertSuccess("PRODUCTO ELIMINADO");
     })
   }
   isHome(){
