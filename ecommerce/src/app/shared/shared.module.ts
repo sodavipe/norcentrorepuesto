@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -12,6 +15,10 @@ import { FooterComponent } from './footer/footer.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule,
+    FormsModule,
   ],
   exports:[
     HeaderComponent,

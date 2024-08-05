@@ -29,8 +29,31 @@
                   <div class="col-lg-6 mb--40">
                       <div class="single-product-content">
                           <div class="inner">
-                              <h2 class="product-title">{{product_selected.title}}</h2>
-                              <span class="price-amount">S/. {{product_selected.price_soles}}</span>
+                              <h2 class="product-title">{{product_selected.title}}
+                              </h2>
+                              <ng-container *ngIf="getDiscount() > 0">
+                                <div class="discount-info">
+                                    <small>
+                                        <span class="discount-label">
+                                            DESCUENTO POR:
+                                        </span>
+                                        <strong class="campaign-type">
+                                            {{SALE_FLASH.type_campaign == 1 ? 'CAMPAÑA DE DESCUENTO' : 'VENTA FLASH'}}
+                                        </strong>
+                                    </small>
+                                    <br>
+                                    <small>
+                                        <span class="previous-price-label">
+                                            Precio Anterior:
+                                        </span>
+                                        <del class="previous-price">
+                                            S/. {{product_selected.price_soles}}
+                                        </del>
+                                    </small>
+                                </div>
+                            </ng-container>
+                              <!-- <span class="price-amount" *ngIf="getDiscount() > 0"> </span> -->
+                              <span class="price-amount">S/. {{product_selected.price_soles - getDiscount() | number:'1.2-2'}}</span>
                               <div class="product-rating">
                                   <div class="star-rating">
                                       <i class="fas fa-star"></i>

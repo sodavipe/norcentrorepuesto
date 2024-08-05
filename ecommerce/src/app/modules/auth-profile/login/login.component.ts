@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
       console.log(resp);
       if(!resp.error && resp){
         //EL USUARIO INGRESÓ CON ÉXITO
-        this.router.navigate(["/"])
+        // this.router.navigate(["/"])
+        location.reload();
       }else{
         alertDanger(resp.error.message);
       }

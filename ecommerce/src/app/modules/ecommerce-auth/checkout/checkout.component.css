@@ -17,3 +17,42 @@
 .new-address-link:active {
   background-color: #004085;
 }
+.exchange-rate-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease;
+  user-select: none;
+  cursor: default;
+  margin-bottom: 30px;
+}
+.exchange-rate-box:hover {
+  transform: scale(1.05);
+}
+.exchange-rate-box h2 {
+  margin: 0 0 20px;
+}
+.exchange-rate {
+  font-size: 24px;
+  color: #007bff;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.exchange-rate img {
+  width: 30px;
+  height: auto;
+  margin: 0 5px;
+}
+.update-info {
+  font-size: 14px;
+  color: #666;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}

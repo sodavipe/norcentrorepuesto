@@ -57,3 +57,45 @@
   word-wrap: break-word; /* Permite que las palabras largas se dividan si es necesario */
   line-height: 1.6; /* Ajusta el espaciado entre líneas */
 }
+.discount-info {
+  padding: 10px;
+  margin-top: 10px;
+  line-height: 1.6;
+  font-size: 15px; /* Ajustar tamaño de fuente si es necesario */
+  color: #333;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+.discount-info:hover {
+  transform: scale(1.02);
+
+}
+.discount-label {
+  color: #d9534f; /* Color rojo para el texto del descuento */
+  font-weight: bold;
+  font-size: 16px; /* Aumentar el tamaño de fuente */
+}
+
+.campaign-type {
+  display: inline-block;
+  background-color: #f5c6cb;
+  padding: 4px 8px; /* Mayor padding para mayor visibilidad */
+  border-radius: 3px;
+  margin-left: 5px;
+  color: #721c24; /* Color más oscuro para texto */
+}
+
+.previous-price-label {
+  font-weight: bold;
+  color: #666;
+  font-size: 16px; /* Aumentar el tamaño de fuente */
+}
+
+.previous-price {
+  color: #999;
+  text-decoration: line-through;
+  font-weight: normal;
+  margin-left: 5px;
+  font-size: 16px; /* Aumentar el tamaño de fuente */
+}

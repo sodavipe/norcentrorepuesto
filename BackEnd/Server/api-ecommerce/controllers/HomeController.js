@@ -73,6 +73,9 @@ export default {
     try {
         let SLUG = req.params.slug;
 
+        let DISCOUNT_ID = req.query._id
+        console.log(DISCOUNT_ID);
+
         let Product = await models.Product.findOne({slug:SLUG,state:2});
 
         let VARIEDADES = await models.Variedad.find({product:Product._id});
@@ -84,10 +87,14 @@ export default {
             let VARIEDADES = await models.Variedad.find({product:Product._id});
             ObjectRelatedProducts.push(resource.Product.product_list(Product,VARIEDADES));
         }
-
+        let SALE_FLASH = null;
+        if(DISCOUNT_ID){
+            SALE_FLASH = await models.Discount.findById({_id:DISCOUNT_ID});
+        }
         res.status(200).json({
             product: resource.Product.product_list(Product,VARIEDADES),
             related_products: ObjectRelatedProducts,
+            SALE_FLASH: SALE_FLASH,
         })
     } catch (error) {
         res.status(500).send({

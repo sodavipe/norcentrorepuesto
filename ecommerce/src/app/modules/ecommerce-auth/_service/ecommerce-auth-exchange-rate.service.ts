@@ -13,4 +13,7 @@ export class EcommerceAuthExchangeRateService {
   getExchangeRate(): Observable<any> {
     return this.http.get('https://api.exchangerate-api.com/v4/latest/PEN');
   }
+  getExchangeRateUSD(): Observable<any>{
+    return this.http.get('https://api.exchangerate-api.com/v4/latest/USD');
+  }
 }

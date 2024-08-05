@@ -30,7 +30,7 @@ export class CheckoutComponent implements OnInit {
   nota:any = null;
   address_client_selected:any = null;
 
-
+  preciodolar:any = 0;
   listCart:any = [];
   subtotalCart:any = 0;
   totalCart:any = 0;
@@ -45,6 +45,9 @@ export class CheckoutComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.exchangeRateService.getExchangeRate().subscribe((data: any) => {
         this.exchangeRate = data.rates.USD;
+        this.exchangeRateService.getExchangeRateUSD().subscribe((data:any)=>{
+          this.preciodolar = data.rates.PEN;
+        })
         console.log(this.exchangeRate);
         resolve();
       }, (error) => {

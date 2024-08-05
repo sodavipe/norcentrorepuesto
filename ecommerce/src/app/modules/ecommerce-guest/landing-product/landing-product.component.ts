@@ -22,6 +22,9 @@ export class LandingProductComponent implements OnInit {
   product_selected_modal:any = null;
   variedad_selected:any = null;
 
+
+  discount_id:any;
+  SALE_FLASH:any = null;
   constructor(
     public ecommerce_guest:EcommerceGuestService,
     public router:Router,
@@ -33,11 +36,15 @@ export class LandingProductComponent implements OnInit {
     this.routerActive.params.subscribe((resp:any) =>{
       this.slug = resp["slug"];
     })
+    this.routerActive.queryParams.subscribe((resp:any) =>{
+      this.discount_id = resp["_id"];
+    })
     console.log(this.slug);
-    this.ecommerce_guest.showLandingProduct(this.slug).subscribe((resp:any)=>{
+    this.ecommerce_guest.showLandingProduct(this.slug,this.discount_id).subscribe((resp:any)=>{
       console.log(resp);
       this.product_selected =  resp.product;
       this.related_products = resp.related_products;
+      this.SALE_FLASH = resp.SALE_FLASH;
       setTimeout(() => {
         LandingProductDetail();
       }, 50);
@@ -54,6 +61,18 @@ export class LandingProductComponent implements OnInit {
         ModalProductDetail();
       },50);
     }, 100);
+  }
+
+  getDiscount(){
+    let discount = 0;
+    if(this.SALE_FLASH){
+      if(this.SALE_FLASH.type_discount == 1){
+        return this.SALE_FLASH.discount * this.product_selected.price_soles*0.01
+      }else{
+        return this.SALE_FLASH.discount
+      }
+    }
+    return discount;
   }
   getCallNewPrice(product:any){
     // if(this.FlashSale.type_discount == 1){
@@ -87,15 +106,15 @@ export class LandingProductComponent implements OnInit {
     let data = {
       user:this.cartService._authService.user._id,
       product:this.product_selected._id,
-      type_discount: null,
-      discound:0,
+      type_discount: this.SALE_FLASH ? this.SALE_FLASH.type_discount : null,
+      discount:this.SALE_FLASH ? this.SALE_FLASH.discount : 0,
       cantidad:$("#qty-cart").val(),
       variedad:this.variedad_selected? this.variedad_selected._id :null,
       code_cupon:null,
-      code_discount:null,
+      code_discount:this.SALE_FLASH ? this.SALE_FLASH._id : null,
       price_unitario:this.product_selected.price_soles,
-      subtotal:this.product_selected.price_soles,
-      total:this.product_selected.price_soles*$("#qty-cart").val(),
+      subtotal:this.product_selected.price_soles - this.getDiscount(),
+      total:(this.product_selected.price_soles - this.getDiscount())*$("#qty-cart").val(),
     }
     this.cartService.registerCart(data).subscribe((resp:any)=>{
       if(resp.message == 403){
