@@ -18,11 +18,42 @@ export default {
             return resource.Category.category_list(category);
         })
 
+        let CampaignDiscount = await models.Discount.findOne({
+            type_campaign: 1,
+            start_date_num:{$lte:TIME_NOW},
+            end_date_num:{$gte:TIME_NOW},
+        });
+
+        console.log(CampaignDiscount.categories);
+
         let BestProducts = await models.Product.find({state:2}).sort({"createdAt": -1});
         var ObjectBestProducts = [];
         for (const Product of BestProducts) {
             let VARIEDADES = await models.Variedad.find({product:Product._id});
-            ObjectBestProducts.push(resource.Product.product_list(Product,VARIEDADES));
+            let REVIEWS = await models.Review.find({product:Product._id})
+            let AVG_REVIEW = REVIEWS.length > 0 ? Math.ceil(REVIEWS.reduce((sum,item)=> sum + item.cantidad,0)/REVIEWS.length) : 0;
+            let COUNT_REVIEW = REVIEWS.length;
+            let DISCOUNT_EXISTS = null;
+        if(CampaignDiscount){
+            if(CampaignDiscount.type_segment==1){//POR PRODUCTO
+                let products_a = [];
+                CampaignDiscount.products.forEach(item => {
+                    products_a.push(item._id);
+                })
+                if(products_a.includes(Product._id+"")){
+                        DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }else{//POR CATEGORÍA
+                let categories_a = [];
+                CampaignDiscount.categories.forEach(item => {
+                    categories_a.push(item._id);
+                })
+                        if(categories_a.includes(Product.category+"")){
+                            DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }
+        }
+            ObjectBestProducts.push(resource.Product.product_list(Product,VARIEDADES,AVG_REVIEW,COUNT_REVIEW,DISCOUNT_EXISTS));
         }
 
         let OurProducts = await models.Product.find({state:2}).sort({"createdAt": 1});
@@ -30,7 +61,30 @@ export default {
         var ObjectOurProducts = [];
         for (const Product of OurProducts) {
             let VARIEDADES = await models.Variedad.find({product:Product._id});
-            ObjectOurProducts.push(resource.Product.product_list(Product,VARIEDADES));
+            let REVIEWS = await models.Review.find({product:Product._id})
+            let AVG_REVIEW = REVIEWS.length > 0 ? Math.ceil(REVIEWS.reduce((sum,item)=> sum + item.cantidad,0)/REVIEWS.length) : 0;
+            let COUNT_REVIEW = REVIEWS.length;
+            let DISCOUNT_EXISTS = null;
+        if(CampaignDiscount){
+            if(CampaignDiscount.type_segment==1){//POR PRODUCTO
+                let products_a = [];
+                CampaignDiscount.products.forEach(item => {
+                    products_a.push(item._id);
+                })
+                if(products_a.includes(Product._id+"")){
+                        DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }else{//POR CATEGORÍA
+                let categories_a = [];
+                CampaignDiscount.categories.forEach(item => {
+                    categories_a.push(item._id);
+                })
+                        if(categories_a.includes(Product.category+"")){
+                            DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }
+        }
+            ObjectOurProducts.push(resource.Product.product_list(Product,VARIEDADES,AVG_REVIEW,COUNT_REVIEW,DISCOUNT_EXISTS));
         }
 
         // OurProducts = OurProducts.map(async (product)=>{
@@ -80,6 +134,10 @@ export default {
 
         let VARIEDADES = await models.Variedad.find({product:Product._id});
 
+        let REVIEWS = await models.Review.find({product:Product._id}).populate("user");
+        let AVG_REVIEW = REVIEWS.length > 0 ? Math.ceil(REVIEWS.reduce((sum,item)=> sum + item.cantidad,0)/REVIEWS.length) : 0;
+        let COUNT_REVIEW = REVIEWS.length;
+
         let RelatedProducts = await models.Product.find({category: Product.category,state:2});
 
         var ObjectRelatedProducts = [];
@@ -95,6 +153,9 @@ export default {
             product: resource.Product.product_list(Product,VARIEDADES),
             related_products: ObjectRelatedProducts,
             SALE_FLASH: SALE_FLASH,
+            REVIEWS:REVIEWS,
+            AVG_REVIEW:AVG_REVIEW,
+            COUNT_REVIEW:COUNT_REVIEW,
         })
     } catch (error) {
         res.status(500).send({
