@@ -87,10 +87,10 @@ export class EditNewDiscountComponent implements OnInit {
           });
         });
       }else{
-        this.discount_selected.categories.forEach(category_selected => {
+        this.discount_selected.categories.forEach(products_selected => {
           this.categories.forEach(category => {
-            if(category._id == category_selected._id){
-              this.categories_selected.push(category);
+            if(category._id == products_selected._id){
+              this.categories_selected.push(this.category);
             }
           });
         });
