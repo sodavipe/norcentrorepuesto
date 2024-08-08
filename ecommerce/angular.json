@@ -23,12 +23,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css", "node_modules/slick-carousel/slick/slick.css"
+              "src/styles.css"
             ],"allowedCommonJsDependencies": [
               "sweetalert2"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.min.js",
-              "node_modules/slick-carousel/slick/slick.min.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {

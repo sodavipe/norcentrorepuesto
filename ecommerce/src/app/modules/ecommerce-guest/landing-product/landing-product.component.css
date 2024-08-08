@@ -99,27 +99,3 @@
   margin-left: 5px;
   font-size: 16px; /* Aumentar el tamaño de fuente */
 }
-
-
-
-.product-large-thumbnail-2 {
-  position: relative;
-}
-
-.product-large-thumbnail-2 .thumbnail {
-  overflow: hidden; /* Oculta el contenido que se desborda */
-  position: relative; /* Necesario para el posicionamiento absoluto del zoom */
-}
-
-.product-large-thumbnail-2 .thumbnail img {
-  transition: transform 0.3s ease, transform-origin 0.3s ease; /* Transiciones suaves para el zoom */
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  transform-origin: center; /* Asegura que el zoom se centre */
-}
-
-/* Efecto de zoom al pasar el ratón */
-.product-large-thumbnail-2 .thumbnail:hover img {
-  transform: scale(1.5); /* Ajusta el valor de scale según el nivel de zoom deseado */
-}

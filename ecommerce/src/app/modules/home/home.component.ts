@@ -77,4 +77,20 @@ export class HomeComponent implements OnInit {
       return product.price_soles - this.FlashSale.discount;
     }
   }
+  gestDiscountProduct(bestProd:any){
+    if(bestProd.campaign_discount){
+      if(bestProd.campaign_discount.type_discount == 1){ // 1 es Procentaje, 2 es Moneda
+        return bestProd.price_soles*bestProd.campaign_discount.discount*0.01;
+      }else{
+        return bestProd.campaign_discount;
+      }
+    }
+    return 0
+  }
+  getRouterDiscount(bestProd:any){
+    if(bestProd.campaign_discount){
+      return {_id:bestProd.campaign_discount._id};
+    }
+    return {};
+  }
 }

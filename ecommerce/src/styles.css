@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 /* Base para notificaciones */
-
 .notification-ecommerce {
   position: fixed;
   right: 2%;
@@ -92,4 +91,7 @@
     opacity: 0;
     top: 0;
   }
+}
+.start-del{
+    color:#6e6e6e !important;
 }
