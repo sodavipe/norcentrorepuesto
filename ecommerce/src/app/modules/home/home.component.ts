@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
         if(bestProd.campaign_discount.type_discount == 1){ // 1 es Procentaje, 2 es Moneda
           return bestProd.price_soles*bestProd.campaign_discount.discount*0.01;
         }else{
-          return bestProd.campaign_discount;
+          return bestProd.campaign_discount.discount;
         }
       }
     }

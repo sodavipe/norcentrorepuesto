@@ -24,7 +24,7 @@ export default {
             end_date_num:{$gte:TIME_NOW},
         });
 
-        console.log(CampaignDiscount.categories);
+        // console.log(CampaignDiscount.categories);
 
         let BestProducts = await models.Product.find({state:2}).sort({"createdAt": -1});
         var ObjectBestProducts = [];
@@ -106,7 +106,7 @@ export default {
                 ProductList.push(resource.Product.product_list(ObjectT,VARIEDADES));
             }
         }
-        console.log(FlashSale);
+        // console.log(FlashSale);
         res.status(200).json({
             sliders: Sliders,
             categories:Categories,
@@ -164,73 +164,123 @@ export default {
         console.log(error);
     }
  },
- profile_client:async(req,res) =>{
-    try {
-        let user_id = req.body.user_id;
+ search_product:async(req,res) =>{
+        try {
+            var TIME_NOW = req.query.TIME_NOW;
+            let search_product = req.body.search_product;
+            let OurProducts = await models.Product.find({state:2,"title":new RegExp(search_product, "i")}).sort({"createdAt": 1});
 
-        let Orders = await models.Sale.find({user:user_id});
+            let CampaignDiscount = await models.Discount.findOne({
+                type_campaign: 1,
+                start_date_num:{$lte:TIME_NOW},
+                end_date_num:{$gte:TIME_NOW},
+            });
 
-        let sale_orders = [];
+        var Products = [];
+        for (const Product of OurProducts) {
+            let VARIEDADES = await models.Variedad.find({product:Product._id});
+            let REVIEWS = await models.Review.find({product:Product._id})
+            let AVG_REVIEW = REVIEWS.length > 0 ? Math.ceil(REVIEWS.reduce((sum,item)=> sum + item.cantidad,0)/REVIEWS.length) : 0;
+            let COUNT_REVIEW = REVIEWS.length;
+            let DISCOUNT_EXISTS = null;
+        if(CampaignDiscount){
+            if(CampaignDiscount.type_segment==1){//POR PRODUCTO
+                let products_a = [];
+                CampaignDiscount.products.forEach(item => {
+                    products_a.push(item._id);
+                })
+                if(products_a.includes(Product._id+"")){
+                        DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }else{//POR CATEGORÍA
+                let categories_a = [];
+                CampaignDiscount.categories.forEach(item => {
+                    categories_a.push(item._id);
+                })
+                        if(categories_a.includes(Product.category+"")){
+                            DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }
+        }
+            Products.push(resource.Product.product_list(Product,VARIEDADES,AVG_REVIEW,COUNT_REVIEW,DISCOUNT_EXISTS));
+        }
+        res.status(200).json({
+            products:Products,
+        });
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN ERROR"
+            });
+            console.log(error);
+        }
+ },
+    profile_client:async(req,res) =>{
+        try {
+            let user_id = req.body.user_id;
 
-        for (const order of Orders) {
-            let detail_orders = await models.SaleDetail.find({sale:order._id}).populate({
-                path:"product",
-                populate:{
-                    path:"category"
-                },
-            }).populate("variedad");
+            let Orders = await models.Sale.find({user:user_id});
 
-            let sale_address = await models.SaleAddress.find({sale:order._id});
+            let sale_orders = [];
 
-            let collection_detail_orders = [];
-
-            for (const detail_order of detail_orders) {
-                let reviewS = await models.Review.findOne({sale_detail:detail_order._id});
-                collection_detail_orders.push({
-                    _id: detail_order._id,
-                    product:{
-                        _id: detail_order.product._id,
-                        title: detail_order.product.title,
-                        sku: detail_order.product.sku,
-                        imagen: 'http://localhost:3000' + '/api/products/uploads/product/' + detail_order.product.portada,//*
-                        slug:detail_order.product.slug,
-                        category:detail_order.product.category,
-                        price_soles:detail_order.product.price_soles,
-                        price_usd:detail_order.product.price_usd,
+            for (const order of Orders) {
+                let detail_orders = await models.SaleDetail.find({sale:order._id}).populate({
+                    path:"product",
+                    populate:{
+                        path:"category"
                     },
-                    type_discount:detail_order.type_discount,
-                    discound:detail_order.discound,
-                    cantidad:detail_order.cantidad,
-                    variedad:detail_order.variedad,
-                    code_cupon:detail_order.code_cupon,
-                    code_discount:detail_order.code_discount,
-                    price_unitario:detail_order.price_unitario,
-                    subtotal:detail_order.subtotal,
-                    total:detail_order.total,
-                    review:reviewS,
+                }).populate("variedad");
+
+                let sale_address = await models.SaleAddress.find({sale:order._id});
+
+                let collection_detail_orders = [];
+
+                for (const detail_order of detail_orders) {
+                    let reviewS = await models.Review.findOne({sale_detail:detail_order._id});
+                    collection_detail_orders.push({
+                        _id: detail_order._id,
+                        product:{
+                            _id: detail_order.product._id,
+                            title: detail_order.product.title,
+                            sku: detail_order.product.sku,
+                            imagen: 'http://localhost:3000' + '/api/products/uploads/product/' + detail_order.product.portada,//*
+                            slug:detail_order.product.slug,
+                            category:detail_order.product.category,
+                            price_soles:detail_order.product.price_soles,
+                            price_usd:detail_order.product.price_usd,
+                        },
+                        type_discount:detail_order.type_discount,
+                        discound:detail_order.discound,
+                        cantidad:detail_order.cantidad,
+                        variedad:detail_order.variedad,
+                        code_cupon:detail_order.code_cupon,
+                        code_discount:detail_order.code_discount,
+                        price_unitario:detail_order.price_unitario,
+                        subtotal:detail_order.subtotal,
+                        total:detail_order.total,
+                        review:reviewS,
+                    });
+                }
+                sale_orders.push({
+                    sale:order,
+                    sale_details:collection_detail_orders,
+                    sale_address:sale_address,
                 });
             }
-            sale_orders.push({
-                sale:order,
-                sale_details:collection_detail_orders,
-                sale_address:sale_address,
+
+
+            let ADDRESS_CLIENT = await models.AddressClient.find({user: user_id}).sort({'createdAt':-1});
+
+            res.status(200).json({
+                sale_orders: sale_orders,
+                address_client:ADDRESS_CLIENT,
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN ERROR"
             });
+            console.log(error);
         }
-
-
-        let ADDRESS_CLIENT = await models.AddressClient.find({user: user_id}).sort({'createdAt':-1});
-
-        res.status(200).json({
-            sale_orders: sale_orders,
-            address_client:ADDRESS_CLIENT,
-        })
-    } catch (error) {
-        res.status(500).send({
-            message: "OCURRIÓ UN ERROR"
-        });
-        console.log(error);
-    }
-},
+    },
     update_client :async(req,res) =>{
         try {
             if(req.files){
@@ -261,5 +311,6 @@ export default {
             });
             console.log(error);
         }
-    }
+    },
+    
 }

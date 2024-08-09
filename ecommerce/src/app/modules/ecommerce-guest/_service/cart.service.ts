@@ -69,4 +69,10 @@ export class CartService {
     let URL = URL_SERVICIOS + "cart/delete_all/" + cart_id;
     return this.http.delete(URL, { headers: headers });
   }
+  searchProduct(data:any){
+    let headers = new HttpHeaders({ 'token': this._authService.token });
+    let TIME_NOW = new Date().getTime();
+    let URL = URL_SERVICIOS + "home/search_product?TIME_NOW="+TIME_NOW;
+    return this.http.post(URL,data,{ headers: headers });
+  }
 }
