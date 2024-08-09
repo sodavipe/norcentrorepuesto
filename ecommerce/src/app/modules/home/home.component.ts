@@ -1,9 +1,14 @@
 import { Component, OnInit, } from '@angular/core';
 import { HomeService } from './_services/home.service';
+import { CartService } from '../ecommerce-guest/_service/cart.service';
+import { Router } from '@angular/router';
 
 declare var $:any;
 declare function HOMEINITTEMPLATE ([]):any;
 declare function ModalProductDetail():any;
+declare function alertDanger([]):any;
+declare function alertWarning([]):any;
+declare function alertSuccess([]):any;
 
 @Component({
   selector: 'app-home',
@@ -21,6 +26,8 @@ export class HomeComponent implements OnInit {
   FlashProductList:any = [];
   constructor(
     public homeService:HomeService,
+    public cartService:CartService,
+    public router:Router,
     // public changeDetectorRef:ChangeDetectorRef
   ) { }
 
@@ -77,12 +84,20 @@ export class HomeComponent implements OnInit {
       return product.price_soles - this.FlashSale.discount;
     }
   }
-  gestDiscountProduct(bestProd:any){
-    if(bestProd.campaign_discount){
-      if(bestProd.campaign_discount.type_discount == 1){ // 1 es Procentaje, 2 es Moneda
-        return bestProd.price_soles*bestProd.campaign_discount.discount*0.01;
-      }else{
-        return bestProd.campaign_discount;
+  gestDiscountProduct(bestProd:any,is_sale_flash=null){
+    if(is_sale_flash){
+      if(this.FlashSale.type_discount == 1){
+          return bestProd.price_soles*this.FlashSale.discount*0.01;
+        }else{
+          return this.FlashSale.discount;
+        }
+    }else{
+      if(bestProd.campaign_discount){
+        if(bestProd.campaign_discount.type_discount == 1){ // 1 es Procentaje, 2 es Moneda
+          return bestProd.price_soles*bestProd.campaign_discount.discount*0.01;
+        }else{
+          return bestProd.campaign_discount;
+        }
       }
     }
     return 0
@@ -92,5 +107,72 @@ export class HomeComponent implements OnInit {
       return {_id:bestProd.campaign_discount._id};
     }
     return {};
+  }
+
+  AddCart(product:any,is_sale_flash:any =null){
+    console.log(product);
+
+    if(!this.cartService._authService.user){
+      alertDanger("NECESITAS AUTENTICARTE PARA PODER AGREGAR EL PRODUCTO AL CARRITO")
+      return;
+    }if($("#qty-cart").val() == 0){
+      alertDanger("NECESITAS AGREGAR UNA CANTIDAD MAYOR A 0 DEL PRODUCTO PARA EL CARRITO")
+      return;
+    }if(product.type_inventario == 2){
+      let LINK_DISCOUNT="";
+      if(is_sale_flash){
+        LINK_DISCOUNT = "?_id="+this.FlashSale._id;
+      }else{
+        if(product.campaign_discount){
+          LINK_DISCOUNT = "?_id="+product.campaign_discount._id;
+        }
+      }
+      this.router.navigateByUrl("/landing-product/"+product.slug+LINK_DISCOUNT);
+    }
+    let type_discount = null;
+    let discount = 0;
+    let code_discount = null;
+    if(is_sale_flash){
+      type_discount = this.FlashSale.type_discount,
+      discount = this.FlashSale.discount,
+      code_discount = this.FlashSale._id
+    }else{
+      if(product.campaign_discount){
+        type_discount = product.campaign_discount.type_discount,
+        discount = product.campaign_discount.discount,
+        code_discount = product.campaign_discount._id
+      }
+    }
+    let data = {
+      user:this.cartService._authService.user._id,
+      product:product._id,
+      type_discount: type_discount,
+      discount:discount,
+      cantidad:1,
+      variedad:null,
+      code_cupon:null,
+      code_discount:code_discount,
+      price_unitario:product.price_soles,
+      subtotal:product.price_soles - this.gestDiscountProduct(product,is_sale_flash),
+      total:(product.price_soles - this.gestDiscountProduct(product,is_sale_flash))*1,
+    }
+    this.cartService.registerCart(data).subscribe((resp:any)=>{
+      if (product.variedades && product.variedades.length > 0 && !product.variedadSeleccionada) {
+        alertSuccess("SELECCIONE UNA VARIEDAD");
+        return;
+      }
+      if(resp.message == 403){
+        alertDanger(resp.message_text);
+        return
+      }else{
+        this.cartService.changeCart(resp.cart);
+        alertSuccess("EL PRODUCTO SE HA AGREGADO EXITÓSAMENTE AL CARRITO");
+      }
+    },error=>{
+      console.log(error);
+      if(error.error.message == "EL TOKEN NO ES VÁLIDO"){
+        this.cartService._authService.logout();
+      }
+    });
   }
 }
