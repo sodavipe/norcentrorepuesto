@@ -312,5 +312,31 @@ export default {
             console.log(error);
         }
     },
-    
+    config_initial:async(req,res) =>{
+        try {
+            let categories = await models.Category.find({state:1});
+
+            let variedades = await models.Variedad.find({});
+
+            res.status(200).json({
+                categories:categories,
+                variedades:variedades,
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN ERROR"
+            });
+            console.log(error);
+        }
+    },
+    filter_selected:async(req,res) =>{
+        try {
+            
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIÓ UN ERROR"
+            });
+            console.log(error); 
+        }
+    }
 }
