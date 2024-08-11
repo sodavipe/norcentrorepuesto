@@ -29,11 +29,11 @@ async function  sendEmail(sale_id) {
 
         let Order = await models.Sale.findById({_id:sale_id}).populate("user");
         let OrderDetail = await models.SaleDetail.find({sale:Order._id}).populate("product").populate("variedad");
-        OrderDetail = OrderDetail.map(detail => {
-            detail.product.resumen = truncateText(detail.product.resumen, 30);
-            detail.product.portada = imageBasePath + detail.product.portada;
-            return detail;
-        });
+        // OrderDetail = OrderDetail.map(detail => {
+        //     detail.product.resumen = truncateText(detail.product.resumen, 30);
+        //     detail.product.portada = imageBasePath + detail.product.portada;
+        //     return detail;
+        // });
         let AddressSale = await models.SaleAddress.findOne({sale: Order._id});
         var transporter = nodemailer.createTransport(smtpTransport({
             service: 'gmail',
@@ -49,7 +49,10 @@ async function  sendEmail(sale_id) {
         // });
 
         readHTMLFile(process.cwd() + '/mails/email_sale.html', (err, html)=>{
-                                
+            OrderDetail.map((detail)=>{
+                detail.product.imgs = 'http://localhost:3000' + '/api/products/uploads/product/' + detail.product.portada;
+                return detail;
+            });
             let rest_html = ejs.render(html, {order: Order, address_sale:AddressSale, order_detail:OrderDetail});
     
             var template = handlebars.compile(rest_html);

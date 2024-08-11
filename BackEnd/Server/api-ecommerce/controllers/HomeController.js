@@ -331,7 +331,106 @@ export default {
     },
     filter_selected:async(req,res) =>{
         try {
-            
+            var TIME_NOW = req.query.TIME_NOW;
+            let search_product = req.body.search_product;
+            let category_selected = req.body.category_selected
+            let is_discount = req.body.is_discount
+            let variedad_selected = req.body.variedad_selected
+            let price_min = req.body.price_min
+            let price_max = req.body.price_max
+
+            let filter = [
+                {state:2},
+            ];
+
+            var categories_s = [];
+            var products_s = [];
+
+            // {state:2,"title":new RegExp(search_product, "i")}
+            if(category_selected.length > 0){
+                category_selected.forEach((category) =>{
+                    categories_s.push(category);
+                })
+                // filter.push({
+                //     category: {$in: category_selected},
+                // })
+            }
+            let CampaignDiscount = await models.Discount.findOne({
+                type_campaign: 1,
+                start_date_num:{$lte:TIME_NOW},
+                end_date_num:{$gte:TIME_NOW},
+            });
+                       
+                        if(is_discount == 2){
+                            if(CampaignDiscount.type_segment==1){
+                                CampaignDiscount.products.forEach(item => {
+                                    products_s.push(item._id);
+                                })
+                            }else{
+                                CampaignDiscount.categories.forEach(item => {
+                                    categories_s.push(item._id);
+                                })
+                            }
+                        }
+
+                if(variedad_selected){
+                    let VARIETY = await models.Variedad.findById({_id:variedad_selected._id});
+                    if(VARIETY){
+                        products_s.push(VARIETY.product);
+                    }
+                }
+
+                if(categories_s.length > 0){
+                    filter.push({
+                        category: {$in: categories_s},
+                    });
+                }
+
+                if(products_s.length > 0){
+                    filter.push({
+                        _id: {$in: products_s},
+                    });
+                }
+
+                if(price_min > 0 && price_max > 0){
+                    filter.push({
+                        price_soles: {$gte: price_min ,$lte: price_max},
+                    });
+                }
+
+            let OurProducts = await models.Product.find({$and: filter}).sort({"createdAt": 1});
+
+        var Products = [];
+        for (const Product of OurProducts) {
+            let VARIEDADES = await models.Variedad.find({product:Product._id});
+            let REVIEWS = await models.Review.find({product:Product._id})
+            let AVG_REVIEW = REVIEWS.length > 0 ? Math.ceil(REVIEWS.reduce((sum,item)=> sum + item.cantidad,0)/REVIEWS.length) : 0;
+            let COUNT_REVIEW = REVIEWS.length;
+            let DISCOUNT_EXISTS = null;
+        if(CampaignDiscount){
+            if(CampaignDiscount.type_segment==1){//POR PRODUCTO
+                let products_a = [];
+                CampaignDiscount.products.forEach(item => {
+                    products_a.push(item._id);
+                })
+                if(products_a.includes(Product._id+"")){
+                        DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }else{//POR CATEGORÍA
+                let categories_a = [];
+                CampaignDiscount.categories.forEach(item => {
+                    categories_a.push(item._id);
+                })
+                        if(categories_a.includes(Product.category+"")){
+                            DISCOUNT_EXISTS = CampaignDiscount;
+                }
+            }
+        }
+            Products.push(resource.Product.product_list(Product,VARIEDADES,AVG_REVIEW,COUNT_REVIEW,DISCOUNT_EXISTS));
+        }
+        res.status(200).json({
+            products:Products,
+        });
         } catch (error) {
             res.status(500).send({
                 message: "OCURRIÓ UN ERROR"

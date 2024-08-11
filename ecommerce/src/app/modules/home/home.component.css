@@ -1,0 +1,16 @@
+.description-container {
+  width: 100%; /* O un valor fijo como 600px */
+  max-width: 600px; /* Ajusta el ancho máximo si es necesario */
+  height: 150px; /* Ajusta la altura fija basada en el número de líneas que quieres mostrar */
+  overflow-y: auto; /* Muestra una barra de desplazamiento vertical si el contenido es mayor que la altura */
+  padding: 10px; /* Agrega relleno para mayor estética */
+  box-sizing: border-box; /* Asegura que el padding no afecte al ancho y alto total */
+  /* border: 1px solid #ddd; */ /* Elimina o comenta esta línea si no deseas un borde */
+  /* border-radius: 5px; */ /* Opcional: Elimina o comenta esta línea si no deseas bordes redondeados */
+}
+
+.description {
+  white-space: normal; /* Permite que el texto se ajuste en múltiples líneas */
+  word-wrap: break-word; /* Permite que las palabras largas se dividan si es necesario */
+  line-height: 1.6; /* Ajusta el espaciado entre líneas */
+}
