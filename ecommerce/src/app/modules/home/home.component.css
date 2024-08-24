@@ -14,3 +14,25 @@
   word-wrap: break-word; /* Permite que las palabras largas se dividan si es necesario */
   line-height: 1.6; /* Ajusta el espaciado entre líneas */
 }
+.range-variant li {
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid #ccc;
+  margin: 5px 5;
+  transition: background-color 0.3s, color 0.3s; /* Transición suave para el hover */
+}
+
+.range-variant li:hover {
+  background-color: #f0f0f0; /* Color de fondo cuando el cursor pasa sobre el elemento */
+}
+
+.range-variant li.selected {
+  background-color: #3cb371; /* Color de fondo para la selección */
+  color: #fff; /* Color del texto para la selección */
+  border-color: #3cb371; /* Color del borde para la selección */
+}
+
+.range-variant li.selected:hover {
+  background-color: #3cb371; /* Mantén el color de fondo seleccionado al pasar el cursor */
+  color: #fff; /* Mantén el color del texto seleccionado al pasar el cursor */
+}

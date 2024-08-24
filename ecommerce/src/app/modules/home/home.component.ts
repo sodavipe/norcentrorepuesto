@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   product_selected:any = null;
   FlashSale:any = null;
   FlashProductList:any = [];
+  variedad_selected:any = null;
+  SALE_FLASH:any = null;
   constructor(
     public homeService:HomeService,
     public cartService:CartService,
@@ -161,6 +163,80 @@ export class HomeComponent implements OnInit {
         alertSuccess("SELECCIONE UNA VARIEDAD");
         return;
       }
+      if(resp.message == 403){
+        alertDanger(resp.message_text);
+        return
+      }else{
+        this.cartService.changeCart(resp.cart);
+        alertSuccess("EL PRODUCTO SE HA AGREGADO EXITÓSAMENTE AL CARRITO");
+      }
+    },error=>{
+      console.log(error);
+      if(error.error.message == "EL TOKEN NO ES VÁLIDO"){
+        this.cartService._authService.logout();
+      }
+    });
+  }
+  selectedVariedad(variedad:any){
+    this.variedad_selected = variedad;
+  }
+  getDiscount(){
+    let discount = 0;
+    if(this.SALE_FLASH){
+      if(this.SALE_FLASH.type_discount == 1){
+        return this.SALE_FLASH.discount * this.product_selected.price_soles*0.01
+      }else{
+        return this.SALE_FLASH.discount
+      }
+    }
+    return discount;
+  }
+  AddCartModal(product:any,is_sale_flash:any =null){
+    console.log(product);
+    if(!this.cartService._authService.user){
+      alertDanger("NECESITAS AUTENTICARTE PARA PODER AGREGAR EL PRODUCTO AL CARRITO")
+      return;
+    }if($("#qty-cart").val() == 0){
+      alertDanger("NECESITAS AGREGAR UNA CANTIDAD MAYOR A 0 DEL PRODUCTO PARA EL CARRITO")
+      return;
+    }if(this.product_selected.type_inventario == 2){
+      if(!this.variedad_selected){
+        alertDanger("NECESITAS SELECCIONAR UNA VARIEDAD PARA EL PRODUCTO")
+        return;
+      }
+      if(this.variedad_selected.stock < $("#qty-cart").val()){
+        alertDanger("NECESITAS AGREGAR UNA CANTIDAD MENOR PORQUE NO HAY STOCK O NO HAY STOCK DISPONIBLE PARA LA VARIEDAD SELECCIONADA")
+        return;
+      }
+    }
+    let type_discount = null;
+    let discount = 0;
+    let code_discount = null;
+    if(is_sale_flash){
+      type_discount = this.FlashSale.type_discount,
+      discount = this.FlashSale.discount,
+      code_discount = this.FlashSale._id
+    }else{
+      if(product.campaign_discount){
+        type_discount = product.campaign_discount.type_discount,
+        discount = product.campaign_discount.discount,
+        code_discount = product.campaign_discount._id
+      }
+    }
+    let data = {
+      user:this.cartService._authService.user._id,
+      product:this.product_selected._id,
+      type_discount: this.SALE_FLASH ? this.SALE_FLASH.type_discount : null,
+      discount:this.SALE_FLASH ? this.SALE_FLASH.discount : 0,
+      cantidad:$("#qty-cart").val(),
+      variedad:this.variedad_selected? this.variedad_selected._id :null,
+      code_cupon:null,
+      code_discount:this.SALE_FLASH ? this.SALE_FLASH._id : null,
+      price_unitario:this.product_selected.price_soles,
+      subtotal:product.price_soles - this.gestDiscountProduct(product,is_sale_flash),
+      total:(product.price_soles - this.gestDiscountProduct(product,is_sale_flash))*1,
+    }
+    this.cartService.registerCart(data).subscribe((resp:any)=>{
       if(resp.message == 403){
         alertDanger(resp.message_text);
         return

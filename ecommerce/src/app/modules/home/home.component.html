@@ -680,13 +680,18 @@
                                             <!-- End Product Variation  -->
 
                                             <!-- Start Product Variation  -->
-                                            <div class="product-variation" *ngIf="product_selected.type_inventario == 2">
-                                                <h6 class="title">Variedad:</h6>
-                                                <ul class="range-variant">
-                                                  <ng-container *ngFor="let variedad of product_selected.variedades">
-                                                    <li>{{variedad.valor}}</li>
-                                                  </ng-container>
-                                                </ul>
+                                            <div class="product-variation product-size-variation" *ngIf="product_selected.type_inventario==2">
+                                              <h6 class="title">Variedades:</h6>
+                                              <ul class="range-variant">
+                                                <ng-container *ngFor="let variedad of product_selected.variedades">
+                                                  <li
+                                                    (click)="selectedVariedad(variedad)"
+                                                    [class.selected]="variedad === variedad_selected"
+                                                  >
+                                                    {{ variedad.valor }}
+                                                  </li>
+                                                </ng-container>
+                                              </ul>
                                             </div>
                                             <!-- End Product Variation  -->
 
@@ -695,13 +700,13 @@
                                         <!-- Start Product Action Wrapper  -->
                                         <div class="product-action-wrapper d-flex-center">
                                             <!-- Start Quentity Action  -->
-                                            <div class="pro-qty"><input type="text" value="1"></div>
+                                            <div class="pro-qty mr--20"><input type="text" id="qty-cart"  value="1"></div>
                                             <!-- End Quentity Action  -->
 
                                             <!-- Start Product Action  -->
                                             <ul class="product-action d-flex-center mb--0">
-                                                <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Agregar</a></li>
-                                                <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                              <li class="add-to-cart"><a href="#" onclick="return false;" (click)="AddCartModal(product_selected)" class="axil-btn btn-bg-primary">Add to Cart</a></li>
+                                              <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
                                             </ul>
                                             <!-- End Product Action  -->
 
