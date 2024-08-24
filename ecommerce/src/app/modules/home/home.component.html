@@ -128,13 +128,13 @@
             <div class="container">
                 <div class="section-title-wrapper">
                     <span class="title-highlighter highlighter-secondary"> <i class="far fa-tags"></i> Categories</span>
-                    <h2 class="title">Encontrar por Categoría</h2>
+                    <h2 class="title">Todas las Categorías</h2>
                 </div>
                 <div class="categrie-product-activation slick-layout-wrapper--15 axil-slick-arrow  arrow-top-slide">
                      <ng-container *ngFor="let categorie of categories">
                       <div class="slick-single-layout">
                         <div class="categrie-product" data-sal="zoom-out" data-sal-delay="300" data-sal-duration="500">
-                            <a href="#">
+                            <a href="#" onclick="return false;">
                                 <img class="img-fluid" [src]="categorie.imagen_home" width="64px" alt="product categorie">
                                 <h6 class="cat-title">{{categorie.title}}</h6>
                             </a>
@@ -354,7 +354,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center mt--20 mt_sm--0">
-                        <a href="shop.html" class="axil-btn btn-bg-lighter btn-load-more">View All Products</a>
+                        <a [routerLink]="['/filtro-de-productos']" class="axil-btn btn-bg-lighter btn-load-more">Todos los productos</a>
                     </div>
                 </div>
 
