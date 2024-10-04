@@ -1,0 +1,31 @@
+.axil-signin-form{
+  animation: fadeInUp 1.5s ease-out forwards; /* Aplica la animación */
+}
+/* Definición de la animación */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.site-logo {
+  max-width: 300px; /* Ajusta el tamaño máximo para que no sea demasiado grande */
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: contain; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+  padding: 5px; /* Opcional: agrega un pequeño margen interno */
+  transition: transform 0.3s ease; /* Transición suave en caso de hover */
+  animation: fadeInUp 1.5s ease-out forwards;
+}
+.title {
+  font-size: 24px; /* Ajusta el tamaño de la fuente */
+  color: #333; /* Cambia el color del texto según tu diseño */
+  text-align: center; /* Centra el texto */
+  opacity: 0; /* Inicialmente oculto */
+  transform: translateY(20px); /* Mueve el texto hacia abajo inicialmente */
+  animation: fadeInUp 1.5s ease-out forwards; /* Aplica la animación */
+  margin-bottom: 20px; /* Espacio extra debajo del título */
+}

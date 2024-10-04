@@ -8,14 +8,23 @@ export default{
     register: async(req, res)=>{
         try {
             req.body.password = await bcript.hash(req.body.password,10);
-            const user = await models.User.create(req.body);
-            res.status(200).json(user);
-        } catch (error) {
-            res.status(500).send({
-                message: "OCURRIÓ UN PROBLEMA"
-            });
-            console.log(error)
-        }
+             // Intentar crear el usuario
+             const user = await models.User.create(req.body);
+             res.status(200).json(user);
+         } catch (error) {
+             if (error.code === 11000 && error.keyPattern.email) {
+                 // Capturar error de clave duplicada para email
+                 res.status(400).send({
+                     message: "El correo electrónico ya está registrado. Usa otro email."
+                 });
+             } else {
+                 // Otros errores
+                 res.status(500).send({
+                     message: "Ocurrió un problema durante el registro."
+                 });
+             }
+             console.log(error);
+         }
     },
     register_admin: async(req, res)=>{
         try {
