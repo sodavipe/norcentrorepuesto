@@ -10,6 +10,7 @@ import Cart from './Cart';
 import AddressClient from './AddressClient';
 import Sale from './Sale';
 import Review from './Review';
+import Subscription from './Subscription'
 
 const router = routerx();
 router.use('/user',User);
@@ -23,5 +24,6 @@ router.use('/cart',Cart);
 router.use('/address_client',AddressClient);
 router.use('/sale',Sale);
 router.use('/review',Review);
+router.use('/subscription',Subscription)
 
 export default router;

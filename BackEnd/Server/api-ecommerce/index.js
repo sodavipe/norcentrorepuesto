@@ -4,6 +4,7 @@ import path from 'path'
 import mongoose from 'mongoose'
 import router from './router';
 
+
 //Conexión a la BASE DE DATOS
 require('dotenv').config();
 mongoose.Promise = global.Promise;

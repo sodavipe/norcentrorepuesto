@@ -2,6 +2,7 @@ import { Component, OnInit, } from '@angular/core';
 import { HomeService } from './_services/home.service';
 import { CartService } from '../ecommerce-guest/_service/cart.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 declare var $:any;
 declare function HOMEINITTEMPLATE ([]):any;
@@ -16,7 +17,7 @@ declare function alertSuccess([]):any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  email: string = '';
   sliders:any = [];
   categories:any = [];
   bestProducts:any = [];
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit {
     public homeService:HomeService,
     public cartService:CartService,
     public router:Router,
+    public http: HttpClient
     // public changeDetectorRef:ChangeDetectorRef
   ) { }
 
@@ -78,7 +80,9 @@ export class HomeComponent implements OnInit {
       },50);
     }, 100);
   }
-
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   getCallNewPrice(product:any){
     if(this.FlashSale.type_discount == 1){
       return (product.price_soles - product.price_soles*this.FlashSale.discount*0.01).toFixed(2);
@@ -250,5 +254,35 @@ export class HomeComponent implements OnInit {
         this.cartService._authService.logout();
       }
     });
+
   }
+  subscribe() {
+    if (this.email) {
+        const body = { email: this.email };
+        this.http.post('http://localhost:3000/api/subscription/subscribe', body).subscribe(
+            (response: any) => { // Asegúrate de tratar la respuesta como `any`
+                // Manejo de la respuesta
+                if (response && response.message) {
+                    alertSuccess(response.message); // Muestra el mensaje de éxito
+                } else {
+                    alertDanger('Respuesta inesperada del servidor.'); // Si no hay mensaje esperado
+                }
+                this.email = ''; // Limpia el campo de entrada
+            },
+            (error) => {
+                // Manejo de errores
+                console.error(error); // Muestra el error en la consola
+                // Si hay un mensaje de error del servidor, úsalo
+                let errorMessage = 'Hubo un error al suscribirte. Por favor, inténtalo de nuevo.';
+                if (error.error && error.error.message) {
+                    errorMessage = error.error.message; // Mensaje de error del servidor
+                }
+                alertDanger(errorMessage); // Muestra la alerta de error
+            }
+        );
+    } else {
+        alertDanger('Por favor, introduce un correo electrónico válido.');
+    }
+}
+
 }
