@@ -238,7 +238,7 @@ export class HomeComponent implements OnInit {
       code_discount:this.SALE_FLASH ? this.SALE_FLASH._id : null,
       price_unitario:this.product_selected.price_soles,
       subtotal:product.price_soles - this.gestDiscountProduct(product,is_sale_flash),
-      total:(product.price_soles - this.gestDiscountProduct(product,is_sale_flash))*1,
+      total:((product.price_soles - this.gestDiscountProduct(product,is_sale_flash))*1)*$("#qty-cart").val(),
     }
     this.cartService.registerCart(data).subscribe((resp:any)=>{
       if(resp.message == 403){
