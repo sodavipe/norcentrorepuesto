@@ -108,8 +108,8 @@
                                   <div class="inner">
                                       <h5 class="title"><a [routerLink]="['/landing-product/', product.slug]" [queryParams]="{_id: FlashSale._id}">{{product.title}}</a></h5>
                                       <div class="product-price-variant">
-                                          <span class="price old-price">S/. {{product.price_soles}}</span>
-                                          <span class="price current-price">S/. {{getCallNewPrice(product)}}</span>
+                                          <span class="price old-price">S/. {{product.price_soles | number:'1.2-2'}}</span>
+                                          <span class="price current-price">S/. {{getCallNewPrice(product) | number:'1.2-2'}}</span>
                                       </div>
                                   </div>
                               </div>
@@ -187,8 +187,8 @@
                                         </div>
                                         <h5 class="title"><a [routerLink]="['/landing-product/', bestProd.slug]" [queryParams]="getRouterDiscount(bestProd)">{{bestProd.title}}</a></h5>
                                         <div class="product-price-variant">
-                                          <span class="price old-price" *ngIf="bestProd.campaign_discount">S/. {{bestProd.price_soles}}</span>
-                                            <span class="price current-price">S/. {{bestProd.price_soles - gestDiscountProduct(bestProd)}}</span>
+                                          <span class="price old-price" *ngIf="bestProd.campaign_discount">S/. {{bestProd.price_soles| number:'1.2-2'}}</span>
+                                            <span class="price current-price">S/. {{bestProd.price_soles - gestDiscountProduct(bestProd)| number:'1.2-2'}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -283,8 +283,8 @@
                                       </div>
                                           <h5 class="title"><a [routerLink]="['/landing-product/', our_product.slug]" >{{our_product.title}}</a></h5>
                                           <div class="product-price-variant">
-                                            <span class="price old-price" *ngIf="our_product.campaign_discount">S/. {{our_product.price_soles}}</span>
-                                            <span class="price current-price">S/. {{our_product.price_soles - gestDiscountProduct(our_product)}}</span>
+                                            <span class="price old-price" *ngIf="our_product.campaign_discount">S/. {{our_product.price_soles| number:'1.2-2'}}</span>
+                                            <span class="price current-price">S/. {{our_product.price_soles - gestDiscountProduct(our_product)| number:'1.2-2'}}</span>
                                               <!-- <span class="price current-price">S/. {{our_product.price_soles}}</span> -->
                                               <!-- <span class="price old-price">$49.99</span> -->
                                           </div>
@@ -442,7 +442,7 @@
             <div class="container">
                 <div class="section-title-wrapper">
                     <span class="title-highlighter highlighter-primary"><i class="far fa-shopping-basket"></i> Semanal</span>
-                    <h2 class="title">Novedades</h2>
+                    <h2 class="title">Novedades (Lanzamientos)</h2>
                 </div>
                 <div class="new-arrivals-product-activation slick-layout-wrapper--30 axil-slick-arrow  arrow-top-slide">
                   <ng-container *ngFor="let best_product of bestProducts">
@@ -458,16 +458,6 @@
                           </div>
                           <div class="product-content">
                               <div class="inner">
-                                  <div class="color-variant-wrapper">
-                                      <ul class="color-variant">
-                                          <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                          </li>
-                                          <li class="color-extra-02"><span><span class="color"></span></span>
-                                          </li>
-                                          <li class="color-extra-03"><span><span class="color"></span></span>
-                                          </li>
-                                      </ul>
-                                  </div>
                                   <h5 class="title"><a [routerLink]="['/landing-product/', best_product.slug]">{{best_product.title}}</a></h5>
                                   <div class="product-price-variant">
                                       <!-- <span class="price old-price">$50</span> -->
@@ -480,6 +470,7 @@
                                       <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal" (click)="OpenModal(best_product)"><i class="far fa-eye"></i></a></li>
                                   </ul>
                               </div>
+                              <p>No aplican descuentos en esta sección</p>
                           </div>
                       </div>
                   </div>
@@ -495,7 +486,7 @@
           <div class="container">
               <div class="etrade-newsletter-wrapper bg_image img-gmail">
                   <div class="newsletter-content">
-                      <span class="title-highlighter highlighter-primary2"><i class="fas fa-envelope-open"></i>Boletin</span>
+                      <span class="title-highlighter highlighter-primary2"><i class="fas fa-envelope-open"></i>Boletin (PROXIMAMENTE)</span>
                       <h2 class="title mb--40 mb_sm--30">Recibe Actualizaciones semanales</h2>
                       <div class="input-group newsletter-form">
                           <div class="position-relative newsletter-inner mb--15">
@@ -513,56 +504,34 @@
     </main>
 
 
-    <div class="service-area">
-        <div class="container">
-            <div class="row row-cols-xl-4 row-cols-sm-2 row-cols-1 row--20">
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service1.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Rapido &amp; Seguro Delivery</h6>
-                            <p>Cuentame sobre tu servicio.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service2.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Garantía de devolución</h6>
-                            <p>En un plazo de 10 dias.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service3.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Política de devolución en 24 horas</h6>
-                            <p>No hay que hacer preguntas</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="service-box service-style-2">
-                        <div class="icon">
-                            <img src="./assets/images/icons/service4.png" alt="Service">
-                        </div>
-                        <div class="content">
-                            <h6 class="title">Soporte de calidad profesional</h6>
-                            <p>Soporte en vivo las 24 horas del día, los 7 días de la semana.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="service-area d-flex align-items-center justify-content-center">
+      <div class="container">
+          <div class="row row-cols-xl-2 row-cols-1 justify-content-center">
+              <div class="col text-justify">
+                  <div class="service-box service-style-2 text-center">
+                      <div class="icon d-flex justify-content-center align-items-center">
+                          <img src="./assets/images/icons/service2.png" alt="Service">
+                      </div>
+                      <div class="content">
+                          <h6 class="title">Garantía de devolución</h6>
+                          <p>Consultar en Tienda</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col text-justify">
+                  <div class="service-box service-style-2 text-center">
+                      <div class="icon d-flex justify-content-center align-items-center">
+                          <img src="./assets/images/icons/service4.png" alt="Service">
+                      </div>
+                      <div class="content">
+                          <h6 class="title">Soporte de calidad profesional</h6>
+                          <p>Soporte en vivo las 24 horas del día, los 7 días de la semana.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 
     <app-footer></app-footer>
 
@@ -624,15 +593,28 @@
                                             <div class="review-link">
                                                 <a href="#">(<span>1</span> customer reviews)</a>
                                             </div>
+
+
                                         </div>
                                         <h3 class="product-title">{{product_selected.title}}</h3>
-                                        <span class="price-amount" *ngIf="!product_selected.FlashSale">S/.{{product_selected.price_soles}}</span>
-                                        <span class="price-amount" *ngIf="product_selected.FlashSale"><del>S/.{{product_selected.price_soles}}</del></span>
-                                        <span class="price-amount" *ngIf="product_selected.FlashSale">S/.{{getCallNewPrice(product_selected)}}</span>
+                                        <span *ngIf="!product_selected.campaign_discount">
+                                          <span *ngIf="product_selected.FlashSale"><div><b>CAMPAÑA FLASH</b></div></span>
+                                        <span class="price-amount" *ngIf="!product_selected.FlashSale">S/.{{product_selected.price_soles| number:'1.2-2'}}</span>
+                                        <span class="price-amount" *ngIf="product_selected.FlashSale"><del>S/.{{product_selected.price_soles| number:'1.2-2'}}</del></span>
+                                        <span class="price-amount" *ngIf="product_selected.FlashSale">S/.{{getCallNewPrice(product_selected)| number:'1.2-2'}}</span>
+                                        </span>
+
+                                        <span *ngIf="product_selected.campaign_discount">
+                                          <div><b>CAMPAÑA DE DESCUENTO</b></div>
+                                          <div class="product-price-variant">
+                                            <span class="price-amount" *ngIf="product_selected.campaign_discount"><del>S/.{{product_selected.price_soles| number:'1.2-2'}}</del></span>
+                                            <span class="price-amount">S/. {{product_selected.price_soles - gestDiscountProduct(product_selected)| number:'1.2-2'}}</span>
+
+                                          </div>
+                                        </span>
+
                                         <ul class="product-meta">
-                                            <li><i class="fal fa-check"></i>En Stock</li>
-                                            <li><i class="fal fa-check"></i>Delivery gratis y Seguro>
-                                            <li><i class="fal fa-check"></i>Descuento 30% Usando el codigo: MOTIVE30</li>
+                                          <li><i class="fal fa-check"></i>Pedir en Tienda, si hay Cupones disponibles para usted</li>
                                         </ul>
                                         <div class="description-container">
                                           <p class="description">

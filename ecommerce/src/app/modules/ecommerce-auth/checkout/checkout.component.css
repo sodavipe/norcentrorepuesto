@@ -56,3 +56,12 @@
   right: 10px;
   bottom: 10px;
 }
+.imagen{
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+}
+.paypal-logo {
+  width: 100px; /* Ajusta según el tamaño deseado */
+  height: auto; /* Mantiene la proporción */
+}

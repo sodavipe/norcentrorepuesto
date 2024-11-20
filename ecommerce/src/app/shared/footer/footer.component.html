@@ -29,12 +29,14 @@
               <!-- End Single Widget  -->
               <!-- Start Single Widget  -->
               <div class="col-lg-3 col-sm-6">
-                  <div class="axil-footer-widget">
+                  <div *ngIf="!user" class="axil-footer-widget">
                       <h5 class="widget-title">Cuenta</h5>
                       <div class="inner">
                           <ul>
-                              <li><a href="my-account.html">Mi Cuenta </a></li>
-                              <li><a href="sign-up.html">Iniciar Session / Registrarse</a></li>  
+                              <li><a href="/perfil-del-cliente">Mi Cuenta </a></li>
+                              <li><a [routerLink]="[ '/auth/login' ]">Iniciar Sesión</a></li>
+                              <li><a [routerLink]="[ '/auth/registro' ]">Registro</a></li>
+
                           </ul>
                       </div>
                   </div>
@@ -48,8 +50,6 @@
                           <ul>
                               <li><a href="privacy-policy.html">Politica de Privacidad</a></li>
                               <li><a href="terms-of-service.html">Terminos de uso</a></li>
-                              <li><a href="#">FAQ</a></li>
-                              <li><a href="contact.html">Contacto</a></li>
                               <li><a href="contact.html">Contacto</a></li>
                           </ul>
                       </div>
@@ -57,7 +57,7 @@
               </div>
               <!-- End Single Widget  -->
               <!-- Start Single Widget  -->
-            
+
               <!-- End Single Widget  -->
           </div>
       </div>

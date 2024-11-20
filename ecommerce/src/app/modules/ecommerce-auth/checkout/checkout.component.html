@@ -77,11 +77,6 @@
                               <label>País <span>*</span></label>
                               <select id="Region" [(ngModel)]="pais" name="pais">
                                   <option value="Perú">Perú</option>
-                                  <option value="Argentina">Argentina</option>
-                                  <option value="Colombia">Colombia</option>
-                                  <option value="Chile">Chile</option>
-                                  <option value="Brasil">Brasil</option>
-                                  <option value="Ecuador">Ecuador</option>
                               </select>
                           </div>
                           <div class="form-group">
@@ -135,26 +130,10 @@
                                           <td>Subtotal</td>
                                           <td>S/. {{subtotalCart | number:'1.2-2'}} (Sin IGV)</td>
                                       </tr>
-                                      <tr class="order-shipping">
-                                          <td colspan="2">
-                                              <div class="shipping-amount">
-                                                  <span class="title">Shipping Method</span>
-                                                  <span class="amount">$0.00</span>
-                                              </div>
-                                              <div class="input-group">
-                                                  <input type="radio" id="radio1" name="shipping" checked>
-                                                  <label for="radio1">Free Shippping</label>
-                                              </div>
-                                              <div class="input-group">
-                                                  <input type="radio" id="radio2" name="shipping">
-                                                  <label for="radio2">Local</label>
-                                              </div>
-                                              <div class="input-group">
-                                                  <input type="radio" id="radio3" name="shipping">
-                                                  <label for="radio3">Flat rate</label>
-                                              </div>
-                                          </td>
-                                      </tr>
+                                      <tr class="order-subtotal">
+                                        <td>IGV</td>
+                                        <td>+ S/. {{impuestoshow | number:'1.2-2'}} (Cargo)</td>
+                                    </tr>
                                       <tr class="order-total">
                                           <td>Total en soles (Con IGV)</td>
                                           <td class="order-total-amount">S/. {{totalCart | number:'1.2-2'}}</td>
@@ -168,25 +147,11 @@
                           </div>
                           <div class="order-payment-method">
                               <div class="single-payment">
-                                  <div class="input-group">
-                                      <input type="radio" id="radio4" name="payment">
-                                      <label for="radio4">Direct bank transfer</label>
-                                  </div>
-                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                              </div>
-                              <div class="single-payment">
-                                  <div class="input-group">
-                                      <input type="radio" id="radio5" name="payment">
-                                      <label for="radio5">Cash on delivery</label>
-                                  </div>
-                                  <p>Pay with cash upon delivery.</p>
-                              </div>
-                              <div class="single-payment">
                                   <div class="input-group justify-content-between align-items-center">
                                       <input type="radio" id="radio6" name="payment" checked>
                                       <label for="radio6">Paypal</label>
-                                      <img src="./assets/images/others/payment.png" alt="Paypal payment">
-                                  </div>
+                                      <img src="../../../../assets/images/others/paypal-logo.png" alt="Paypal payment" class="paypal-logo">
+                                    </div>
                                   <p>Paga vía Paypal; usted puede pagar con su tarjeta de crédito si es que no cuenta con alguna cuenta de PayPal (Pagar por este método es necesario la conversión de su moneda local a Dólares Estadounidenses (USD))</p>
                               </div>
                           </div>

@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit {
   email:any = null;
   nota:any = null;
   address_client_selected:any = null;
+  impuestoshow:any = null;
 
   preciodolar:any = 0;
   listCart:any = [];
@@ -66,6 +67,7 @@ export class CheckoutComponent implements OnInit {
       this.listCart = resp;
       const subtotal = this.listCart.reduce((sum: any, item: any) => sum + item.total, 0);
       const impuesto = subtotal * 0.18
+      this.impuestoshow=impuesto
       this.subtotalCart = this.listCart.reduce((sum: any, item: any) => sum + item.total, 0).toFixed(2);
       this.totalCart = (subtotal + impuesto).toFixed(2);
       this.totalCartUSD = (this.totalCart*this.exchangeRate).toFixed(2);
