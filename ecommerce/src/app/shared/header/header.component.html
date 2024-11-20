@@ -654,8 +654,8 @@
 
                               </ul>
                               <a [routerLink]="[ '/auth/login' ]" class="axil-btn btn-bg-primary" *ngIf="!user">Login</a>
-                              <a href="#" onclick="return false;" class="axil-btn btn-bg-primary" (click)="logout()" *ngIf="user" >Logout</a>
-                              <div class="reg-footer text-center">No account yet? <a href="sign-up.html" class="btn-link">REGISTER HERE.</a></div>
+                              <a href="#" onclick="return false;" class="axil-btn btn-bg-primary" (click)="logout()" *ngIf="user" >Cerrar Sesión</a>
+                              <div *ngIf="!user" class="reg-footer text-center">No estás registrado? <a [routerLink]="[ '/auth/registro' ]">Regístrate</a> </div>
                           </div>
                       </li>
                       <li class="axil-mobile-toggle">
