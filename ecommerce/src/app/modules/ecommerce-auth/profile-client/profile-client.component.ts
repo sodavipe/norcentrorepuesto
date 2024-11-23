@@ -44,6 +44,10 @@ export class ProfileClientComponent implements OnInit {
   description : any = null;
   sale_detail_selected:any = null;
 
+  showPassword: boolean = false;
+  showPasswordRepeat: boolean = false;
+
+
   scrollToTop(event: Event): void {
     event.preventDefault(); // Previene el comportamiento predeterminado del enlace
     window.scrollTo({
@@ -193,6 +197,11 @@ export class ProfileClientComponent implements OnInit {
         alertDanger("LAS CONTRASEÑAS SON INCORRECTAS");
         return;
       }
+      // Validación de la fortaleza de la contraseña
+      if (!this.validatePasswordStrength(this.password)) {
+        alertWarning("LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES, INCLUIR UNA MAYÚSCULA, UNA MINÚSCULA, UN NÚMERO Y UN CARÁCTER ESPECIAL");
+        return;
+      }
     }
 
     // Creación del objeto data sin la contraseña inicialmente
@@ -227,6 +236,11 @@ export class ProfileClientComponent implements OnInit {
       this.cantidad = null
       this.description = null
     }
+  }
+  validatePasswordStrength(password: string): boolean {
+    // Requiere al menos 8 caracteres, un número, una letra mayúscula, una minúscula y un carácter especial
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+    return passwordPattern.test(password);
   }
   goDetail(){
     this.sale_detail_selected = null;
@@ -285,6 +299,13 @@ export class ProfileClientComponent implements OnInit {
       this.sale_detail_selected.review = resp.review;
       alertSuccess(resp.message);
     })
+  }
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  togglePasswordRepeatVisibility(): void {
+    this.showPasswordRepeat = !this.showPasswordRepeat;
   }
   logout(){
     this.authEcommerceService.authService.logout();

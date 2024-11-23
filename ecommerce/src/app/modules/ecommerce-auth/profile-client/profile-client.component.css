@@ -24,3 +24,42 @@
   outline: none;
   color: gold
 }
+/* Contenedor del input y el botón */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Input con espacio para el botón */
+.input-container input.form-control {
+  flex: 1; /* Toma todo el ancho disponible */
+  padding-right: 2.5rem; /* Espacio para el botón */
+}
+
+/* Botón de visibilidad */
+.input-container .btn-visibility {
+  position: absolute;
+  right: 10px; /* Espaciado desde el borde derecho */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 2rem; /* Botón compacto */
+}
+
+/* Ícono dentro del botón */
+.input-container .btn-visibility i {
+  font-size: 1.2rem; /* Ajusta el tamaño del ícono */
+}
+
+/* Hover del botón */
+.input-container .btn-visibility:hover {
+  color: #000;
+}
+
